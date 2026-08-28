@@ -480,6 +480,7 @@
           '<p class="eyebrow">Verdict &mdash; Case <b>CLOSED</b></p>' +
           '<div class="type">' + v.type.t.name + "</div>" +
           '<p class="tier"><span>' + v.type.tier.label + "</span> " + v.type.tier.note + "</p>" +
+          '<p class="stature"><b>' + v.target + " cm</b> &nbsp;·&nbsp; " + v.stature.line + "</p>" +
           '<p class="blurb">' + v.type.t.blurb + "</p>" +
           '<p class="fit" style="margin:16px 0 0">Spec match <b>' + v.type.fit + "%</b> &nbsp;·&nbsp; nearest of " +
             M.TYPES.length + " archetypes &nbsp;·&nbsp; distance " + v.type.d.toFixed(2) +

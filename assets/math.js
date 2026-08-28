@@ -25,24 +25,27 @@ WZ.math = (function () {
   const HOT   = { mu: 5.0, sd: 1.6 };
   const CRAZY = { mu: 6.4, sd: 1.5 };
 
-  /* Archetypes, as points in 4-D spec space: height z-score, build index,
-     hot, crazy. Classification is nearest neighbour — never a dice roll. */
+  /* Archetypes, as points in 3-D spec space: build index, hot, crazy — the
+     three things the user actually chooses. Classification is nearest
+     neighbour, never a dice roll. `cuts` are each type's distance terciles
+     measured over all 147 reachable answer combinations, so its three
+     portraits come up in even thirds. */
   const TYPES = [
-    { key: "model", cuts: [2.00, 3.21], name: "The Model", hz: 1.8, body: 0, hot: 9.2, crazy: 7.5,
-      blurb: "Tall, built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "gothic", cuts: [1.59, 2.23], name: "The Gothic", hz: 0.4, body: 0, hot: 7.5, crazy: 9.0,
+    { key: "model", cuts: [0.77, 1.09], name: "The Model", body: 0, hot: 9.2, crazy: 7.5,
+      blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
+    { key: "gothic", cuts: [1.05, 1.60], name: "The Gothic", body: 0, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "litigator", cuts: [1.62, 2.17], name: "The Litigator", hz: 0.9, body: 1, hot: 7.2, crazy: 5.2,
+    { key: "litigator", cuts: [1.00, 1.65], name: "The Litigator", body: 1, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [2.19, 3.61], name: "The Nerd", hz: -0.7, body: 0, hot: 6.0, crazy: 4.2,
-      blurb: "Small, quick, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "girlnextdoor", cuts: [1.49, 2.14], name: "Plain Good Looking", hz: 0.0, body: 1, hot: 7.0, crazy: 4.5,
+    { key: "nerd", cuts: [0.74, 1.28], name: "The Nerd", body: 0, hot: 6.0, crazy: 4.2,
+      blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
+    { key: "girlnextdoor", cuts: [0.66, 1.23], name: "Plain Good Looking", body: 1, hot: 7.0, crazy: 4.5,
       blurb: "No filter, no fuss, no arc. Looks the same at 7am as she does at a wedding, which is the entire point. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [2.07, 3.25], name: "The Baddie", hz: -0.3, body: 1, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [0.87, 1.66], name: "The Baddie", body: 1, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "valkyrie", cuts: [1.99, 2.93], name: "The Valkyrie", hz: 1.5, body: 2, hot: 6.5, crazy: 7.0,
-      blurb: "Tall and substantial, laughs from the chest, could carry you out of a burning building and probably would. Do not start what you cannot finish." },
-    { key: "comfort", cuts: [1.86, 2.94], name: "The Comfort Class", hz: 0.0, body: 2, hot: 5.5, crazy: 5.5,
+    { key: "valkyrie", cuts: [1.14, 1.68], name: "The Valkyrie", body: 2, hot: 6.5, crazy: 7.0,
+      blurb: "Substantial, laughs from the chest, could carry you out of a burning building and probably would. Do not start what you cannot finish." },
+    { key: "comfort", cuts: [0.88, 1.22], name: "The Comfort Class", body: 2, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 
@@ -87,20 +90,24 @@ WZ.math = (function () {
 
   /* --- archetype: nearest neighbour in weighted 4-D space ----------------- */
 
-  function classify(targetH, bodyKey, hot, crazy) {
-    const hz = (targetH - POP.mu) / POP.sd;
-    const b  = BODY[bodyKey].idx;
+  /* Height is deliberately NOT an axis here. It is fixed for any one user, so
+     including it pinned the archetype to whatever their own height happened to
+     be — at 195 cm only four of the eight types were reachable at all, and the
+     three answers the user actually chooses barely moved the result. Height
+     still drives the target band and the whole rarity calculation, which is
+     where it belongs. The type is decided by what they pick. */
+  function classify(bodyKey, hot, crazy) {
+    const b = BODY[bodyKey].idx;
     let best = null;
     for (const t of TYPES) {
       const d = Math.sqrt(
-        Math.pow((hz    - t.hz)    * 1.00, 2) +
         Math.pow((b     - t.body)  * 1.60, 2) +
         Math.pow((hot   - t.hot)   * 0.60, 2) +
         Math.pow((crazy - t.crazy) * 0.55, 2)
       );
       if (!best || d < best.d) best = { t: t, d: d };
     }
-    best.fit = Math.max(31, Math.round(100 * Math.exp(-best.d / 2.6)));
+    best.fit = Math.max(31, Math.round(100 * Math.exp(-best.d / 1.35)));
 
     /* Which of the type's three portraits to show. The cuts on each archetype
        are its distance terciles measured over the whole input space, so the
@@ -116,6 +123,20 @@ WZ.math = (function () {
     { key: "variation", label: "Variation", note: "Recognisably the type, but one of your answers pulls her off-spec." },
     { key: "edge",      label: "Edge case", note: "She only just qualifies. Your answers sit at the far edge of this archetype — the next type over was close behind." }
   ];
+
+  /* --- stature: where the target sits in the height distribution ---------- */
+  /* Height no longer decides the archetype, so it reports itself directly. */
+  function statureOf(target) {
+    const pctShorter = Math.round(100 * ncdf(target, POP.mu, POP.sd));
+    const line =
+      pctShorter >= 99 ? "Taller than 99% of women. You are asking for the very end of the curve."
+    : pctShorter >= 90 ? "Taller than " + pctShorter + "% of women. Genuinely tall, and priced accordingly."
+    : pctShorter >= 70 ? "Taller than " + pctShorter + "% of women. Above average without being rare."
+    : pctShorter >= 31 ? pctShorter + "% of women are shorter. Dead centre of the distribution — the widest part of the pool."
+    : pctShorter >= 10 ? "Shorter than " + (100 - pctShorter) + "% of women. Petite, and common enough to find."
+    :                    "Shorter than " + (100 - pctShorter) + "% of women. That is its own kind of rare.";
+    return { pctShorter: pctShorter, line: line };
+  }
 
   /* --- rarity ------------------------------------------------------------- */
 
@@ -145,8 +166,9 @@ WZ.math = (function () {
     const target = s.adjust === "fine" ? ideal : applyDelta(s.height, ideal, s.delta);
     const lo = target - 3, hi = target + 3;
     const zone  = zoneOf(s.hot, s.crazy);
-    const type  = classify(target, s.body, s.hot, s.crazy);
+    const type  = classify(s.body, s.hot, s.crazy);
     const rare  = rarity(lo, hi, s.body, s.hot, s.crazy);
+    const stature = statureOf(target);
     const weeks = rare.oneIn / 2;                 // two assessed first dates a week
     const years = weeks / 52;
     return {
@@ -154,7 +176,7 @@ WZ.math = (function () {
       gap: s.height - target,
       floor: floorFor(s.height),
       body: BODY[s.body],
-      zone: zone, type: type, rare: rare,
+      zone: zone, type: type, rare: rare, stature: stature,
       weeks: weeks, years: years,
       searchTime: years > 4000 ? "The sun expires first"
                 : years > 1    ? fmt(years) + " yr"
@@ -178,5 +200,5 @@ WZ.math = (function () {
 
   return { POP, RATIO, BODY, HOT, CRAZY, TYPES, VARIANTS,
            ncdf, idealFor, floorFor, applyDelta,
-           zoneOf, classify, rarity, evaluate, fmt, pct };
+           zoneOf, classify, statureOf, rarity, evaluate, fmt, pct };
 })();

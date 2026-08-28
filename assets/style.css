@@ -269,6 +269,11 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
   text-transform:uppercase;margin:6px 0 10px;color:var(--signal);text-wrap:balance;
 }
 .verdict .blurb{color:var(--muted);margin:0;font-size:16.5px;}
+.verdict .stature{
+  font-family:var(--f-mono);font-size:11.5px;line-height:1.7;color:var(--dim);
+  margin:0 0 16px;padding-left:11px;border-left:2px solid var(--data);
+}
+.verdict .stature b{color:var(--data);font-weight:700;}
 .verdict .tier{
   font-family:var(--f-mono);font-size:11.5px;line-height:1.7;color:var(--dim);
   margin:0 0 14px;max-width:58ch;
