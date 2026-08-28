@@ -47,31 +47,54 @@ WZ.math = (function () {
   const formOf    = k => FORM.find(f => f.key === k) || FORM[1];
   const buildLabel = (soft, form) => softOf(soft).label + ", " + formOf(form).label.toLowerCase() + " underneath";
 
+  /* --- effort: how much production goes into how she looks ----------------
+     This is the axis that actually separates the Girl Next Door from the
+     Baddie. Before it existed they were told apart only by hot/crazy, which is
+     why so many answers collapsed onto the same few types. */
+  const EFFORT = [
+    { idx: 0, key: "none",   p: 0.15, label: "None",            hint: "Rolled out of bed. That is the whole look." },
+    { idx: 1, key: "low",    p: 0.35, label: "Minimal",         hint: "Clean, brushed, done in four minutes." },
+    { idx: 2, key: "high",   p: 0.35, label: "Put together",    hint: "Thought about it. You can tell, but only just." },
+    { idx: 3, key: "max",    p: 0.15, label: "Full production", hint: "Ninety minutes. Every single time." }
+  ];
+
+  /* --- room: where she sits in a crowd ------------------------------------
+     Temperament, not volume of speech. Separates the Gothic from the Baddie
+     and the Nerd from the Comfort Class far better than craziness does. */
+  const ROOM = [
+    { v: +1, key: "centre", p: 0.30, label: "The centre of it",        hint: "Everyone ends up facing her." },
+    { v:  0, key: "edges",  p: 0.45, label: "Working the edges",       hint: "Three good conversations, no audience." },
+    { v: -1, key: "corner", p: 0.25, label: "Found one person, stayed", hint: "Left at eleven and did not say goodbye." }
+  ];
+  const effortOf = i => EFFORT[i];
+  const roomOf   = k => ROOM.find(r => r.key === k) || ROOM[1];
+
   /* Hotness and craziness, as distributed in the wild. */
   const HOT   = { mu: 5.0, sd: 1.6 };
   const CRAZY = { mu: 6.4, sd: 1.5 };
 
-  /* Archetypes, as points in 3-D spec space: build index, hot, crazy — the
-     three things the user actually chooses. Classification is nearest
-     neighbour, never a dice roll. `cuts` are each type's distance terciles
-     measured over all 147 reachable answer combinations, so its three
-     portraits come up in even thirds. */
+  /* Archetypes, as points in 6-D spec space: softness, form, effort, room,
+     hot, crazy — every axis is something the user actually chooses. Height is
+     deliberately absent: it is fixed per user, so including it pinned the
+     result. Classification is nearest neighbour, never a dice roll. `cuts` are
+     each type's distance terciles over all 7,056 reachable answer
+     combinations, so its three portraits come up in even thirds. */
   const TYPES = [
-    { key: "model", cuts: [1.16, 1.54], name: "The Model", soft: 0.7, form: -0.2, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.63, 2.01], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "gothic", cuts: [1.42, 1.79], name: "The Gothic", soft: 1.1, form:  0.1, hot: 7.5, crazy: 9.0,
+    { key: "gothic", cuts: [1.81, 2.25], name: "The Gothic", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "litigator", cuts: [1.20, 1.62], name: "The Litigator", soft: 1.7, form: -0.3, hot: 7.2, crazy: 5.2,
+    { key: "litigator", cuts: [1.66, 2.05], name: "The Litigator", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [1.35, 1.69], name: "The Nerd", soft: 1.3, form:  0.2, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [1.67, 2.07], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "girlnextdoor", cuts: [1.19, 1.70], name: "Plain Good Looking", soft: 1.9, form:  0.1, hot: 7.0, crazy: 4.5,
+    { key: "girlnextdoor", cuts: [1.68, 2.09], name: "Plain Good Looking", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, hot: 7.0, crazy: 4.5,
       blurb: "No filter, no fuss, no arc. Looks the same at 7am as she does at a wedding, which is the entire point. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.25, 1.53], name: "The Baddie", soft: 2.0, form:  0.0, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [1.64, 2.02], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "valkyrie", cuts: [1.30, 1.77], name: "The Valkyrie", soft: 1.4, form: -0.9, hot: 6.5, crazy: 7.0,
+    { key: "valkyrie", cuts: [1.76, 2.18], name: "The Valkyrie", soft: 1.4, form: -0.9, effort: 1.0, room:  0.7, hot: 6.5, crazy: 7.0,
       blurb: "Substantial, laughs from the chest, could carry you out of a burning building and probably would. Do not start what you cannot finish." },
-    { key: "comfort", cuts: [1.14, 1.58], name: "The Comfort Class", soft: 2.8, form:  0.9, hot: 5.5, crazy: 5.5,
+    { key: "comfort", cuts: [1.61, 2.06], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 
@@ -122,24 +145,27 @@ WZ.math = (function () {
      three answers the user actually chooses barely moved the result. Height
      still drives the target band and the whole rarity calculation, which is
      where it belongs. The type is decided by what they pick. */
-  function classify(soft, form, hot, crazy) {
+  function classify(soft, form, effort, room, hot, crazy) {
     const f = formOf(form).v;
+    const r = roomOf(room).v;
     let best = null;
     for (const t of TYPES) {
       const d = Math.sqrt(
-        Math.pow((soft  - t.soft)  * 0.90, 2) +
-        Math.pow((f     - t.form)  * 1.10, 2) +
-        Math.pow((hot   - t.hot)   * 0.60, 2) +
-        Math.pow((crazy - t.crazy) * 0.55, 2)
+        Math.pow((soft   - t.soft)   * 0.90, 2) +
+        Math.pow((f      - t.form)   * 1.10, 2) +
+        Math.pow((effort - t.effort) * 0.75, 2) +
+        Math.pow((r      - t.room)   * 0.85, 2) +
+        Math.pow((hot    - t.hot)    * 0.60, 2) +
+        Math.pow((crazy  - t.crazy)  * 0.55, 2)
       );
       if (!best || d < best.d) best = { t: t, d: d };
     }
-    best.fit = Math.max(31, Math.round(100 * Math.exp(-best.d / 3.4)));
+    best.fit = Math.max(31, Math.round(100 * Math.exp(-best.d / 4.2)));
 
     /* Which of the type's three portraits to show. The cuts on each archetype
        are its distance terciles measured over the whole input space, so the
        three variants come up in even thirds and none is unreachable. */
-    best.note = buildNote(best.t, soft, form);
+    best.note = buildNote(best.t, soft, form, effort, room);
     const c = best.t.cuts;
     best.variant = best.d <= c[0] ? 0 : best.d <= c[1] ? 1 : 2;
     best.tier    = VARIANTS[best.variant];
@@ -149,16 +175,23 @@ WZ.math = (function () {
   /* The type is the headline; this is the fine print. It reads the user's exact
      build against the archetype's centre, so two people who land on the same
      type but arrived from different builds do not get the identical write-up. */
-  function buildNote(t, soft, form) {
+  function buildNote(t, soft, form, effort, room) {
     const ds = soft - t.soft;
     const df = formOf(form).v - t.form;
+    const de = effort - t.effort;
+    const dr = roomOf(room).v - t.room;
     const bits = [];
     if (ds <= -1.0) bits.push("firmer than the type usually runs");
     else if (ds >= 1.0) bits.push("softer than the type usually runs");
     else bits.push("dead on the type for build");
     if (df <= -0.7) bits.push("and carrying real muscle under it");
     else if (df >= 0.7) bits.push("and there is nothing but softness underneath");
-    return bits.join(" ") + ".";
+    let out = bits.join(" ") + ".";
+    if (de <= -1.2) out += " She puts in far less work on her appearance than this type normally does.";
+    else if (de >= 1.2) out += " And considerably more production than the type calls for.";
+    if (dr <= -1.2) out += " Quieter in a room than the archetype suggests.";
+    else if (dr >= 1.2) out += " Louder in a room than the archetype suggests.";
+    return out;
   }
 
   const VARIANTS = [
@@ -183,9 +216,11 @@ WZ.math = (function () {
 
   /* --- rarity ------------------------------------------------------------- */
 
-  function rarity(lo, hi, soft, form, hot, crazy) {
+  function rarity(lo, hi, soft, form, effort, room, hot, crazy) {
     const pH  = Math.max(1e-12, ncdf(hi + 0.5, POP.mu, POP.sd) - ncdf(lo - 0.5, POP.mu, POP.sd));
     const pB  = buildP(soft, form);
+    const pE  = EFFORT[effort].p;
+    const pR  = roomOf(room).p;
     const pHt = Math.max(1e-12, 1 - ncdf(hot - 0.5, HOT.mu, HOT.sd));
     const pCz = Math.max(1e-12, ncdf(crazy + 0.5, CRAZY.mu, CRAZY.sd));
 
@@ -194,9 +229,9 @@ WZ.math = (function () {
     const gap  = hot - crazy;
     const corr = gap > 2 ? 1 / (1 + (gap - 2) * 1.8) : 1;
 
-    const p = pH * pB * pHt * pCz * corr;
+    const p = pH * pB * pE * pR * pHt * pCz * corr;
     return {
-      pH: pH, pB: pB, pHt: pHt, pCz: pCz, corr: corr, p: p,
+      pH: pH, pB: pB, pE: pE, pR: pR, pHt: pHt, pCz: pCz, corr: corr, p: p,
       oneIn: 1 / p,
       candidates: POP.singlePool * p
     };
@@ -209,8 +244,8 @@ WZ.math = (function () {
     const target = s.adjust === "fine" ? ideal : applyDelta(s.height, ideal, s.delta);
     const lo = target - 3, hi = target + 3;
     const zone  = zoneOf(s.hot, s.crazy);
-    const type  = classify(s.soft, s.form, s.hot, s.crazy);
-    const rare  = rarity(lo, hi, s.soft, s.form, s.hot, s.crazy);
+    const type  = classify(s.soft, s.form, s.effort, s.room, s.hot, s.crazy);
+    const rare  = rarity(lo, hi, s.soft, s.form, s.effort, s.room, s.hot, s.crazy);
     const stature = statureOf(target);
     const weeks = rare.oneIn / 2;                 // two assessed first dates a week
     const years = weeks / 52;
@@ -219,6 +254,7 @@ WZ.math = (function () {
       gap: s.height - target,
       floor: floorFor(s.height),
       soft: softOf(s.soft), form: formOf(s.form),
+      effort: effortOf(s.effort), room: roomOf(s.room),
       buildLabel: buildLabel(s.soft, s.form),
       zone: zone, type: type, rare: rare, stature: stature,
       weeks: weeks, years: years,
@@ -242,7 +278,8 @@ WZ.math = (function () {
          : (p * 100).toExponential(1) + "%";
   }
 
-  return { POP, RATIO, SOFT, FORM, BUILD_P, HOT, CRAZY, TYPES, VARIANTS,
+  return { POP, RATIO, SOFT, FORM, EFFORT, ROOM, BUILD_P, HOT, CRAZY, TYPES, VARIANTS,
+           effortOf, roomOf,
            buildP, softOf, formOf, buildLabel, buildNote,
            ncdf, idealFor, floorFor, applyDelta,
            zoneOf, classify, statureOf, rarity, evaluate, fmt, pct };

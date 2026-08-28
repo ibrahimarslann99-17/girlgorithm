@@ -46,6 +46,8 @@ WZ.db = (function () {
         p_delta:         s.adjust === "fine" ? 0 : s.delta,
         p_soft:          s.soft,
         p_form:          s.form,
+        p_effort:        s.effort,
+        p_room:          s.room,
         p_hot:           s.hot,
         p_crazy:         s.crazy,
         p_target_height: v.target,

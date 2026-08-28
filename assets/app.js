@@ -14,7 +14,7 @@
 
   const BLANK = {
     height: null, obese: null, looks: null,
-    adjust: null, delta: 0, soft: null, form: null,
+    adjust: null, delta: 0, soft: null, form: null, effort: null, room: null,
     hot: 8, crazy: 6, flags: []
   };
   let S = Object.assign({}, BLANK, { flags: [] });
@@ -26,7 +26,7 @@
   };
   const addFlag = k => { if (!S.flags.some(f => f[0] === k)) S.flags.push([k, FLAG_TEXT[k]]); };
 
-  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","hot","crazy","result"];
+  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","effort","room","hot","crazy","result"];
   let stepIdx = -1;
 
   const stage  = document.getElementById("stage");
@@ -124,7 +124,7 @@
       '<div class="card">' +
         '<p class="eyebrow">Intake &mdash; Case <b>OPEN</b></p>' +
         '<h1 class="big">You have been picking wrong. We can prove it.</h1>' +
-        '<p class="sub">Nine questions. Real arithmetic behind every one of them &mdash; a height ratio, a normal distribution, and the Hot Crazy Matrix, applied without mercy. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
+        '<p class="sub">Eleven questions. Real arithmetic behind every one of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
         '<p class="sub"><em>No result here is random.</em> Same answers, same verdict, every time. That is the part that will annoy you.</p>' +
         '<div class="row">' +
           '<button class="primary" style="flex:1;min-width:180px" id="begin">Let\'s begin</button>' +
@@ -136,7 +136,7 @@
     document.getElementById("scared").onclick = () => say({
       title: "Get your shit together",
       img: "scared", imgLabel: "get your shit together",
-      body: "It's a quiz. It has nine questions and no consequences. You have survived worse things than a chart. <strong>Stand up straight and answer the questions.</strong>",
+      body: "It's a quiz. It has eleven questions and no consequences. You have survived worse things than a chart. <strong>Stand up straight and answer the questions.</strong>",
       buttons: [
         { label: "Got my shit together", fn: () => go("height") },
         { label: "Still scared, honestly", style: "ghost", fn: welcome }
@@ -374,11 +374,51 @@
       "</div>"
     );
     stage.querySelectorAll("button").forEach(b => b.onclick = () => {
-      S.form = b.dataset.v; go("hot");
+      S.form = b.dataset.v; go("effort");
     });
   };
 
-  /* --- 07 / 08 the matrix axes ------------------------------------------- */
+  /* --- 07 effort ---------------------------------------------------------- */
+  SCREEN.effort = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">Question 07 &mdash; Production value</p>' +
+        '<h2 class="q">How much work goes into how she looks?</h2>' +
+        '<p class="sub">Not how good she looks &mdash; how much <em>labour</em> is involved. These are different questions and everybody confuses them, which is exactly why the last version of this quiz kept giving people the same answer.</p>' +
+        '<div class="stack">' +
+          M.EFFORT.map(function (o) {
+            return '<button data-v="' + o.idx + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.effort = parseInt(b.dataset.v, 10); go("room");
+    });
+  };
+
+  /* --- 08 room ------------------------------------------------------------ */
+  SCREEN.room = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">Question 08 &mdash; Temperament</p>' +
+        '<h2 class="q">Full room of people. Where is she?</h2>' +
+        '<p class="sub">This is the one nobody thinks to specify and everybody discovers in month three. It costs nothing to answer now.</p>' +
+        '<div class="stack">' +
+          M.ROOM.map(function (o) {
+            return '<button data-v="' + o.key + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.room = b.dataset.v; go("hot");
+    });
+  };
+
+  /* --- 09 / 10 the matrix axes ------------------------------------------- */
   const HOTLBL = {4:"Below the chart's floor",5:"Chart minimum. Barely on the board.",6:"Solid. Grows on people.",7:"Turns heads in a normal bar.",8:"Turns heads in a good bar.",9:"Turns heads in an airport.",10:"You would not approach her."};
   const CZLBL  = {4:"Chart minimum. Suspiciously calm.",5:"Load-bearing amount only.",6:"Normal human volatility.",7:"Interesting. Manageable.",8:"The last safe rung.",9:"Above the danger line.",10:"Actively hazardous."};
 
@@ -410,14 +450,14 @@
   }
 
   SCREEN.hot = () => sliderScreen({
-    n: 7, key: "hot", labels: HOTLBL, next: "crazy",
+    n: 9, key: "hot", labels: HOTLBL, next: "crazy",
     title: "How hot do you want her?",
     sub: "The chart's x-axis. Be greedy here and the arithmetic at the end will hand you the bill.",
     note: "In the reference population hotness sits around 5 with a standard deviation of 1.6. Every point you add above 5 cuts the pool by roughly two thirds."
   });
 
   SCREEN.crazy = () => sliderScreen({
-    n: 8, key: "crazy", labels: CZLBL, next: "result",
+    n: 10, key: "crazy", labels: CZLBL, next: "result",
     title: "And how much crazy can you take?",
     sub: "The y-axis. Nobody is under 4 &mdash; the chart doesn't even print the numbers. You are choosing a ceiling, not an absence.",
     note: "Population crazy sits near 6.4. Asking for a hot 9 with a crazy 5 is not a preference, it is a search for an exception &mdash; and the model prices exceptions accordingly."
@@ -517,6 +557,7 @@
           '<div class="spec"><div class="k">Target height</div><div class="v">' + v.target + "<small>" + v.lo + "&ndash;" + v.hi + " cm band</small></div></div>" +
           '<div class="spec"><div class="k">Height gap</div><div class="v">' + v.gap + "<small>cm below you</small></div></div>" +
           '<div class="spec"><div class="k">Build</div><div class="v" style="font-size:17px">' + v.soft.label + "<small>" + v.form.note + "</small></div></div>" +
+          '<div class="spec"><div class="k">Effort</div><div class="v" style="font-size:17px">' + v.effort.label + "<small>" + v.room.label + "</small></div></div>" +
           '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">Matrix position</div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
           '<div class="spec"><div class="k">Rarity</div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
           '<div class="spec"><div class="k">Search time</div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
@@ -533,6 +574,8 @@
           '<ul class="mathlist">' +
             "<li><span>Height " + v.lo + "&ndash;" + v.hi + ' cm &nbsp;<em style="color:var(--dim)">N(' + M.POP.mu + ", " + M.POP.sd + ")</em></span><span>" + M.pct(v.rare.pH) + "</span></li>" +
             "<li><span>Build: " + v.buildLabel.toLowerCase() + "</span><span>" + M.pct(v.rare.pB) + "</span></li>" +
+            "<li><span>Effort: " + v.effort.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pE) + "</span></li>" +
+            "<li><span>Room: " + v.room.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pR) + "</span></li>" +
             "<li><span>Hot &ge; " + S.hot + ' &nbsp;<em style="color:var(--dim)">N(' + M.HOT.mu + ", " + M.HOT.sd + ")</em></span><span>" + M.pct(v.rare.pHt) + "</span></li>" +
             "<li><span>Crazy &le; " + S.crazy + ' &nbsp;<em style="color:var(--dim)">N(' + M.CRAZY.mu + ", " + M.CRAZY.sd + ")</em></span><span>" + M.pct(v.rare.pCz) + "</span></li>" +
             "<li><span>Hot/crazy correlation penalty</span><span>&times;" + v.rare.corr.toFixed(2) + "</span></li>" +
@@ -674,6 +717,7 @@
       S = {
         height: row.height, obese: row.obese, looks: row.looks,
         adjust: row.adjust, delta: row.delta, soft: row.soft, form: row.form,
+        effort: row.effort, room: row.room,
         hot: row.hot, crazy: row.crazy,
         flags: (row.flags || []).map(k => [k, FLAG_TEXT[k] || ""])
       };
