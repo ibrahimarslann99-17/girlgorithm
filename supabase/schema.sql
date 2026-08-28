@@ -21,7 +21,8 @@ create table if not exists public.runs (
   looks         text     not null check (looks  in ('ugly','normal','handsome')),
   adjust        text     not null check (adjust in ('fine','short','tall')),
   delta         smallint not null check (delta between -25 and 15),
-  body          text     not null check (body   in ('oak','pillow','jug')),
+  soft          smallint not null check (soft between 0 and 3),
+  form          text     not null check (form   in ('muscle','neutral','fat')),
   hot           smallint not null check (hot   between 4 and 10),
   crazy         smallint not null check (crazy between 4 and 10),
 
@@ -32,6 +33,11 @@ create table if not exists public.runs (
   one_in        bigint   not null check (one_in >= 1),
   flags         text[]   not null default '{}'
 );
+
+-- upgrade path for a table created before the build question was split in two
+alter table public.runs drop column if exists body;
+alter table public.runs add  column if not exists soft smallint;
+alter table public.runs add  column if not exists form text;
 
 create index if not exists runs_created_idx   on public.runs (created_at desc);
 create index if not exists runs_zone_idx      on public.runs (zone);
@@ -55,7 +61,8 @@ create or replace function public.submit_run(
   p_looks         text,
   p_adjust        text,
   p_delta         smallint,
-  p_body          text,
+  p_soft          smallint,
+  p_form          text,
   p_hot           smallint,
   p_crazy         smallint,
   p_target_height smallint,
@@ -92,10 +99,10 @@ begin
   end loop;
 
   insert into public.runs (
-    code, height, obese, looks, adjust, delta, body, hot, crazy,
+    code, height, obese, looks, adjust, delta, soft, form, hot, crazy,
     target_height, zone, archetype, one_in, flags
   ) values (
-    v_code, p_height, p_obese, p_looks, p_adjust, p_delta, p_body, p_hot, p_crazy,
+    v_code, p_height, p_obese, p_looks, p_adjust, p_delta, p_soft, p_form, p_hot, p_crazy,
     p_target_height, p_zone, p_archetype, greatest(p_one_in, 1),
     coalesce(p_flags, '{}')
   );
@@ -113,7 +120,7 @@ security definer
 set search_path = public
 as $$
   select to_json(t) from (
-    select code, created_at, height, obese, looks, adjust, delta, body,
+    select code, created_at, height, obese, looks, adjust, delta, soft, form,
            hot, crazy, target_height, zone, archetype, one_in, flags
       from public.runs
      where code = upper(trim(p_code))
@@ -153,10 +160,10 @@ $$;
 
 -- ---------- grants ----------------------------------------------------------
 
-revoke all on function public.submit_run(smallint,boolean,text,text,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) from public;
+revoke all on function public.submit_run(smallint,boolean,text,text,smallint,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) from public;
 revoke all on function public.get_run(text)      from public;
 revoke all on function public.get_stats(bigint)  from public;
 
-grant execute on function public.submit_run(smallint,boolean,text,text,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) to anon, authenticated;
+grant execute on function public.submit_run(smallint,boolean,text,text,smallint,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) to anon, authenticated;
 grant execute on function public.get_run(text)     to anon, authenticated;
 grant execute on function public.get_stats(bigint) to anon, authenticated;
