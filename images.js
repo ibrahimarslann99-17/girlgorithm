@@ -28,7 +28,7 @@ window.WZ_IMG = {
   gay2    : "assets/img/gay2.webp",   // seriously dude, why are you gay
   homo    : "assets/img/homo.webp",   // FindMeAHomo app listing
   cops    : "assets/img/cops.webp",   // pedo detected, calling the cops
-  complex : "",   // got some complexes there
+  complex : "assets/img/complex.webp",   // got some complexes there
 
   /* ---- archetypes: [textbook, variation, edge case] ---- */
   model        : ["assets/img/model1.webp", "assets/img/model2.webp", "assets/img/model3.webp"],
