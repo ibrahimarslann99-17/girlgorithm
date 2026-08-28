@@ -422,3 +422,89 @@ It inlines everything it finds, warns about paths listed but missing from disk, 
 warns about files sitting in `assets/img/` that nothing references. Slots left as
 `""` keep rendering their dashed placeholder, so partial sets ship fine — do them in
 whatever order you like.
+
+---
+
+## GLAM SPINE — for the hot-9 types only (Model, Baddie)
+
+The original spine said "no beauty retouching, editorial not commercial, less
+polished". That was my mistake: it forbade exactly the thing a hot-9 archetype
+has to deliver, which is why the Baddie doesn't read as a 9. Those two types get
+this spine instead. Everything else keeps the original.
+
+```
+Beauty campaign portrait, waist-up, subject right of centre with clear negative
+space on the left third of the frame. Large soft key light close to camera with a
+reflector filling the shadows — flattering and low-contrast on the face — plus one
+hard rim light separating her from the background. Background: flat, plain, very
+dark plum-black (#17090F) — no props, no set. Rich saturated colour grade. 85mm
+lens look at f/1.8. 3:2 landscape aspect ratio. High-end and photorealistic:
+professionally styled hair, flawless makeup, campaign-grade retouching. A
+striking, symmetrical, memorable face — she must read instantly as a 9 out of 10,
+not as a documentary portrait. A fictional person who does not resemble any real
+or public figure. No text, no logos, no watermark, no border.
+```
+
+If a render comes back plain or documentary-looking, add:
+*"More glamorous. Cosmetics campaign, not street photography. Perfect skin."*
+
+---
+
+## REPLACEMENTS — regenerate these six with the GLAM SPINE
+
+### `model1.webp` · textbook
+```
+A woman in her mid-twenties, very lean with long limbs, sharp cheekbones and a
+strong jaw — the bone structure that makes a face photograph. Dark hair pulled
+back flat and severe, showing the whole face. Bare shoulders, plain black
+sleeveless top, one fine gold chain. Skin luminous. Expression: cool, level,
+completely unimpressed, looking straight down the lens. She knows precisely what
+she looks like and stopped finding it interesting years ago.
+```
+
+### `model2.webp` · variation
+```
+The same class of face, late twenties, caught mid-laugh with her head tipped back
+— composure cracked, still flawless. Long dark hair loose, glossy, one strand
+falling across her cheek. Oversized white silk shirt, sleeves pushed up.
+Expression: genuinely delighted, teeth showing, eyes creased. Warm where the first
+one is cold. Just as striking.
+```
+
+### `model3.webp` · edge case
+```
+A woman around thirty, lean but softer than a runway build — still beautiful, just
+less severe. Honey-brown hair down and lightly waved, minimal jewellery, a fine
+knit in cream. Expression: calm, faintly amused, a small closed-mouth smile,
+looking slightly off-camera. The type at lower intensity — an obviously good
+looking woman who would never call herself a model. Do NOT make her plain.
+```
+
+### `baddie1.webp` · textbook
+```
+A woman in her mid-twenties, curvy, in full glam: long sculpted nails, dramatic
+lashes, sharp contour, glossy lip. Long honey-toned hair with a centre part,
+styled to within an inch of its life. Large gold hoops, layered chains, a fitted
+black going-out top. Expression: chin up, one brow raised, looking down her nose
+at the lens, entirely unbothered. Devastating and aware of it. She should stop a
+room.
+```
+
+### `baddie2.webp` · variation
+```
+The same woman, glam dialled to daytime but not down: hair in a sleek high bun not
+a scruffy one, oversized sunglasses pushed up, minimal makeup that still took
+forty minutes, nails and lashes immaculate. Cropped hoodie, gold underneath.
+Expression: mid eye-roll, half a smirk, caught and not enjoying it. Running
+errands and still the best-looking person on the street — that has to be visible.
+```
+
+### `baddie3.webp` · edge case
+```
+A woman in her early twenties, curvy, glam pushed past elegant into confrontational
+— razor-sharp liner, dark glossy lip, very long nails, jet-black hair, several ear
+piercings, all black. Expression: intense and volatile, eyes locked on the lens,
+head lowered slightly, jaw set. Still unmistakably a 9. The difference from the
+first two is temperature, not looks: this one is visibly one bad text away from an
+incident.
+```
