@@ -14,7 +14,7 @@
 
   const BLANK = {
     height: null, obese: null, looks: null,
-    adjust: null, delta: 0, body: null,
+    adjust: null, delta: 0, soft: null, form: null,
     hot: 8, crazy: 6, flags: []
   };
   let S = Object.assign({}, BLANK, { flags: [] });
@@ -26,7 +26,7 @@
   };
   const addFlag = k => { if (!S.flags.some(f => f[0] === k)) S.flags.push([k, FLAG_TEXT[k]]); };
 
-  const STEPS = ["height","reveal","obese","looks","adjust","hug","hot","crazy","result"];
+  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","hot","crazy","result"];
   let stepIdx = -1;
 
   const stage  = document.getElementById("stage");
@@ -293,7 +293,7 @@
     );
     stage.querySelectorAll("button").forEach(b => b.onclick = () => {
       S.adjust = b.dataset.v;
-      if (S.adjust === "fine") { S.delta = 0; return go("hug"); }
+      if (S.adjust === "fine") { S.delta = 0; return go("soft"); }
       if (S.adjust === "tall") {
         return say({
           title: "Got some complexes there?",
@@ -335,23 +335,47 @@
       });
     });
   };
-  function setDelta(d) { S.delta = d; go("hug"); }
+  function setDelta(d) { S.delta = d; go("soft"); }
 
-  /* --- 06 build ---------------------------------------------------------- */
-  SCREEN.hug = function () {
+  /* --- 06 build, axis one: how much give ---------------------------------- */
+  SCREEN.soft = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 05 &mdash; Build</p>' +
-        '<h2 class="q">When you hug her, what do you want to feel?</h2>' +
-        '<p class="sub">This is the single most honest question on the whole form, because nobody has a socially acceptable answer prepared for it.</p>' +
+        '<p class="eyebrow">Question 05 &mdash; Build, first axis</p>' +
+        '<h2 class="q">When you hug her, how much give is there?</h2>' +
+        '<p class="sub">This is the most honest question on the form, because nobody has a socially acceptable answer prepared for it. Answer before you think about it.</p>' +
         '<div class="stack">' +
-          '<button data-v="oak">Like hugging the trunk of an oak tree<span class="hint">Slim, straight lines, no give</span></button>' +
-          '<button data-v="pillow">Like hugging my cotton pillow in bed<span class="hint">Curvy, soft, some give</span></button>' +
-          '<button data-v="jug">Like hugging a 19-litre water jug<span class="hint">Heavy-set, considerable give</span></button>' +
+          M.SOFT.map(function (o) {
+            return '<button data-v="' + o.idx + '">' +
+              o.hug.charAt(0).toUpperCase() + o.hug.slice(1) +
+              '<span class="hint">' + o.label + "</span></button>";
+          }).join("") +
         "</div>" +
       "</div>"
     );
-    stage.querySelectorAll("button").forEach(b => b.onclick = () => { S.body = b.dataset.v; go("hot"); });
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.soft = parseInt(b.dataset.v, 10); go("form");
+    });
+  };
+
+  /* --- 06b build, axis two: what is underneath ---------------------------- */
+  SCREEN.form = function () {
+    const hug = M.softOf(S.soft).hug;
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">Question 06 &mdash; Build, second axis</p>' +
+        '<h2 class="q">And underneath that &mdash; what is doing the work?</h2>' +
+        '<p class="sub">You said <em>' + hug + '</em>. Two women can feel identical in a hug and be built completely differently. Softness is one axis; this is the other, and the old version of this quiz collapsed them into one, which is why everybody got the same answer.</p>' +
+        '<div class="stack">' +
+          '<button data-v="muscle">Muscle<span class="hint">She trains. It is load-bearing.</span></button>' +
+          '<button data-v="neutral">Nothing in particular<span class="hint">No engine under it either way. She just is.</span></button>' +
+          '<button data-v="fat">More of the same<span class="hint">Softness all the way down. No apologies.</span></button>' +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.form = b.dataset.v; go("hot");
+    });
   };
 
   /* --- 07 / 08 the matrix axes ------------------------------------------- */
@@ -386,14 +410,14 @@
   }
 
   SCREEN.hot = () => sliderScreen({
-    n: 6, key: "hot", labels: HOTLBL, next: "crazy",
+    n: 7, key: "hot", labels: HOTLBL, next: "crazy",
     title: "How hot do you want her?",
     sub: "The chart's x-axis. Be greedy here and the arithmetic at the end will hand you the bill.",
     note: "In the reference population hotness sits around 5 with a standard deviation of 1.6. Every point you add above 5 cuts the pool by roughly two thirds."
   });
 
   SCREEN.crazy = () => sliderScreen({
-    n: 7, key: "crazy", labels: CZLBL, next: "result",
+    n: 8, key: "crazy", labels: CZLBL, next: "result",
     title: "And how much crazy can you take?",
     sub: "The y-axis. Nobody is under 4 &mdash; the chart doesn't even print the numbers. You are choosing a ceiling, not an absence.",
     note: "Population crazy sits near 6.4. Asking for a hot 9 with a crazy 5 is not a preference, it is a search for an exception &mdash; and the model prices exceptions accordingly."
@@ -479,7 +503,7 @@
         '<div class="verdict">' +
           '<p class="eyebrow">Verdict &mdash; Case <b>CLOSED</b></p>' +
           '<div class="type">' + v.type.t.name + "</div>" +
-          '<p class="tier"><span>' + v.type.tier.label + "</span> " + v.type.tier.note + "</p>" +
+          '<p class="tier"><span>' + v.type.tier.label + "</span> " + v.type.tier.note + " " + v.type.note + "</p>" +
           '<p class="stature"><b>' + v.target + " cm</b> &nbsp;·&nbsp; " + v.stature.line + "</p>" +
           '<p class="blurb">' + v.type.t.blurb + "</p>" +
           '<p class="fit" style="margin:16px 0 0">Spec match <b>' + v.type.fit + "%</b> &nbsp;·&nbsp; nearest of " +
@@ -492,7 +516,7 @@
         '<div class="specs">' +
           '<div class="spec"><div class="k">Target height</div><div class="v">' + v.target + "<small>" + v.lo + "&ndash;" + v.hi + " cm band</small></div></div>" +
           '<div class="spec"><div class="k">Height gap</div><div class="v">' + v.gap + "<small>cm below you</small></div></div>" +
-          '<div class="spec"><div class="k">Build</div><div class="v" style="font-size:20px">' + v.body.label + "<small>" + v.body.hug + "</small></div></div>" +
+          '<div class="spec"><div class="k">Build</div><div class="v" style="font-size:17px">' + v.soft.label + "<small>" + v.form.note + "</small></div></div>" +
           '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">Matrix position</div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
           '<div class="spec"><div class="k">Rarity</div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
           '<div class="spec"><div class="k">Search time</div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
@@ -508,7 +532,7 @@
           '<p class="panel-h">The arithmetic, itemised</p>' +
           '<ul class="mathlist">' +
             "<li><span>Height " + v.lo + "&ndash;" + v.hi + ' cm &nbsp;<em style="color:var(--dim)">N(' + M.POP.mu + ", " + M.POP.sd + ")</em></span><span>" + M.pct(v.rare.pH) + "</span></li>" +
-            "<li><span>Build: " + v.body.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pB) + "</span></li>" +
+            "<li><span>Build: " + v.buildLabel.toLowerCase() + "</span><span>" + M.pct(v.rare.pB) + "</span></li>" +
             "<li><span>Hot &ge; " + S.hot + ' &nbsp;<em style="color:var(--dim)">N(' + M.HOT.mu + ", " + M.HOT.sd + ")</em></span><span>" + M.pct(v.rare.pHt) + "</span></li>" +
             "<li><span>Crazy &le; " + S.crazy + ' &nbsp;<em style="color:var(--dim)">N(' + M.CRAZY.mu + ", " + M.CRAZY.sd + ")</em></span><span>" + M.pct(v.rare.pCz) + "</span></li>" +
             "<li><span>Hot/crazy correlation penalty</span><span>&times;" + v.rare.corr.toFixed(2) + "</span></li>" +
@@ -649,7 +673,7 @@
       }
       S = {
         height: row.height, obese: row.obese, looks: row.looks,
-        adjust: row.adjust, delta: row.delta, body: row.body,
+        adjust: row.adjust, delta: row.delta, soft: row.soft, form: row.form,
         hot: row.hot, crazy: row.crazy,
         flags: (row.flags || []).map(k => [k, FLAG_TEXT[k] || ""])
       };
