@@ -24,7 +24,7 @@ WZ.math = (function () {
     { idx: 0, key: "oak",     label: "No give at all",  hug: "like hugging the trunk of an oak tree" },
     { idx: 1, key: "yoga",    label: "Firm",            hug: "like hugging a rolled-up yoga mat" },
     { idx: 2, key: "pillow",  label: "Properly soft",   hug: "like hugging your cotton pillow" },
-    { idx: 3, key: "jug",     label: "All give",        hug: "like hugging a 19-litre water jug" }
+    { idx: 3, key: "waterbed", label: "All give",       hug: "like hugging a waterbed" }
   ];
 
   const FORM = [
@@ -80,21 +80,23 @@ WZ.math = (function () {
      each type's distance terciles over all 7,056 reachable answer
      combinations, so its three portraits come up in even thirds. */
   const TYPES = [
-    { key: "model", cuts: [1.63, 2.01], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.57, 1.92], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "gothic", cuts: [1.81, 2.25], name: "The Gothic", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, hot: 7.5, crazy: 9.0,
+    { key: "goth", cuts: [1.70, 2.14], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "litigator", cuts: [1.66, 2.05], name: "The Litigator", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, hot: 7.2, crazy: 5.2,
+    { key: "corporate", cuts: [1.69, 2.11], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [1.67, 2.07], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [1.65, 2.07], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "girlnextdoor", cuts: [1.68, 2.09], name: "Plain Good Looking", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, hot: 7.0, crazy: 4.5,
-      blurb: "No filter, no fuss, no arc. Looks the same at 7am as she does at a wedding, which is the entire point. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.64, 2.02], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, hot: 9.3, crazy: 8.3,
+    { key: "cleangirl", cuts: [1.67, 2.07], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, hot: 7.0, crazy: 4.5,
+      blurb: "Glowing skin, slicked-back bun, small gold hoops, nothing on her that looks like it took effort — because the effort went into sleep, water and a skincare shelf you will not be allowed to touch. Looks identical at 7am and at a wedding. Everyone underrates her until they meet her." },
+    { key: "baddie", cuts: [1.63, 1.99], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "valkyrie", cuts: [1.76, 2.18], name: "The Valkyrie", soft: 1.4, form: -0.9, effort: 1.0, room:  0.7, hot: 6.5, crazy: 7.0,
-      blurb: "Substantial, laughs from the chest, could carry you out of a burning building and probably would. Do not start what you cannot finish." },
-    { key: "comfort", cuts: [1.61, 2.06], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, hot: 5.5, crazy: 5.5,
+    { key: "gymgirl", cuts: [1.56, 1.94], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, hot: 7.8, crazy: 6.2,
+      blurb: "Trains five days a week and can tell you exactly why. Meal-prepped, disciplined, in a matching set more often than in clothes. The most reliable person on this chart and the one most likely to out-lift you. Your gym membership is about to start getting used." },
+    { key: "grunge", cuts: [1.76, 2.17], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, hot: 6.8, crazy: 8.9,
+      blurb: "Flannel, ripped jeans, combat boots, a band on the shirt you have not heard of. Puts in no visible effort and is somehow the most magnetic person in the room. Chaotic in a way that is extremely fun for about eight months." },
+    { key: "comfort", cuts: [1.58, 1.98], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 

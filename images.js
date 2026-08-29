@@ -32,11 +32,12 @@ window.WZ_IMG = {
 
   /* ---- archetypes: [textbook, variation, edge case] ---- */
   model        : ["assets/img/model1.webp", "assets/img/model2.webp", "assets/img/model3.webp"],
-  gothic       : ["assets/img/gothic1.webp", "assets/img/gothic2.webp", "assets/img/gothic3.webp"],
-  litigator    : ["assets/img/litigator1.webp", "assets/img/litigator2.webp", "assets/img/litigator3.webp"],
+  goth         : ["assets/img/goth1.webp", "assets/img/goth2.webp", "assets/img/goth3.webp"],
+  corporate    : ["assets/img/corporate1.webp", "assets/img/corporate2.webp", "assets/img/corporate3.webp"],
   nerd         : ["assets/img/nerd1.webp", "assets/img/nerd2.webp", "assets/img/nerd3.webp"],
-  girlnextdoor : ["assets/img/girlnextdoor1.webp", "assets/img/girlnextdoor2.webp", "assets/img/girlnextdoor3.webp"],
+  cleangirl    : ["assets/img/cleangirl1.webp", "assets/img/cleangirl2.webp", "assets/img/cleangirl3.webp"],
   baddie       : ["assets/img/baddie1.webp", "assets/img/baddie2.webp", "assets/img/baddie3.webp"],
-  valkyrie     : ["assets/img/valkyrie1.webp", "assets/img/valkyrie2.webp", "assets/img/valkyrie3.webp"],
+  gymgirl      : ["assets/img/gymgirl1.webp", "assets/img/gymgirl2.webp", "assets/img/gymgirl3.webp"],
+  grunge       : ["", "", ""],
   comfort      : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"]
 };
