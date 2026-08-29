@@ -1,17 +1,19 @@
 # Image generation brief
 
-24 archetype portraits (8 types × 3 variants) plus 8 interstitials. **32 files total.**
+9 archetypes × 3 variants (27) + 8 interstitials. **35 files total.**
+Model and Baddie (6 files) are already generated — do not regenerate. The other
+21 are what this brief covers.
 
 ---
 
 ## The mistake this file exists to correct
 
 The first version of this brief said *"photorealistic, natural skin texture, visible
-pores, no beauty retouching or skin smoothing"* and told the generator to drift back
+pores, no beauty retouching or skin smoothing"* and told the generator to drift
 toward *"less polished, editorial not commercial"*. Every one of those instructions
-forbids the thing an attractive portrait needs. The result was eighteen women who all
-looked like the same tired documentary subject, and the "plain good looking" type came
-out plain *ugly* — which is not a type, it is a failure.
+forbids the thing an attractive portrait needs. The result was women who all looked
+like the same tired documentary subject, and the lowest-effort type came out plain
+*ugly* — which is not a type, it is a failure.
 
 **The correction, and the single most important line in this file:**
 
@@ -20,20 +22,25 @@ out plain *ugly* — which is not a type, it is a failure.
 > looking she is. Cast a beautiful woman, then style her to the type. Never cast a
 > plain woman and call it a type.
 
-A hot-5 archetype is not an ugly woman. She is a beautiful woman who spent four
-minutes getting ready and would rather be reading.
+A bare-face archetype is not an ugly woman. She is a beautiful woman who spent zero
+minutes getting ready and would rather be somewhere else.
 
 ---
 
 ## How to use this
 
-Every prompt is **BASE SPINE + TREATMENT + SUBJECT**. Paste all three, in that order.
-The spine is what makes 24 separate generations look like one designed set.
+Every prompt below is already **BASE SPINE + TREATMENT + SUBJECT**, merged into one
+block — paste the whole block as-is, one block per image.
+
+### Framing: full body, not waist-up
+
+Earlier renders were waist-up 3:2 landscape, but the site crops every portrait into
+a **3:4 vertical, full-body** frame. A waist-up shot forced into that box gets cut in
+half. Every prompt below asks for the full figure, head to feet, in a vertical frame.
 
 ### File specs
 
-Convert before committing: **1024 px wide, 3:2, WebP quality 82** — at full PNG size
-the 32-image set blows past the 16 MB artifact ceiling once `build.js` inlines it.
+Convert before committing: **1024 px wide, 3:4, WebP quality 82.**
 
 ```bash
 python3 -c "
@@ -47,274 +54,548 @@ for f in glob.glob('*.png'):
 
 ---
 
-## BASE SPINE — paste before every archetype prompt
+## Reference pieces (for your own record — already merged into each prompt below)
 
+**BASE SPINE**
 ```
-Portrait photograph, waist-up, subject placed right of centre with clear negative
-space on the left third of the frame. Background: flat, plain, very dark plum-black
-(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp on the
-eyes. 3:2 landscape aspect ratio. Photorealistic. Cast a genuinely beautiful woman
-with strong, memorable features and clear healthy skin — this is a casting decision
-and it does not change between archetypes. A fictional person who does not resemble
-any real or public figure. No text, no logos, no watermark, no border.
-```
-
----
-
-## TREATMENT — pick one, by archetype
-
-### A · CAMPAIGN — for The Model and The Baddie
-```
-Large soft key light close to camera with a reflector filling the shadows — flattering
-and low-contrast on the face — plus one hard rim light separating her from the
-background. Rich saturated colour grade. f/1.8. High-end: professionally styled hair,
-flawless makeup, campaign-grade retouching. She must read instantly as a 9 out of 10.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin — this is a casting decision and
+it does not change between archetypes. A fictional person who does not resemble any
+real or public figure. No text, no logos, no watermark, no border.
 ```
 
-### B · POLISHED — for The Gothic and The Litigator
+**TREATMENT B · POLISHED** — for Goth, Corporate Baddie (effort 2.2–2.4, higher production)
 ```
 Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
-far shoulder. Clean colour grade. f/2.0. Deliberately styled and well made up, but
-styled to a personality rather than to a campaign — the look is precise, not glossy.
-Beautiful, composed, finished. Retouched enough that she looks rested.
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up, styled
+to a personality rather than to a campaign — precise, composed, camera-ready.
+Retouched enough that she looks flawless without looking artificial.
 ```
 
-### C · UNDERSTATED — for The Nerd, Plain Good Looking, The Valkyrie, The Comfort Class
+**TREATMENT C · UNDERSTATED** — for Nerd, Clean Girl, Gym Girl, Grunge Girl, Comfort Class
 ```
-Soft key light from camera left with generous fill, one gentle rim light. Warm, natural
-colour grade. f/2.0. Minimal or no makeup and simple unstyled hair — but flattering
-light, healthy glowing skin, and light retouching so she looks well and rested.
-CRITICAL: low effort means low STYLING, not low attractiveness. She must still be a
-strikingly good-looking woman — the kind people describe as "she doesn't even try".
-Do NOT make her plain, tired, washed out, or ordinary.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low STYLING, not low attractiveness. She must
+still be a strikingly good-looking woman — the kind people describe as "she doesn't
+even try". Do NOT make her plain, tired, washed out, or ordinary.
 ```
-
-If a render comes back dull, add:
-*"More beautiful. Better casting. Flattering light and healthy skin — she should be
-the best-looking person in any room, just not dressed up for it."*
 
 ---
 
-# The 8 archetypes
+# The 9 archetypes
 
 - **1 · textbook** — the pure form. Answers land almost on the archetype.
 - **2 · variation** — recognisably the type, one thing off-spec.
 - **3 · edge case** — barely qualifies; the type stretched to its far edge.
 
-Which one shows is decided by how far the user's answers sit from the archetype centre
-in six-dimensional space, split at that type's distance terciles — each comes up almost
-exactly a third of the time.
+Which one shows is decided by how far the user's answers sit from the archetype
+centre in seven-dimensional space (build ×2, effort, room, height, hot, crazy),
+split at that type's distance terciles — each comes up in even thirds.
 
 ---
 
-## THE MODEL — treatment A · effort 2.6, hot 9.2 · **DONE, do not regenerate**
+## THE GOTH — treatment B · effort 2.2, room −0.8, height +0.3, hot 7.5, crazy 9.0
+*(PDF: Goth girl — siyah ağırlıklı giyim, koyu makyaj, dantel/deri/platform botlar)*
 
-## THE BADDIE — treatment A · effort 3.0, hot 9.3 · **DONE, do not regenerate**
-
----
-
-## THE GOTHIC — treatment B · effort 2.2, room: corner, hot 7.5, crazy 9.0
-
-### `gothic1.png` · textbook
+### `goth1.webp` · textbook
 ```
-A strikingly beautiful woman in her mid-twenties, slim, pale porcelain skin, dressed
-entirely in black — high-necked long-sleeved top, silver rings on four fingers, a small
-septum hoop. Jet-black hair, blunt fringe cut straight across the eyebrows, glossy and
-sharply cut. Precise dark eyeliner and a matte deep-plum lip, expertly done. Expression:
-level, unblinking, a very slight smile at one corner of the mouth that does not reach
-the eyes. Direct eye contact held one beat too long. Genuinely gorgeous and slightly
-frightening — both at once.
-```
-
-### `gothic2.png` · variation
-```
-A beautiful woman in her late twenties, slim, the same dark world but softened — a
-charcoal knit cardigan over a black slip dress, one delicate silver pendant. Black hair
-grown out with two inches of natural brown at the roots, tucked behind one ear. Eyeliner
-smudged from a long day rather than from carelessness. Expression: thoughtful, lips
-slightly parted as if she was about to say something and thought better of it. Warm,
-intelligent, quietly beautiful.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A strikingly beautiful, tall, slim woman in her mid-twenties, pale porcelain skin,
+dressed entirely in black: a fitted lace-panelled top, a black leather mini skirt,
+sheer black tights, chunky black platform boots laced to the calf. Jet-black hair,
+blunt fringe cut straight across the eyebrows, glossy and sharply cut. Precise dark
+eyeliner and a matte deep-plum lip. Silver rings on four fingers, a small septum
+hoop. Expression: level, unblinking, a very slight smile at one corner of the mouth
+that does not reach the eyes. Direct eye contact held one beat too long. Genuinely
+gorgeous and slightly frightening — both at once.
 ```
 
-### `gothic3.png` · edge case
+### `goth2.webp` · variation
 ```
-A beautiful woman in her early twenties, slim, black clothing worn hard — a faded band
-t-shirt, chipped black nail varnish, dark hair loose and deliberately undone. Almost no
-makeup, and she does not need any. Expression: wired and slightly manic, eyebrows up, a
-wide unsettling grin, leaning into the lens. Too much energy for the frame to hold. The
-beauty is obvious; the stability is the question.
-```
-
----
-
-## THE LITIGATOR — treatment B · effort 2.4, room: edges, hot 7.2, crazy 5.2
-
-### `litigator1.png` · textbook
-```
-A beautiful woman in her early thirties, curvy and solidly built, in an immaculately
-tailored navy blazer over a white shirt buttoned to the second button. Dark hair cut to
-a precise shoulder-length bob, glossy. Discreet expert makeup, a steel watch, small pearl
-studs. Expression: composed, one eyebrow fractionally raised — the look of someone who
-has already found the flaw in what you said and is deciding whether to mention it. Arms
-folded, chin level. Formidable and extremely attractive.
-```
-
-### `litigator2.png` · variation
-```
-A beautiful woman in her mid-thirties, curvy, at the end of a long day — blazer off and
-over one shoulder, sleeves pushed up, top button undone, hair escaping the bob. Reading
-glasses pushed up onto her head. Expression: dry, half-smiling, exhaling. Warm and tired
-rather than sharp, and better looking for it. Still visibly the most organised person in
-any room she enters.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A beautiful woman in her late twenties, slim, softened dark-academia-adjacent goth: a
+charcoal knit cardigan over a black lace-trimmed slip dress, knee-high black leather
+boots with a low heel, one delicate silver pendant. Black hair grown out with two
+inches of natural brown at the roots, tucked behind one ear. Eyeliner smudged from a
+long day rather than carelessness. Expression: thoughtful, lips slightly parted as if
+she was about to say something and thought better of it. Warm, intelligent, quietly
+beautiful.
 ```
 
-### `litigator3.png` · edge case
+### `goth3.webp` · edge case
 ```
-A beautiful woman in her early thirties, fuller-figured, in a sharply cut burgundy suit
-with a silk camisole underneath. Bold red lip, gold jewellery, hair in loose waves rather
-than a bob. Expression: openly amused, chin tilted down, looking up at the lens through
-her lashes. The tailoring says lawyer; everything else says she owns the firm. Far more
-glamorous than the type usually runs.
-```
-
----
-
-## THE NERD — treatment C · effort 0.4, room: corner, hot 6.0, crazy 4.2
-
-### `nerd1.png` · textbook
-```
-A genuinely beautiful young woman in her early twenties, slim and small-framed, wearing
-large round tortoiseshell glasses. Dark hair in a messy bun held up with a pencil, a few
-strands escaping. Faded graphic t-shirt under an open flannel shirt. No makeup at all,
-a scatter of freckles, clear glowing skin. Expression: mid-sentence and lit up, eyebrows
-raised, explaining something she cares about far more than you do. IMPORTANT: she is
-beautiful and has simply never thought about it — do not make her plain or awkward.
-```
-
-### `nerd2.png` · variation
-```
-The same woman in her mid-twenties, glasses off and folded in one hand, hair brushed out
-and down. A simple fitted dark green sweater. Expression: quietly pleased and a little
-self-conscious, a small closed-mouth smile, looking straight at the lens. This is the
-version of her twenty minutes into a good conversation, when she stops hiding — and the
-whole joke of this archetype is that she is stunning and nobody noticed for months.
-```
-
-### `nerd3.png` · edge case
-```
-A beautiful young woman in her early twenties, very slim, glasses slightly askew, hair
-half out of its bun. An oversized university hoodie. Expression: over-caffeinated and
-locked in, staring at the lens with the flat intensity of hour thirty of a deadline.
-Not tired-looking, not unwell — wired. Still obviously good looking underneath the
-chaos. This is the Nerd with the crazy dial turned up.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A beautiful woman in her early twenties, slim, tall, black clothing worn hard: a
+faded band t-shirt tucked into ripped black jeans, scuffed platform boots, chipped
+black nail varnish, dark hair loose and deliberately undone. Almost no makeup beyond
+smudged kohl, and she does not need any. Expression: wired and slightly manic,
+eyebrows up, a wide unsettling grin, leaning into the lens. Too much energy for the
+frame to hold. The beauty is obvious; the stability is the question.
 ```
 
 ---
 
-## PLAIN GOOD LOOKING — treatment C · effort 0.7, room: edges, hot 7.0, crazy 4.5
+## CORPORATE BADDIE — treatment B · effort 2.4, room +0.3, height +0.5, hot 7.2, crazy 5.2
+*(PDF: Corporate baddie — vücuda oturan blazer, topuklu, keskin makyaj, boss havası)*
 
-**This is the type the first attempt got most wrong.** "Plain" describes the styling,
-not the face. She is the best-looking woman in this entire set and she is wearing a
-jumper.
+### `corporate1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A beautiful woman in her early thirties, tall, with a curvy hourglass figure and
+visibly toned, defined arms — the build of someone who trains but is not skinny — in
+an immaculately tailored black blazer worn fitted to the body over a silk camisole, a
+matching pencil skirt, sharp black stiletto heels. Dark hair cut to a precise
+shoulder-length bob, glossy. Sharp, expertly done makeup — defined brows, a bold but
+controlled lip, a steel watch, small gold studs. Expression: composed, one eyebrow
+fractionally raised — the look of someone who has already found the flaw in what you
+said and is deciding whether to mention it. Arms loose at her sides, chin level.
+Formidable and extremely attractive.
+```
 
-### `girlnextdoor1.png` · textbook
+### `corporate2.webp` · variation
 ```
-An exceptionally beautiful woman in her mid-twenties, softly curvy, completely unstyled
-— clean hair worn down with no product, no makeup whatsoever, no jewellery, a plain
-cream crew-neck jumper. Flawless clear skin, perfectly even symmetrical features,
-nothing exaggerated anywhere. Expression: relaxed, open, an easy natural smile that
-reaches the eyes, looking straight at the lens and comfortable being looked at. She
-would look exactly like this at seven in the morning. CRITICAL: no makeup means no
-makeup, NOT plain — she must be immediately, obviously beautiful.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A beautiful woman in her mid-thirties, curvy, at the end of a long day: blazer off
+and carried over one shoulder, silk camisole underneath, sleeves nowhere in sight,
+heels still on, hair escaping the bob. Reading glasses pushed up onto her head.
+Expression: dry, half-smiling, exhaling. Warm and tired rather than sharp, and better
+looking for it. Still visibly the most organised person in any room she enters.
 ```
 
-### `girlnextdoor2.png` · variation
+### `corporate3.webp` · edge case
 ```
-The same beautiful woman in her late twenties, dressed up for once — a simple black
-dress, one thin gold necklace, a small amount of makeup that mostly just evens things
-out. Hair pinned back on one side. Expression: warm, slightly amused at the effort she
-has made, head tilted. The same person as the first image, at a wedding, and everyone
-there has noticed.
-```
-
-### `girlnextdoor3.png` · edge case
-```
-A breathtaking woman in her mid-twenties, curvy, wearing a plain white t-shirt and
-nothing else of note — no makeup, no jewellery, hair simply down. Strong symmetrical
-features, thick glossy natural hair, unusual striking eye colour. Expression: calm,
-direct, almost blank. The joke of this image is that absolutely nothing has been done
-to her and she is still the most beautiful woman in the set.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left at 30 degrees with gentle fill, one rim light on the
+far shoulder. Clean colour grade. f/2.5. Deliberately styled and well made up,
+precise and composed. Retouched enough that she looks flawless without looking
+artificial.
+A beautiful woman in her early thirties, fuller-figured, tall, in a sharply cut
+burgundy blazer-dress with nothing underneath but a delicate chain, very high heels.
+Bold red lip, gold jewellery stacked on both wrists, hair in loose waves rather than
+a bob. Expression: openly amused, chin tilted down, looking up at the lens through
+her lashes. The tailoring says boardroom; everything else says she owns the company.
+Far more glamorous than the type usually runs.
 ```
 
 ---
 
-## THE VALKYRIE — treatment C · effort 1.0, room: centre, hot 6.5, crazy 7.0
+## THE NERD — treatment C · effort 0.4, room −0.9, height −0.2, hot 6.0, crazy 4.2
+*(closest PDF match: Study girl / Booktok girl — kütüphane, not alma, üretkenlik)*
 
-### `valkyrie1.png` · textbook
+### `nerd1.webp` · textbook
 ```
-A beautiful woman in her late twenties, tall and powerfully built — broad shoulders,
-strong arms, an athlete's frame, substantial and solid rather than soft. Long
-dark-blonde hair loose. A simple fitted olive t-shirt. Minimal makeup, healthy glowing
-skin. Expression: head back, laughing openly from the chest, entirely unselfconscious.
-She fills the whole frame and is not apologising for it. Strong and genuinely
-good-looking — power and beauty in the same person, not a trade between them.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A genuinely beautiful young woman in her early twenties, slim and small-framed,
+wearing large round tortoiseshell glasses, standing in an oversized cable-knit
+cardigan over leggings, thick wool socks. Dark hair in a messy bun held up with a
+pencil, a few strands escaping. No makeup at all, a scatter of freckles, clear
+glowing skin. Expression: mid-sentence and lit up, eyebrows raised, explaining
+something she cares about far more than you do. She is beautiful and has simply never
+thought about it.
 ```
 
-### `valkyrie2.png` · variation
+### `nerd2.webp` · variation
 ```
-A beautiful woman in her early thirties, tall and heavily built, hair braided back tight
-against her head. A sleeveless black top, one tattoo on the upper arm. Expression: not
-laughing this time — level, direct, chin slightly down, arms crossed. Still warm around
-the eyes, but the message has changed. This is the version of her that ends an argument
-by standing up.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same woman in her mid-twenties, glasses off and folded in one hand, hair brushed
+out and down over a simple fitted dark green sweater and straight-leg jeans, bare
+feet. Expression: quietly pleased and a little self-conscious, a small closed-mouth
+smile, looking straight at the lens. The version of her twenty minutes into a good
+conversation, when she stops hiding — and the whole joke of this archetype is that
+she is stunning and nobody noticed for months.
 ```
 
-### `valkyrie3.png` · edge case
+### `nerd3.webp` · edge case
 ```
-A beautiful woman around thirty, tall but curvy rather than muscular, in a loose dark
-jumper, hair long and unbrushed. Expression: unsettled and unpredictable — a wide fixed
-smile with tension around the eyes, leaning slightly out of frame, weight on the back
-foot. Very tall, quite soft, and something is going on behind the face. Attractive, and
-you would not relax around her.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful young woman in her early twenties, very slim, glasses slightly askew,
+hair half out of its bun, in an oversized university hoodie over pyjama shorts and
+mismatched socks. Expression: over-caffeinated and locked in, staring at the lens
+with the flat intensity of hour thirty of a deadline. Not tired-looking, not unwell —
+wired. Still obviously good looking underneath the chaos. This is the Nerd with the
+crazy dial turned up.
 ```
 
 ---
 
-## THE COMFORT CLASS — treatment C · effort 0.8, room: edges, hot 5.5, crazy 5.5
+## CLEAN GIRL — treatment C · effort 0.7, room +0.1, height 0.0, hot 7.0, crazy 4.5
+*(PDF: Clean girl — parlak doğal cilt, slick-back topuz, nötr kıyafetler, sade takılar)*
 
-### `comfort1.png` · textbook
+### `cleangirl1.webp` · textbook
 ```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+An exceptionally beautiful woman in her mid-twenties, soft and gently curvy rather
+than lean, hair slicked back into a tight low bun with not a strand out of place,
+small gold hoop earrings, a fitted ribbed top in oatmeal-neutral, straight-leg
+trousers skimming rounded hips. Dewy, glass-like skin with
+almost no visible makeup beyond a hint of gloss. Flawless clear complexion,
+perfectly even features. Expression: relaxed, open, an easy natural smile that
+reaches the eyes, comfortable being looked at. Looks identical at 7am and at a
+wedding.
+```
+
+### `cleangirl2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same beautiful woman in her late twenties, hair down but glossy and freshly
+washed, in a simple cream slip dress, one thin gold necklace, a touch of tinted balm.
+Dressed up for once, still reads as effortless. Expression: warm, slightly amused at
+the small amount of effort she has made, head tilted. The same person as the first
+image, at a nicer dinner, and everyone there has noticed.
+```
+
+### `cleangirl3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A breathtaking woman in her mid-twenties, soft and curvy, wearing a plain white
+ribbed tank stretched slightly over the curve of her hips and loose linen trousers,
+no jewellery, hair simply slicked back with water, no makeup whatsoever. Strong
+symmetrical features, unusual striking eye colour. Expression:
+calm, direct, almost blank. The joke of this image is that absolutely nothing has
+been done to her and she is still the most beautiful woman in the set.
+```
+
+---
+
+## GYM GIRL — treatment C · effort 1.6, room +0.6, height +0.4, hot 7.8, crazy 6.2
+*(PDF: Gym girl / Fit girl — antrenman programı, spor kombinleri, disiplinli yaşam)*
+
+### `gymgirl1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her late twenties, tall, athletic and powerfully built — toned
+shoulders, defined arms, a lean athlete's frame — in a matching fitted workout set:
+sports bra and high-waisted leggings in a solid colour. Long hair pulled back in a
+high ponytail. Minimal makeup, healthy glowing skin with a light sheen. Expression:
+head back, laughing openly from the chest, entirely unselfconscious, hands loosely on
+her hips. She fills the frame and is not apologising for it. Power and beauty in the
+same person, not a trade between them.
+```
+
+### `gymgirl2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her early thirties, athletic, post-workout: hair damp and tied
+back low, an oversized cropped hoodie over the same leggings, a gym towel draped over
+one shoulder. One small tattoo on the forearm. Expression: relaxed, direct, chin
+slightly down, a small satisfied smile — the look of someone who already got the hard
+part of the day done before you woke up.
+```
+
+### `gymgirl3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful, very athletic woman around thirty, heavily muscled, hair braided back
+tight against her head, in a sports bra and leggings, arms crossed, weight on one
+hip. Expression: locked, intense, unblinking eye contact, jaw set — competitive
+energy with nowhere to go. Still warm at the edges, but the message is "do not test
+me". Attractive, and a little too switched on.
+```
+
+---
+
+## GRUNGE GIRL — treatment C · effort 0.3, room −0.3, height −0.1, hot 6.8, crazy 8.9
+*(PDF: Grunge girl — flanel gömlek, yırtık jean, band tişörtü, combat bot, umursamaz görünüm)*
+
+### `grunge1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her early twenties, slim, an unbuttoned faded flannel shirt tied
+loosely at the waist over a plain band t-shirt, ripped light-wash jeans, scuffed
+combat boots. Hair long, slightly greasy-textured on purpose, parted messily down the
+middle. No visible makeup except a smudge of old dark eyeliner. Expression: bored,
+heavy-lidded, chin down, looking at the lens like it is an inconvenience. Puts in no
+visible effort and is somehow the most magnetic person in the room.
+```
+
+### `grunge2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her mid-twenties, flannel shirt buttoned all the way this time,
+oversized, sleeves rolled once, over black leggings and combat boots, a beanie pulled
+low over messy hair. One small silver nose ring. Expression: small, dry, closed-mouth
+smile, arms crossed loosely. More put-together than the first image but still
+entirely unbothered — the softer edge of the same person.
+```
+
+### `grunge3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her early twenties, a torn band t-shirt worn as a dress over
+fishnet tights, unlaced combat boots, dark eyeliner smudged heavily and deliberately,
+hair wild and unbrushed with one section dyed a faded colour. Expression: wide, wired
+grin, eyes a little too bright, leaning into the lens with restless energy. The
+beauty is obvious; so is the chaos.
+```
+
+---
+
+## THE COMFORT CLASS — treatment C · effort 0.8, room +0.4, height −0.5, hot 5.5, crazy 5.5
+*(closest PDF mood: Vanilla girl — krem, bej tonları, örgü, sıcak, rahat ev estetiği)*
+
+### `comfort1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
 A beautiful woman in her late twenties, heavy-set and soft, with a lovely open round
-face, warm eyes and wonderful skin. Hair in a simple low bun with pieces falling out.
-A large oatmeal knitted cardigan over a plain top. No makeup. Expression: an easy
-unhurried smile, eyes crinkled, entirely at ease. The specific calm of someone with
-nothing to prove to anybody in the room. Genuinely lovely to look at — warmth is the
-point, not a consolation prize.
+face, warm eyes and wonderful skin, wearing a large oatmeal cable-knit cardigan over
+a cream slip dress, thick wool socks. Hair in a simple low bun with pieces falling
+out. No makeup. Expression: an easy unhurried smile, eyes crinkled, entirely at ease.
+The specific calm of someone with nothing to prove to anybody in the room. Warmth is
+the point, not a consolation prize.
 ```
 
-### `comfort2.png` · variation
+### `comfort2.webp` · variation
 ```
-The same woman in her early thirties, heavy-set, hair down and freshly washed, in a deep
-green wrap dress with small gold earrings — dressed for something. A little makeup, well
-done. Expression: laughing at something just off camera, one hand half raised as if
-waving off a compliment. More energy and more polish than the first image, the same
-fundamental unbotheredness. Beautiful and glowing.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same woman in her early thirties, heavy-set, hair down and freshly washed, in a
+deep green wrap dress with small gold earrings — dressed for something. A little
+makeup, well done. Expression: laughing at something just off camera, one hand half
+raised as if waving off a compliment. More energy and more polish than the first
+image, the same fundamental unbotheredness. Beautiful and glowing.
 ```
 
-### `comfort3.png` · edge case
+### `comfort3.webp` · edge case
 ```
-A pretty woman in her mid-twenties, shorter and heavy-set, in a plain grey hoodie with
-the hood down, hair flat and unstyled. Expression: neutral to the point of blank, mouth
-closed, eyes slightly unfocused, looking past the camera. Not unhappy, not unwell — just
-switched off. Low on every axis the chart measures, which is exactly the region of the
-model that produces this slot. Still a good-looking face; the lights are simply off.
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A pretty woman in her mid-twenties, shorter and heavy-set, in a plain grey hoodie
+with the hood down over pyjama bottoms, hair flat and unstyled. Expression: neutral
+to the point of blank, mouth closed, eyes slightly unfocused, looking past the
+camera. Not unhappy, not unwell — just switched off. Still a good-looking face; the
+lights are simply off.
 ```
 
 ---
 
 # The 8 interstitials
 
-Joke cards, not portraits — the spine and treatments do **not** apply. All eight are
+Joke cards, not portraits — spine and treatments do **not** apply. All eight are
 already generated and in place. `gay` and `gay2` use the real meme images.
 
 ---
@@ -323,12 +604,18 @@ already generated and in place. `gay` and `gay2` use the real meme images.
 
 ```js
 // images.js
-scared : "assets/img/scared.webp",
-model  : ["assets/img/model1.webp", "assets/img/model2.webp", "assets/img/model3.webp"],
+goth      : ["assets/img/goth1.webp", "assets/img/goth2.webp", "assets/img/goth3.webp"],
+corporate : ["assets/img/corporate1.webp", "assets/img/corporate2.webp", "assets/img/corporate3.webp"],
+nerd      : ["assets/img/nerd1.webp", "assets/img/nerd2.webp", "assets/img/nerd3.webp"],
+cleangirl : ["assets/img/cleangirl1.webp", "assets/img/cleangirl2.webp", "assets/img/cleangirl3.webp"],
+gymgirl   : ["assets/img/gymgirl1.webp", "assets/img/gymgirl2.webp", "assets/img/gymgirl3.webp"],
+grunge    : ["assets/img/grunge1.webp", "assets/img/grunge2.webp", "assets/img/grunge3.webp"],
+comfort   : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"]
 ```
 
 ```bash
 node build.js
 ```
 
-Slots left as `""` keep rendering their dashed placeholder, so partial sets ship fine.
+Slots left as `""` keep rendering their dashed placeholder, so partial sets ship fine
+— generate them in whatever order suits you.

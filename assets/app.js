@@ -382,9 +382,9 @@
   SCREEN.effort = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 07 &mdash; Production value</p>' +
-        '<h2 class="q">How much work goes into how she looks?</h2>' +
-        '<p class="sub">Not how good she looks &mdash; how much <em>labour</em> is involved. These are different questions and everybody confuses them, which is exactly why the last version of this quiz kept giving people the same answer.</p>' +
+        '<p class="eyebrow">Question 07 &mdash; Getting-ready effort</p>' +
+        '<h2 class="q">How much work goes into her face and hair before she leaves the house?</h2>' +
+        '<p class="sub">Not how good she looks &mdash; how much <em>labour</em> is involved. A bare-faced girl and a full-glam one can be equally good looking; this is the makeup-and-effort axis, the one that actually separates a Clean Girl from a Baddie.</p>' +
         '<div class="stack">' +
           M.EFFORT.map(function (o) {
             return '<button data-v="' + o.idx + '">' + o.label +
@@ -403,8 +403,8 @@
     el(
       '<div class="card">' +
         '<p class="eyebrow">Question 08 &mdash; Temperament</p>' +
-        '<h2 class="q">Full room of people. Where is she?</h2>' +
-        '<p class="sub">This is the one nobody thinks to specify and everybody discovers in month three. It costs nothing to answer now.</p>' +
+        '<h2 class="q">You walk into a party together. Ninety seconds later, where is she?</h2>' +
+        '<p class="sub">Not a shyness question &mdash; a gravity one. This single answer splits the Goth from the Baddie and the Nerd from the Comfort Class harder than anything else on the form.</p>' +
         '<div class="stack">' +
           M.ROOM.map(function (o) {
             return '<button data-v="' + o.key + '">' + o.label +

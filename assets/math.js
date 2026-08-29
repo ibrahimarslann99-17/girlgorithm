@@ -52,19 +52,19 @@ WZ.math = (function () {
      Baddie. Before it existed they were told apart only by hot/crazy, which is
      why so many answers collapsed onto the same few types. */
   const EFFORT = [
-    { idx: 0, key: "none",   p: 0.15, label: "None",            hint: "Rolled out of bed. That is the whole look." },
-    { idx: 1, key: "low",    p: 0.35, label: "Minimal",         hint: "Clean, brushed, done in four minutes." },
-    { idx: 2, key: "high",   p: 0.35, label: "Put together",    hint: "Thought about it. You can tell, but only just." },
-    { idx: 3, key: "max",    p: 0.15, label: "Full production", hint: "Ninety minutes. Every single time." }
+    { idx: 0, key: "none",   p: 0.15, label: "Bare face",           hint: "Didn't glance in a mirror. Grunge-girl, zero performance." },
+    { idx: 1, key: "low",    p: 0.35, label: "Clean-girl minimal",  hint: "Slicked-back bun, tinted lip, skin she actually invests in." },
+    { idx: 2, key: "high",   p: 0.35, label: "Put together",       hint: "Sharp and intentional, corporate-baddie energy. You can tell she tried, but only just." },
+    { idx: 3, key: "max",    p: 0.15, label: "Full glam",           hint: "Lashes, contour, ninety minutes. Every single time — IG-baddie production." }
   ];
 
   /* --- room: where she sits in a crowd ------------------------------------
      Temperament, not volume of speech. Separates the Gothic from the Baddie
      and the Nerd from the Comfort Class far better than craziness does. */
   const ROOM = [
-    { v: +1, key: "centre", p: 0.30, label: "The centre of it",        hint: "Everyone ends up facing her." },
-    { v:  0, key: "edges",  p: 0.45, label: "Working the edges",       hint: "Three good conversations, no audience." },
-    { v: -1, key: "corner", p: 0.25, label: "Found one person, stayed", hint: "Left at eleven and did not say goodbye." }
+    { v: +1, key: "centre", p: 0.30, label: "Centre of the room",          hint: "It-girl gravity — people orbit toward her without meaning to." },
+    { v:  0, key: "edges",  p: 0.45, label: "Working the edges",          hint: "Three real conversations, zero audience, gone before anyone notices." },
+    { v: -1, key: "corner", p: 0.25, label: "Picked one person, stayed",   hint: "Low-key on purpose. Found who she came for and the room stopped mattering." }
   ];
   const effortOf = i => EFFORT[i];
   const roomOf   = k => ROOM.find(r => r.key === k) || ROOM[1];
@@ -80,23 +80,23 @@ WZ.math = (function () {
      each type's distance terciles over all 7,056 reachable answer
      combinations, so its three portraits come up in even thirds. */
   const TYPES = [
-    { key: "model", cuts: [1.57, 1.92], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.93, 2.42], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, heightZ: +0.9, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "goth", cuts: [1.70, 2.14], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, hot: 7.5, crazy: 9.0,
+    { key: "goth", cuts: [2.05, 2.59], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, heightZ: +0.3, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "corporate", cuts: [1.69, 2.11], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, hot: 7.2, crazy: 5.2,
+    { key: "corporate", cuts: [2.04, 2.54], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, heightZ: +0.5, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [1.65, 2.07], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [2.02, 2.52], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, heightZ: -0.2, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "cleangirl", cuts: [1.67, 2.07], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, hot: 7.0, crazy: 4.5,
+    { key: "cleangirl", cuts: [2.02, 2.50], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, heightZ:  0.0, hot: 7.0, crazy: 4.5,
       blurb: "Glowing skin, slicked-back bun, small gold hoops, nothing on her that looks like it took effort — because the effort went into sleep, water and a skincare shelf you will not be allowed to touch. Looks identical at 7am and at a wedding. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.63, 1.99], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [1.98, 2.47], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, heightZ: -0.3, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "gymgirl", cuts: [1.56, 1.94], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, hot: 7.8, crazy: 6.2,
+    { key: "gymgirl", cuts: [1.92, 2.41], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, heightZ: +0.4, hot: 7.8, crazy: 6.2,
       blurb: "Trains five days a week and can tell you exactly why. Meal-prepped, disciplined, in a matching set more often than in clothes. The most reliable person on this chart and the one most likely to out-lift you. Your gym membership is about to start getting used." },
-    { key: "grunge", cuts: [1.76, 2.17], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, hot: 6.8, crazy: 8.9,
+    { key: "grunge", cuts: [2.11, 2.59], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, heightZ: -0.1, hot: 6.8, crazy: 8.9,
       blurb: "Flannel, ripped jeans, combat boots, a band on the shirt you have not heard of. Puts in no visible effort and is somehow the most magnetic person in the room. Chaotic in a way that is extremely fun for about eight months." },
-    { key: "comfort", cuts: [1.58, 1.98], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, hot: 5.5, crazy: 5.5,
+    { key: "comfort", cuts: [1.58, 1.98], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, heightZ: -0.5, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 
@@ -139,26 +139,37 @@ WZ.math = (function () {
       line: "An 8-plus with a crazy under 5. The chart lists this zone for completeness. She is a transvestite or you are being lied to." };
   }
 
-  /* --- archetype: nearest neighbour in weighted 4-D space ----------------- */
+  /* --- archetype: nearest neighbour in weighted 7-D space ----------------- */
 
-  /* Height is deliberately NOT an axis here. It is fixed for any one user, so
-     including it pinned the archetype to whatever their own height happened to
-     be — at 195 cm only four of the eight types were reachable at all, and the
-     three answers the user actually chooses barely moved the result. Height
-     still drives the target band and the whole rarity calculation, which is
-     where it belongs. The type is decided by what they pick. */
-  function classify(soft, form, effort, room, hot, crazy) {
+  /* Height re-enters here, but not the way it broke things the first time.
+     The first version fed the user's raw height straight into classify() —
+     fixed for any one user, so it just pinned the archetype to whichever
+     number they happened to be born with; at 195 cm only four of the eight
+     types were reachable at all. What actually carries a *choice* is the
+     override: after the ratio sets a proposed partner height, the user can
+     accept it or argue with it, and that decision — asking for someone taller
+     or shorter than the model recommends, and by how much — is exactly the
+     kind of preference the rest of this axis list is made of. So the input
+     here is not height, it is heightZ: the resulting target height expressed
+     as a z-score against the population, i.e. "how tall a partner is this,
+     relative to everyone" rather than "how tall is this user". Comparable
+     across a 165 cm user and a 205 cm user, and it moves only when the user
+     actually pushes on the override screen. Weighted low relative to the
+     other axes on purpose — a nudge toward Model/Gym Girl on a tall ask, not
+     a repeat of the old takeover. */
+  function classify(soft, form, effort, room, heightZ, hot, crazy) {
     const f = formOf(form).v;
     const r = roomOf(room).v;
     let best = null;
     for (const t of TYPES) {
       const d = Math.sqrt(
-        Math.pow((soft   - t.soft)   * 0.90, 2) +
-        Math.pow((f      - t.form)   * 1.10, 2) +
-        Math.pow((effort - t.effort) * 0.75, 2) +
-        Math.pow((r      - t.room)   * 0.85, 2) +
-        Math.pow((hot    - t.hot)    * 0.60, 2) +
-        Math.pow((crazy  - t.crazy)  * 0.55, 2)
+        Math.pow((soft    - t.soft)    * 0.90, 2) +
+        Math.pow((f       - t.form)    * 1.10, 2) +
+        Math.pow((effort  - t.effort)  * 0.75, 2) +
+        Math.pow((r       - t.room)    * 0.85, 2) +
+        Math.pow((heightZ - t.heightZ) * 0.45, 2) +
+        Math.pow((hot     - t.hot)     * 0.60, 2) +
+        Math.pow((crazy   - t.crazy)   * 0.55, 2)
       );
       if (!best || d < best.d) best = { t: t, d: d };
     }
@@ -205,6 +216,8 @@ WZ.math = (function () {
 
   /* --- stature: where the target sits in the height distribution ---------- */
   /* Height no longer decides the archetype, so it reports itself directly. */
+  function heightZFor(target) { return (target - POP.mu) / POP.sd; }
+
   function statureOf(target) {
     const pctShorter = Math.round(100 * ncdf(target, POP.mu, POP.sd));
     const line =
@@ -247,7 +260,8 @@ WZ.math = (function () {
     const target = s.adjust === "fine" ? ideal : applyDelta(s.height, ideal, s.delta);
     const lo = target - 3, hi = target + 3;
     const zone  = zoneOf(s.hot, s.crazy);
-    const type  = classify(s.soft, s.form, s.effort, s.room, s.hot, s.crazy);
+    const heightZ = heightZFor(target);
+    const type  = classify(s.soft, s.form, s.effort, s.room, heightZ, s.hot, s.crazy);
     const rare  = rarity(lo, hi, s.soft, s.form, s.effort, s.room, s.hot, s.crazy);
     const stature = statureOf(target);
     const weeks = rare.oneIn / 2;                 // two assessed first dates a week
@@ -285,5 +299,5 @@ WZ.math = (function () {
            effortOf, roomOf,
            buildP, softOf, formOf, buildLabel, buildNote,
            ncdf, idealFor, floorFor, applyDelta,
-           zoneOf, classify, statureOf, rarity, evaluate, fmt, pct };
+           zoneOf, classify, statureOf, heightZFor, rarity, evaluate, fmt, pct };
 })();

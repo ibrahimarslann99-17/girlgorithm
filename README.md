@@ -14,7 +14,7 @@ Nothing in the model is random. The same answers always produce the same file �
 | Rarity | Normal distributions: height `N(163, 6.4)`, hot `N(5.0, 1.6)`, crazy `N(6.4, 1.5)`, times build prevalence |
 | Hot/crazy correction | Asking for a big hot−crazy gap divides the result by `1 + (gap − 2) × 1.8` |
 | Matrix zone | Boundaries read straight off the Hot Crazy Matrix chart |
-| Archetype | Nearest neighbour among 8 types in weighted 4-D space (height z-score, build, hot, crazy) |
+| Archetype | Nearest neighbour among 9 types in weighted 7-D space (build ×2, effort, room, height z-score, hot, crazy) |
 
 All of it lives in `assets/math.js` as pure functions with no DOM access, so it can be tested or reused on its own.
 
