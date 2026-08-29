@@ -15,6 +15,7 @@
   const BLANK = {
     height: null, obese: null, looks: null,
     adjust: null, delta: 0, soft: null, form: null, effort: null, room: null,
+    emphasis: null, dealbreaker: null,
     hot: 8, crazy: 6, flags: []
   };
   let S = Object.assign({}, BLANK, { flags: [] });
@@ -26,7 +27,7 @@
   };
   const addFlag = k => { if (!S.flags.some(f => f[0] === k)) S.flags.push([k, FLAG_TEXT[k]]); };
 
-  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","effort","room","hot","crazy","result"];
+  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","effort","room","emphasis","dealbreaker","hot","crazy","result"];
   let stepIdx = -1;
 
   const stage  = document.getElementById("stage");
@@ -124,7 +125,7 @@
       '<div class="card">' +
         '<p class="eyebrow">Intake &mdash; Case <b>OPEN</b></p>' +
         '<h1 class="big">You have been picking wrong. We can prove it.</h1>' +
-        '<p class="sub">Eleven questions. Real arithmetic behind every one of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
+        '<p class="sub">Thirteen questions. Real arithmetic behind most of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. Two of them are just for flavor and never touch the math. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
         '<p class="sub"><em>No result here is random.</em> Same answers, same verdict, every time. That is the part that will annoy you.</p>' +
         '<div class="row">' +
           '<button class="primary has-icon" style="flex:1;min-width:180px" id="begin"><span>Let\'s begin</span>' + WZ.icon("arrow-right") + '</button>' +
@@ -414,11 +415,59 @@
       "</div>"
     );
     stage.querySelectorAll("button").forEach(b => b.onclick = () => {
-      S.room = b.dataset.v; go("hot");
+      S.room = b.dataset.v; go("emphasis");
     });
   };
 
-  /* --- 09 / 10 the matrix axes ------------------------------------------- */
+  /* --- 09 emphasis (flavor only — never read by math.js) ------------------ */
+  const EMPHASIS_LBL = {
+    structure: "Structure", waist: "Waist",
+    movement: "Movement", clean: "Whatever's clean"
+  };
+  SCREEN.emphasis = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("eye") + '<span>Question 09 &mdash; What she leads with</span></p>' +
+        '<h2 class="q">When she gets dressed, what is she actually optimizing for?</h2>' +
+        '<p class="sub">This one doesn\'t touch the arithmetic. It just means the write-up describes her instead of a mannequin.</p>' +
+        '<div class="stack">' +
+          '<button data-v="structure">Structure<span class="hint">Shoulders, tailoring, straight lines. She dresses like architecture.</span></button>' +
+          '<button data-v="waist">Waist<span class="hint">Everything is cut to say the word &ldquo;waist.&rdquo;</span></button>' +
+          '<button data-v="movement">Movement<span class="hint">Fabric that moves before she does. Comfort dressed up as intention.</span></button>' +
+          '<button data-v="clean">Whatever\'s clean<span class="hint">She got dressed in four minutes and it worked anyway.</span></button>' +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.emphasis = b.dataset.v; go("dealbreaker");
+    });
+  };
+
+  /* --- 10 dealbreaker (flavor only — never read by math.js) --------------- */
+  const DEALBREAKER_LBL = {
+    hard: "Trying too hard", flat: "Not trying at all",
+    trend: "Chasing every trend", none: "Nothing, really"
+  };
+  SCREEN.dealbreaker = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("alert-triangle") + '<span>Question 10 &mdash; The instant no</span></p>' +
+        '<h2 class="q">One thing, and it ends immediately. What is it?</h2>' +
+        '<p class="sub">Also flavor only. The matrix doesn\'t care what ends it &mdash; it only knows that you have a limit.</p>' +
+        '<div class="stack">' +
+          '<button data-v="hard">Trying too hard<span class="hint">You can see the effort, and seeing it kills the effect.</span></button>' +
+          '<button data-v="flat">Not trying at all<span class="hint">Zero effort reads as zero interest.</span></button>' +
+          '<button data-v="trend">Chasing every trend<span class="hint">No point of view. Just this week\'s algorithm.</span></button>' +
+          '<button data-v="none">Nothing, really<span class="hint">Dealbreakers are a luxury good. You don\'t have the inventory.</span></button>' +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.dealbreaker = b.dataset.v; go("hot");
+    });
+  };
+
+  /* --- 11 / 12 the matrix axes ------------------------------------------- */
   const HOTLBL = {4:"Below the chart's floor",5:"Chart minimum. Barely on the board.",6:"Solid. Grows on people.",7:"Turns heads in a normal bar.",8:"Turns heads in a good bar.",9:"Turns heads in an airport.",10:"You would not approach her."};
   const CZLBL  = {4:"Chart minimum. Suspiciously calm.",5:"Load-bearing amount only.",6:"Normal human volatility.",7:"Interesting. Manageable.",8:"The last safe rung.",9:"Above the danger line.",10:"Actively hazardous."};
 
@@ -450,14 +499,14 @@
   }
 
   SCREEN.hot = () => sliderScreen({
-    n: 9, key: "hot", labels: HOTLBL, next: "crazy",
+    n: 11, key: "hot", labels: HOTLBL, next: "crazy",
     title: "How hot do you want her?",
     sub: "The chart's x-axis. Be greedy here and the arithmetic at the end will hand you the bill.",
     note: "In the reference population hotness sits around 5 with a standard deviation of 1.6. Every point you add above 5 cuts the pool by roughly two thirds."
   });
 
   SCREEN.crazy = () => sliderScreen({
-    n: 10, key: "crazy", labels: CZLBL, next: "result",
+    n: 12, key: "crazy", labels: CZLBL, next: "result",
     title: "And how much crazy can you take?",
     sub: "The y-axis. Nobody is under 4 &mdash; the chart doesn't even print the numbers. You are choosing a ceiling, not an absence.",
     note: "Population crazy sits near 6.4. Asking for a hot 9 with a crazy 5 is not a preference, it is a search for an exception &mdash; and the model prices exceptions accordingly."
@@ -561,6 +610,8 @@
           '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">' + WZ.icon("target") + '<span>Matrix position</span></div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("hash") + '<span>Rarity</span></div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("clock") + '<span>Search time</span></div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("eye") + '<span>Leads with</span></div><div class="v" style="font-size:17px">' + EMPHASIS_LBL[S.emphasis] + "<small>flavor only</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("alert-triangle") + '<span>Instant no</span></div><div class="v" style="font-size:17px">' + DEALBREAKER_LBL[S.dealbreaker] + "<small>flavor only</small></div></div>" +
         "</div>" +
 
         '<div class="block">' +
