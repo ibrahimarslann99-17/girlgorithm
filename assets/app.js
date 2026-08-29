@@ -1,5 +1,5 @@
 /* =============================================================================
-   WIFE ZONE CALCULATOR — flow and rendering
+   GIRLGORITHM — flow and rendering
    ============================================================================= */
 (function () {
   "use strict";
@@ -540,6 +540,8 @@
 
     el(
       '<div class="dossier">' +
+        '<div class="verdict-row">' +
+        slot(v.type.t.key, v.type.t.name + " — " + v.type.tier.label, "portrait", v.type.variant) +
         '<div class="verdict">' +
           '<p class="eyebrow">Verdict &mdash; Case <b>CLOSED</b></p>' +
           '<div class="type">' + v.type.t.name + "</div>" +
@@ -549,9 +551,7 @@
           '<p class="fit" style="margin:16px 0 0">Spec match <b>' + v.type.fit + "%</b> &nbsp;·&nbsp; nearest of " +
             M.TYPES.length + " archetypes &nbsp;·&nbsp; distance " + v.type.d.toFixed(2) +
             " &nbsp;·&nbsp; portrait " + (v.type.variant + 1) + " of 3</p>" +
-        "</div>" +
-
-        slot(v.type.t.key, v.type.t.name + " — " + v.type.tier.label, "portrait", v.type.variant) +
+        "</div></div>" +
 
         '<div class="specs">' +
           '<div class="spec"><div class="k">Target height</div><div class="v">' + v.target + "<small>" + v.lo + "&ndash;" + v.hi + " cm band</small></div></div>" +
@@ -598,7 +598,8 @@
 
         '<div class="footnote">' +
           "Model: partner height = own height &divide; 1.09 &nbsp;·&nbsp; population N(" + M.POP.mu + " cm, " + M.POP.sd + " cm) &nbsp;·&nbsp; zone boundaries read off the Hot Crazy Matrix &nbsp;·&nbsp; archetype by nearest neighbour in 4-D spec space.<br>" +
-          "Deterministic: the same answers always produce this same file. Built for a group chat, not a life plan. Every woman on this chart is a person and none of them filled in this form." +
+          "Deterministic: the same answers always produce this same file. Built for a group chat, not a life plan. Every woman on this chart is a person and none of them filled in this form.<br>" +
+          "<b style=\"color:var(--muted);letter-spacing:.18em\">GIRLGORITHM</b> &nbsp;·&nbsp; issued by the Bureau of Applied Matchmaking" +
         "</div>" +
 
         '<div class="row">' +

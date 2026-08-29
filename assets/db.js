@@ -1,5 +1,5 @@
 /* =============================================================================
-   WIFE ZONE CALCULATOR — Supabase client
+   GIRLGORITHM — Supabase client
    Three RPC calls over plain fetch. No SDK, no build step, no dependencies.
 
    Every function here fails soft on purpose: if the config is blank, the

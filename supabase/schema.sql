@@ -1,5 +1,5 @@
 -- =============================================================================
---  WIFE ZONE CALCULATOR — Supabase schema
+--  GIRLGORITHM — Supabase schema
 --  Paste the whole file into Supabase → SQL Editor → Run. It is idempotent.
 --
 --  Design note: the anon key ships inside a public static page, so anyone can

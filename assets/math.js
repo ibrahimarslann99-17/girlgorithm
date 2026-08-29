@@ -1,5 +1,5 @@
 /* =============================================================================
-   WIFE ZONE CALCULATOR — the model
+   GIRLGORITHM — the model
    Pure functions, no DOM, no randomness. Same answers in, same file out.
    ============================================================================= */
 window.WZ = window.WZ || {};
@@ -187,6 +187,7 @@ WZ.math = (function () {
     if (df <= -0.7) bits.push("and carrying real muscle under it");
     else if (df >= 0.7) bits.push("and there is nothing but softness underneath");
     let out = bits.join(" ") + ".";
+    out = out.charAt(0).toUpperCase() + out.slice(1);
     if (de <= -1.2) out += " She puts in far less work on her appearance than this type normally does.";
     else if (de >= 1.2) out += " And considerably more production than the type calls for.";
     if (dr <= -1.2) out += " Quieter in a room than the archetype suggests.";

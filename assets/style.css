@@ -1,5 +1,5 @@
 /* =============================================================================
-   WIFE ZONE CALCULATOR
+   GIRLGORITHM
    One committed visual world: a bureau instrument panel. Every colour is
    explicit so the page holds on any host background.
    ============================================================================= */
@@ -243,11 +243,13 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
    whatever fits the joke — so they letterbox rather than get cropped. */
 .slot img{width:100%;height:100%;object-fit:contain;border-radius:2px;display:block;}
 .slot.filled{border-style:solid;border-color:var(--line);padding:0;background:var(--ground);}
-/* The verdict portrait is shot to spec at 3:2, so it fills the block edge to
-   edge — and keeps the same height whether the render has landed or not, so the
-   page doesn't jump as slots get filled in. */
-.slot.portrait{aspect-ratio:3/2;margin:0;}
+/* The verdict portrait is full-length, so it is shot and cropped 3:4. On a wide
+   screen it sits beside the verdict text rather than above it — a standing figure
+   in a 660px-wide block would otherwise be 880px tall and swallow the page. */
+.slot.portrait{aspect-ratio:3/4;margin:0;height:100%;}
 .slot.portrait img{object-fit:cover;}
+.verdict-row{display:grid;grid-template-columns:1fr;gap:16px;align-items:stretch;}
+@media (min-width:620px){ .verdict-row{grid-template-columns:272px 1fr;} }
 
 /* ---------- siren ---------- */
 #siren{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:0;mix-blend-mode:screen;}

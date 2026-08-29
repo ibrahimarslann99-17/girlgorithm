@@ -1,4 +1,4 @@
-# Wife Zone Calculator
+# Girlgorithm
 
 A joke matchmaking calculator with an unreasonable amount of real arithmetic behind it. Nine questions, one written spec, an honest estimate of how many of her exist.
 
