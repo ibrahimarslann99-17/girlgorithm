@@ -68,6 +68,7 @@ const css = read("assets/style.css");
 const js  = [
   read("config.js"),
   img.js,                    // images.js, with every path now a data: URI
+  read("assets/icons.js"),
   read("assets/math.js"),
   read("assets/db.js"),
   read("assets/app.js")

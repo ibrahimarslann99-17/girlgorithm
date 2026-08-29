@@ -67,7 +67,7 @@
     v.className = "veil";
     v.innerHTML =
       '<div class="veil-inner ' + (o.tone || "") + '" role="dialog" aria-modal="true" aria-label="' + esc(o.title) + '">' +
-        "<h3>" + o.title + "</h3>" +
+        "<h3>" + (o.tone === "cop" ? WZ.icon("siren") : o.tone === "warn" ? WZ.icon("alert-triangle") : "") + "<span>" + o.title + "</span></h3>" +
         (o.img ? slot(o.img, o.imgLabel || o.title) : "") +
         "<p>" + o.body + "</p>" +
         '<div class="stack" id="veilbtns"></div>' +
@@ -127,8 +127,8 @@
         '<p class="sub">Eleven questions. Real arithmetic behind every one of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
         '<p class="sub"><em>No result here is random.</em> Same answers, same verdict, every time. That is the part that will annoy you.</p>' +
         '<div class="row">' +
-          '<button class="primary" style="flex:1;min-width:180px" id="begin">Let\'s begin</button>' +
-          '<button class="ghost" style="flex:1;min-width:150px" id="scared">I\'m scared</button>' +
+          '<button class="primary has-icon" style="flex:1;min-width:180px" id="begin"><span>Let\'s begin</span>' + WZ.icon("arrow-right") + '</button>' +
+          '<button class="ghost has-icon" style="flex:1;min-width:150px" id="scared">' + WZ.icon("alert-triangle") + '<span>I\'m scared</span></button>' +
         "</div>" +
       "</div>"
     );
@@ -148,12 +148,12 @@
   SCREEN.height = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 01 &mdash; Baseline measurement</p>' +
+        '<p class="eyebrow">' + WZ.icon("ruler") + '<span>Question 01 &mdash; Baseline measurement</span></p>' +
         '<h2 class="q">How tall are you?</h2>' +
         '<p class="sub">Barefoot. In centimetres. The entire model hangs off this one number, so do not do the thing where you add four.</p>' +
         '<div class="measure"><input id="h" type="number" inputmode="numeric" placeholder="185" min="120" max="240" autocomplete="off"><span class="unit">CM</span></div>' +
         '<p class="err" id="he"></p>' +
-        '<button class="primary" id="next" style="width:100%">Lock it in</button>' +
+        '<button class="primary has-icon" id="next" style="width:100%"><span>Lock it in</span>' + WZ.icon("arrow-right") + '</button>' +
       "</div>"
     );
     const inp = document.getElementById("h");
@@ -177,7 +177,7 @@
     const ideal = M.idealFor(S.height);
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Result 01 &mdash; Optimum partner height</p>' +
+        '<p class="eyebrow">' + WZ.icon("ruler") + '<span>Result 01 &mdash; Optimum partner height</span></p>' +
         '<h2 class="q">Here is your number.</h2>' +
         '<div class="readout">' + S.height + " cm &divide; 1.09 =" +
           '<span class="huge">' + ideal + " cm</span>" +
@@ -186,7 +186,7 @@
           "Hard floor <b>" + M.floorFor(S.height) + " cm</b> &mdash; below this, daily friction" +
         "</div>" +
         '<p class="sub">Men\'s stated preference sits at roughly <em>1.09&times;</em> their partner\'s height, which lands the gap near 15 cm. That number is not aesthetic, it is ergonomic: at 15 cm the neck angle when kissing is neutral, her head sits on your chest when hugging, and your walking stride matches. Add a 7 cm heel and the gap drops to 8 &mdash; still reads as "she\'s tall", still nothing strained. It is the one figure that works flat and in heels.</p>' +
-        '<button class="primary" id="n" style="width:100%">Understood. Next.</button>' +
+        '<button class="primary has-icon" id="n" style="width:100%"><span>Understood. Next.</span>' + WZ.icon("arrow-right") + '</button>' +
       "</div>"
     );
     document.getElementById("n").onclick = () => go("obese");
@@ -281,7 +281,7 @@
     const ideal = M.idealFor(S.height);
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 04 &mdash; Manual override</p>' +
+        '<p class="eyebrow">' + WZ.icon("ruler") + '<span>Question 04 &mdash; Manual override</span></p>' +
         '<h2 class="q">You know your number. Want to argue with it?</h2>' +
         '<div class="readout">Model output <b>' + ideal + " cm</b> &mdash; a " + (S.height - ideal) + " cm gap</div>" +
         '<div class="stack">' +
@@ -309,7 +309,7 @@
       const gap = S.height - ideal;
       el(
         '<div class="card">' +
-          '<p class="eyebrow">Question 04b &mdash; Override magnitude</p>' +
+          '<p class="eyebrow">' + WZ.icon("ruler") + '<span>Question 04b &mdash; Override magnitude</span></p>' +
           '<h2 class="q">How much shorter?</h2>' +
           '<p class="sub">Current gap: <em>' + gap + ' cm</em>. Choose carefully.</p>' +
           '<div class="stack">' +
@@ -341,7 +341,7 @@
   SCREEN.soft = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 05 &mdash; Build, first axis</p>' +
+        '<p class="eyebrow">' + WZ.icon("shirt") + '<span>Question 05 &mdash; Build, first axis</span></p>' +
         '<h2 class="q">When you hug her, how much give is there?</h2>' +
         '<p class="sub">This is the most honest question on the form, because nobody has a socially acceptable answer prepared for it. Answer before you think about it.</p>' +
         '<div class="stack">' +
@@ -363,7 +363,7 @@
     const hug = M.softOf(S.soft).hug;
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 06 &mdash; Build, second axis</p>' +
+        '<p class="eyebrow">' + WZ.icon("shirt") + '<span>Question 06 &mdash; Build, second axis</span></p>' +
         '<h2 class="q">And underneath that &mdash; what is doing the work?</h2>' +
         '<p class="sub">You said <em>' + hug + '</em>. Two women can feel identical in a hug and be built completely differently. Softness is one axis; this is the other, and the old version of this quiz collapsed them into one, which is why everybody got the same answer.</p>' +
         '<div class="stack">' +
@@ -382,7 +382,7 @@
   SCREEN.effort = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 07 &mdash; Getting-ready effort</p>' +
+        '<p class="eyebrow">' + WZ.icon("sparkles") + '<span>Question 07 &mdash; Getting-ready effort</span></p>' +
         '<h2 class="q">How much work goes into her face and hair before she leaves the house?</h2>' +
         '<p class="sub">Not how good she looks &mdash; how much <em>labour</em> is involved. A bare-faced girl and a full-glam one can be equally good looking; this is the makeup-and-effort axis, the one that actually separates a Clean Girl from a Baddie.</p>' +
         '<div class="stack">' +
@@ -402,7 +402,7 @@
   SCREEN.room = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 08 &mdash; Temperament</p>' +
+        '<p class="eyebrow">' + WZ.icon("users") + '<span>Question 08 &mdash; Temperament</span></p>' +
         '<h2 class="q">You walk into a party together. Ninety seconds later, where is she?</h2>' +
         '<p class="sub">Not a shyness question &mdash; a gravity one. This single answer splits the Goth from the Baddie and the Nerd from the Comfort Class harder than anything else on the form.</p>' +
         '<div class="stack">' +
@@ -425,7 +425,7 @@
   function sliderScreen(o) {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">Question 0' + o.n + ' &mdash; Matrix axis</p>' +
+        '<p class="eyebrow">' + WZ.icon(o.key === "hot" ? "flame" : "zap") + '<span>Question 0' + o.n + ' &mdash; Matrix axis</span></p>' +
         '<h2 class="q">' + o.title + "</h2>" +
         '<p class="sub">' + o.sub + "</p>" +
         '<div class="slider-wrap">' +
@@ -437,7 +437,7 @@
           '<div class="ticks"><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span></div>' +
         "</div>" +
         '<p class="sub" style="font-size:15px">' + o.note + "</p>" +
-        '<button class="primary" id="n" style="width:100%">Set it</button>' +
+        '<button class="primary has-icon" id="n" style="width:100%"><span>Set it</span>' + WZ.icon("arrow-right") + '</button>' +
       "</div>"
     );
     const sr = document.getElementById("sr");
@@ -524,8 +524,8 @@
     const v = M.evaluate(S);
 
     const flagsHTML = S.flags.length
-      ? '<div class="block"><p class="panel-h">Flags on file</p><div class="flags">' +
-        S.flags.map(f => '<div class="flag"><b>' + f[0] + "</b><span>" + f[1] + "</span></div>").join("") +
+      ? '<div class="block"><p class="panel-h">' + WZ.icon("alert-triangle") + '<span>Flags on file</span></p><div class="flags">' +
+        S.flags.map(f => '<div class="flag">' + WZ.icon("alert-triangle") + '<span><b>' + f[0] + "</b> " + f[1] + "</span></div>").join("") +
         "</div></div>"
       : "";
 
@@ -554,23 +554,23 @@
         "</div></div>" +
 
         '<div class="specs">' +
-          '<div class="spec"><div class="k">Target height</div><div class="v">' + v.target + "<small>" + v.lo + "&ndash;" + v.hi + " cm band</small></div></div>" +
-          '<div class="spec"><div class="k">Height gap</div><div class="v">' + v.gap + "<small>cm below you</small></div></div>" +
-          '<div class="spec"><div class="k">Build</div><div class="v" style="font-size:17px">' + v.soft.label + "<small>" + v.form.note + "</small></div></div>" +
-          '<div class="spec"><div class="k">Effort</div><div class="v" style="font-size:17px">' + v.effort.label + "<small>" + v.room.label + "</small></div></div>" +
-          '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">Matrix position</div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
-          '<div class="spec"><div class="k">Rarity</div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
-          '<div class="spec"><div class="k">Search time</div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("ruler") + '<span>Target height</span></div><div class="v">' + v.target + "<small>" + v.lo + "&ndash;" + v.hi + " cm band</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("ruler") + '<span>Height gap</span></div><div class="v">' + v.gap + "<small>cm below you</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("shirt") + '<span>Build</span></div><div class="v" style="font-size:17px">' + v.soft.label + "<small>" + v.form.note + "</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("sparkles") + '<span>Effort</span></div><div class="v" style="font-size:17px">' + v.effort.label + "<small>" + v.room.label + "</small></div></div>" +
+          '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">' + WZ.icon("target") + '<span>Matrix position</span></div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("hash") + '<span>Rarity</span></div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("clock") + '<span>Search time</span></div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
         "</div>" +
 
         '<div class="block">' +
-          '<p class="panel-h">Where that puts you on the chart</p>' +
+          '<p class="panel-h">' + WZ.icon("target") + '<span>Where that puts you on the chart</span></p>' +
           '<div class="matrix-wrap">' + matrixSVG(S.hot, S.crazy) + "</div>" +
           '<p class="sub" style="margin:14px 0 0;font-size:16px"><strong>' + v.zone.name + ".</strong> " + v.zone.line + "</p>" +
         "</div>" +
 
         '<div class="block">' +
-          '<p class="panel-h">The arithmetic, itemised</p>' +
+          '<p class="panel-h">' + WZ.icon("hash") + '<span>The arithmetic, itemised</span></p>' +
           '<ul class="mathlist">' +
             "<li><span>Height " + v.lo + "&ndash;" + v.hi + ' cm &nbsp;<em style="color:var(--dim)">N(' + M.POP.mu + ", " + M.POP.sd + ")</em></span><span>" + M.pct(v.rare.pH) + "</span></li>" +
             "<li><span>Build: " + v.buildLabel.toLowerCase() + "</span><span>" + M.pct(v.rare.pB) + "</span></li>" +
@@ -588,7 +588,7 @@
         '<div id="shareblock"></div>' +
 
         '<div class="block">' +
-          '<p class="panel-h">Notes for the file</p>' +
+          '<p class="panel-h">' + WZ.icon("info") + '<span>Notes for the file</span></p>' +
           '<p class="sub" style="margin:0 0 14px">' + overrideLine + "</p>" +
           '<p class="sub" style="margin:0 0 14px">Height is a saturated variable. Going from 170 to 178 is a real jump; going from 185 to 193 is close to nothing, and past 195 some samples show a small penalty for looking disproportionate. Which means the height filter belongs at the <em>end</em> of your list, not the front &mdash; it costs nothing to observe from across a room, so screening on it first throws away the pool before you have learned anything expensive: her humour, how she argues, what she does when things go wrong. Those take three meetings to find out. Let those do the narrowing. Height breaks ties.</p>' +
           '<p class="sub" style="margin:0">The steep part of the curve is elsewhere and it is all fixable: how your clothes actually fit, whether you stand up straight, body composition, and how many conversations you start in a month. That last one is the whole model. A perfect filter over zero input returns zero.</p>' +
@@ -603,8 +603,8 @@
         "</div>" +
 
         '<div class="row">' +
-          '<button class="primary" id="again" style="flex:1;min-width:170px">Run it again</button>' +
-          '<button class="ghost" id="tweak" style="flex:1;min-width:170px">Change hot &amp; crazy</button>' +
+          '<button class="primary has-icon" id="again" style="flex:1;min-width:170px">' + WZ.icon("rotate-cw") + '<span>Run it again</span></button>' +
+          '<button class="ghost has-icon" id="tweak" style="flex:1;min-width:170px">' + WZ.icon("sliders-horizontal") + '<span>Change hot &amp; crazy</span></button>' +
         "</div>" +
       "</div>"
     );
@@ -625,25 +625,25 @@
     if (!host) return;
     if (!DB.enabled) {
       host.innerHTML =
-        '<div class="block"><p class="panel-h">Sharing</p>' +
+        '<div class="block"><p class="panel-h">' + WZ.icon("share-2") + '<span>Sharing</span></p>' +
         '<p class="sub" style="margin:0;font-size:15px">Running without a backend, so this file lives only in your browser. Screenshot it like a caveman.</p></div>';
       return;
     }
     if (!code) {
       host.innerHTML =
-        '<div class="share"><p class="panel-h">Filing your case&hellip;</p>' +
+        '<div class="share"><p class="panel-h">' + WZ.icon("share-2") + '<span>Filing your case&hellip;</span></p>' +
         '<p class="sub" style="margin:0;font-size:15px">Generating a share code.</p></div>';
       return;
     }
     const url = location.origin + location.pathname + "?r=" + code;
     host.innerHTML =
       '<div class="share">' +
-        '<p class="panel-h">Case filed &mdash; send it to the group</p>' +
+        '<p class="panel-h">' + WZ.icon("share-2") + '<span>Case filed &mdash; send it to the group</span></p>' +
         '<div class="code-row"><span class="code">' + code + "</span></div>" +
         '<p class="link" id="shurl">' + esc(url) + "</p>" +
         '<div class="row">' +
-          '<button class="small" id="copylink" style="flex:1">Copy link</button>' +
-          '<button class="small" id="copytext" style="flex:1">Copy the brag</button>' +
+          '<button class="small has-icon" id="copylink" style="flex:1">' + WZ.icon("link-2") + '<span>Copy link</span></button>' +
+          '<button class="small has-icon" id="copytext" style="flex:1">' + WZ.icon("copy") + '<span>Copy the brag</span></button>' +
         "</div>" +
         '<p class="msg" id="shmsg"></p>' +
       "</div>";
@@ -679,7 +679,7 @@
 
     host.innerHTML =
       '<div class="block">' +
-        '<p class="panel-h">How the room compares &mdash; ' + total + " completed file" + (total === 1 ? "" : "s") + "</p>" +
+        '<p class="panel-h">' + WZ.icon("users") + "<span>How the room compares &mdash; " + total + " completed file" + (total === 1 ? "" : "s") + "</span></p>" +
         '<div class="bignum">' +
           (st.rarer_than !== null && st.rarer_than !== undefined
             ? '<div><div class="n">' + st.rarer_than + '%</div><div class="l">Pickier than</div></div>' : "") +
@@ -687,7 +687,7 @@
           '<div><div class="n">' + (st.cops || 0) + '</div><div class="l">Cops called</div></div>' +
           '<div><div class="n">' + (st.handsome || 0) + '</div><div class="l">Self-declared handsome</div></div>' +
         "</div>" +
-        '<p class="panel-h" style="margin-bottom:10px">Zone distribution</p>' +
+        '<p class="panel-h" style="margin-bottom:10px">' + WZ.icon("target") + '<span>Zone distribution</span></p>' +
         '<div class="bars">' + bars + "</div>" +
       "</div>";
   }
