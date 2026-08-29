@@ -46,12 +46,12 @@
      pairs below); the glass look is a translucent sheen layered on top plus
      a backdrop-filter blur, so it degrades to the old flat panel on browsers
      that don't support backdrop-filter rather than breaking. */
-  --glass-1:rgba(255,255,255,.08);
-  --glass-2:rgba(255,255,255,.02);
-  --glass-border:rgba(255,255,255,.14);
-  --glass-blur:blur(20px) saturate(160%);
-  --panel-a:rgba(36,17,26,.58);
-  --panel2-a:rgba(44,22,34,.6);
+  --glass-1:rgba(255,255,255,.16);
+  --glass-2:rgba(255,255,255,.04);
+  --glass-border:rgba(255,255,255,.24);
+  --glass-blur:blur(28px) saturate(180%);
+  --panel-a:rgba(36,17,26,.42);
+  --panel2-a:rgba(44,22,34,.44);
 }
 
 *{box-sizing:border-box;}
@@ -64,8 +64,8 @@ body{
      backdrop-filter over a flat colour has nothing to look "liquid" about. */
   background-image:
     radial-gradient(1100px 620px at 50% -12%, #3A1626 0%, rgba(58,22,38,0) 62%),
-    radial-gradient(640px 520px at 88% 12%, rgba(255,59,92,.16) 0%, rgba(255,59,92,0) 60%),
-    radial-gradient(560px 480px at 6% 74%, rgba(116,214,190,.11) 0%, rgba(116,214,190,0) 62%),
+    radial-gradient(680px 560px at 90% 10%, rgba(255,59,92,.32) 0%, rgba(255,59,92,0) 62%),
+    radial-gradient(600px 520px at 4% 78%, rgba(116,214,190,.24) 0%, rgba(116,214,190,0) 64%),
     repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, rgba(0,0,0,0) 1px 3px);
   background-attachment:fixed;
   color:var(--ink);
@@ -145,7 +145,7 @@ body{
    near the top-left corner, like light catching an edge of poured glass. */
 .card::before,.verdict::before,.block::before,.share::before,.veil-inner::before{
   content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
-  background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 26%);
+  background:linear-gradient(115deg,rgba(255,255,255,.26) 0%,rgba(255,255,255,0) 34%);
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
