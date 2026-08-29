@@ -40,6 +40,18 @@
 
   --maxw:920px;
   --indent:clamp(28px,7vw,104px);
+
+  /* ---- liquid glass ----
+     Every panel keeps its old opaque colour as a fallback (see the rgba
+     pairs below); the glass look is a translucent sheen layered on top plus
+     a backdrop-filter blur, so it degrades to the old flat panel on browsers
+     that don't support backdrop-filter rather than breaking. */
+  --glass-1:rgba(255,255,255,.08);
+  --glass-2:rgba(255,255,255,.02);
+  --glass-border:rgba(255,255,255,.14);
+  --glass-blur:blur(20px) saturate(160%);
+  --panel-a:rgba(36,17,26,.58);
+  --panel2-a:rgba(44,22,34,.6);
 }
 
 *{box-sizing:border-box;}
@@ -47,15 +59,26 @@
 body{
   margin:0;
   background:var(--ground);
+  /* Two soft colour blobs behind everything, pinned to the viewport, are
+     what the glass panels actually pick up as they blur — without them a
+     backdrop-filter over a flat colour has nothing to look "liquid" about. */
   background-image:
     radial-gradient(1100px 620px at 50% -12%, #3A1626 0%, rgba(58,22,38,0) 62%),
+    radial-gradient(640px 520px at 88% 12%, rgba(255,59,92,.16) 0%, rgba(255,59,92,0) 60%),
+    radial-gradient(560px 480px at 6% 74%, rgba(116,214,190,.11) 0%, rgba(116,214,190,0) 62%),
     repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, rgba(0,0,0,0) 1px 3px);
+  background-attachment:fixed;
   color:var(--ink);
   font-family:var(--f-body);
   font-size:17px;
   line-height:1.62;
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
+}
+@media (max-width:759px){
+  /* fixed backgrounds repaint on every scroll frame on some mobile browsers —
+     not worth the jank on the device where it'll be felt most. */
+  body{background-attachment:scroll;}
 }
 
 /* ---------- shell ---------- */
@@ -110,10 +133,19 @@ body{
 
 /* ---------- card ---------- */
 .card{
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-doc);
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),var(--panel-a);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);border-radius:var(--r-doc);
   padding:30px 28px 28px;
   box-shadow:var(--shadow-card);
   animation:rise .34s cubic-bezier(.2,.7,.3,1) both;
+}
+/* The one light "reflection" every glass panel gets: a soft diagonal streak
+   near the top-left corner, like light catching an edge of poured glass. */
+.card::before,.verdict::before,.block::before,.share::before,.veil-inner::before{
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 26%);
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
@@ -151,12 +183,19 @@ h2.q{
 
 button{
   font-family:var(--f-body);font-size:16.5px;color:var(--ink);
-  background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-ui);
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),var(--panel2-a);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);border-radius:var(--r-ui);
   padding:13px 16px;text-align:left;cursor:pointer;line-height:1.35;
-  transition:border-color .16s, background .16s, transform .08s, box-shadow .16s;
+  transition:border-color .16s, background .16s, transform .16s ease, box-shadow .2s;
 }
-button:hover{border-color:var(--signal);background:#331A26;}
-button:active{transform:translateY(1px);}
+button:hover{
+  border-color:var(--signal);
+  background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.03)),var(--panel2-a);
+  transform:translateY(-2px) scale(1.012);
+  box-shadow:0 14px 30px -18px rgba(0,0,0,.75), 0 0 0 1px rgba(255,59,92,.22);
+}
+button:active{transform:translateY(0) scale(.99);}
 button:focus-visible{outline:2px solid var(--data);outline-offset:2px;}
 button .hint{
   display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;
@@ -181,13 +220,22 @@ button.primary::after{
   transform:translateX(-130%);
 }
 button.primary:hover::after{transition:transform .65s ease;transform:translateX(130%);}
-button.primary:hover{background:#FF5470;border-color:#FF5470;box-shadow:var(--shadow-glow);}
+button.primary:hover{
+  background:#FF5470;border-color:#FF5470;
+  box-shadow:var(--shadow-glow);transform:translateY(-2px) scale(1.012);
+}
+button.primary:active{transform:translateY(0) scale(.99);}
 button.ghost{
-  background:transparent;text-align:center;border-radius:var(--r-ui);
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2));
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  text-align:center;border-radius:var(--r-ui);border-color:var(--glass-border);
   font-family:var(--f-display);text-transform:uppercase;letter-spacing:.03em;
   font-size:19px;padding:15px 26px;color:var(--muted);
 }
-button.ghost:hover{color:var(--ink);}
+button.ghost:hover{
+  color:var(--ink);border-color:rgba(255,255,255,.28);
+  background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.03));
+}
 button.small{
   font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;
   text-transform:uppercase;padding:10px 14px;text-align:center;
@@ -266,7 +314,10 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
 }
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .veil-inner{
-  width:100%;max-width:520px;background:var(--panel);
+  position:relative;overflow:hidden;
+  width:100%;max-width:520px;
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),var(--panel-a);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
   border:1px solid var(--signal);border-radius:var(--r-doc);padding:26px 24px 24px;
   animation:pop .28s cubic-bezier(.2,.8,.3,1) both;
   box-shadow:0 0 0 1px rgba(255,59,92,.18), 0 40px 90px -40px #000;
@@ -319,9 +370,22 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
 
 /* ---------- dossier ---------- */
 .dossier{display:flex;flex-direction:column;gap:16px;}
+/* Every direct panel of the result screen floats up on its own beat instead
+   of all landing at once — the closest a plain CSS page gets to a Framer
+   Motion stagger without shipping React for one screen. */
+.dossier>*{animation:rise .42s cubic-bezier(.2,.7,.3,1) both;}
+.dossier>*:nth-child(1){animation-delay:.02s;}
+.dossier>*:nth-child(2){animation-delay:.09s;}
+.dossier>*:nth-child(3){animation-delay:.16s;}
+.dossier>*:nth-child(4){animation-delay:.23s;}
+.dossier>*:nth-child(5){animation-delay:.30s;}
+.dossier>*:nth-child(n+6){animation-delay:.36s;}
 .verdict{
-  border:1px solid var(--line);border-radius:var(--r-doc);
-  background:linear-gradient(180deg,var(--panel-2),var(--panel));padding:var(--pad-panel);
+  position:relative;overflow:hidden;
+  border:1px solid var(--glass-border);border-radius:var(--r-doc);
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),linear-gradient(180deg,var(--panel2-a),var(--panel-a));
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  padding:var(--pad-panel);
   box-shadow:var(--shadow-panel);
 }
 .verdict .type{
@@ -350,11 +414,19 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
 
 .specs{
   display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
-  background:var(--line);border:1px solid var(--line);border-radius:var(--r-doc);overflow:hidden;
+  background:var(--glass-border);border:1px solid var(--glass-border);border-radius:var(--r-doc);overflow:hidden;
   box-shadow:var(--shadow-panel);
 }
 @media (min-width:540px){ .specs{grid-template-columns:repeat(3,1fr);} }
-.spec{background:var(--panel);padding:14px 16px;}
+.spec{
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),var(--panel-a);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  padding:14px 16px;transition:background .2s,transform .2s,box-shadow .2s;
+}
+.spec:hover{
+  background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.03)),var(--panel-a);
+  transform:translateY(-2px);box-shadow:0 12px 26px -16px rgba(0,0,0,.75);
+}
 .spec .k{
   font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--dim);margin-bottom:5px;
@@ -376,7 +448,10 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
 }
 .panel-h .icon{font-size:13px;color:var(--data);flex:none;}
 .block{
-  border:1px solid var(--line);border-radius:var(--r-doc);background:var(--panel);
+  position:relative;overflow:hidden;
+  border:1px solid var(--glass-border);border-radius:var(--r-doc);
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),var(--panel-a);
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
   padding:var(--pad-panel);box-shadow:var(--shadow-panel);
 }
 .matrix-wrap{overflow-x:auto;}
@@ -403,8 +478,11 @@ input[type=range]:focus-visible{outline:2px solid var(--data);outline-offset:4px
 
 /* ---------- share ---------- */
 .share{
+  position:relative;overflow:hidden;
   border:1px solid var(--signal);border-radius:var(--r-doc);
-  background:linear-gradient(180deg,rgba(255,59,92,.09),var(--panel));padding:var(--pad-panel);
+  background:linear-gradient(160deg,var(--glass-1),var(--glass-2)),linear-gradient(180deg,rgba(255,59,92,.14),var(--panel-a));
+  -webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  padding:var(--pad-panel);
   box-shadow:var(--shadow-panel);
 }
 .code-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
