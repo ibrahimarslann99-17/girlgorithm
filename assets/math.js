@@ -73,30 +73,43 @@ WZ.math = (function () {
   const HOT   = { mu: 5.0, sd: 1.6 };
   const CRAZY = { mu: 6.4, sd: 1.5 };
 
-  /* Archetypes, as points in 6-D spec space: softness, form, effort, room,
-     hot, crazy — every axis is something the user actually chooses. Height is
-     deliberately absent: it is fixed per user, so including it pinned the
-     result. Classification is nearest neighbour, never a dice roll. `cuts` are
-     each type's distance terciles over all 7,056 reachable answer
-     combinations, so its three portraits come up in even thirds. */
+  /* Archetypes, as points in 7-D spec space: softness, form, effort, room,
+     height z-score, hot, crazy — every axis is something the user actually
+     chooses. Classification is nearest neighbour, never a dice roll.
+
+     `cuts` are each type's distance terciles, but — this is the fix for the
+     "everyone gets the textbook portrait" bug five separate testers hit,
+     0/5 ever seeing variant 2 or 3 — measured over a REALISTIC population of
+     answers, not a uniform grid. The original cuts were terciles over all
+     7,056 combinations weighted equally, which means a soft=3/muscle combo
+     with a real-world probability of 0.007 counted exactly as much as the
+     soft=2/neutral combo at 0.209 — 30x more common in practice. That
+     inflated the reference distance spread far past what real answers ever
+     produce, so everyone landed under cuts[0]. Recomputed in
+     scripts/compute_cuts.js by Monte Carlo sampling from the SAME weights
+     this file already documents (BUILD_P, EFFORT.p, ROOM.p, HOT, CRAZY) plus
+     a reasonable height/override model, then taking terciles only among the
+     samples actually assigned to each type. Re-run that script and paste its
+     output here if any axis weight, TYPES centroid, or probability table
+     above changes — these numbers are only correct for the current model. */
   const TYPES = [
-    { key: "model", cuts: [1.93, 2.42], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, heightZ: +0.9, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.396, 1.727], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, heightZ: +0.9, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "goth", cuts: [2.05, 2.59], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, heightZ: +0.3, hot: 7.5, crazy: 9.0,
+    { key: "goth", cuts: [1.768, 2.243], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, heightZ: +0.3, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "corporate", cuts: [2.04, 2.54], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, heightZ: +0.5, hot: 7.2, crazy: 5.2,
+    { key: "corporate", cuts: [1.646, 2.166], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, heightZ: +0.5, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [2.02, 2.52], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, heightZ: -0.2, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [1.721, 2.121], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, heightZ: -0.2, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "cleangirl", cuts: [2.02, 2.50], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, heightZ:  0.0, hot: 7.0, crazy: 4.5,
+    { key: "cleangirl", cuts: [1.346, 1.725], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, heightZ:  0.0, hot: 7.0, crazy: 4.5,
       blurb: "Glowing skin, slicked-back bun, small gold hoops, nothing on her that looks like it took effort — because the effort went into sleep, water and a skincare shelf you will not be allowed to touch. Looks identical at 7am and at a wedding. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.98, 2.47], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, heightZ: -0.3, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [1.684, 2.019], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, heightZ: -0.3, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "gymgirl", cuts: [1.92, 2.41], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, heightZ: +0.4, hot: 7.8, crazy: 6.2,
+    { key: "gymgirl", cuts: [1.677, 2.127], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, heightZ: +0.4, hot: 7.8, crazy: 6.2,
       blurb: "Trains five days a week and can tell you exactly why. Meal-prepped, disciplined, in a matching set more often than in clothes. The most reliable person on this chart and the one most likely to out-lift you. Your gym membership is about to start getting used." },
-    { key: "grunge", cuts: [2.11, 2.59], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, heightZ: -0.1, hot: 6.8, crazy: 8.9,
+    { key: "grunge", cuts: [1.791, 2.207], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, heightZ: -0.1, hot: 6.8, crazy: 8.9,
       blurb: "Flannel, ripped jeans, combat boots, a band on the shirt you have not heard of. Puts in no visible effort and is somehow the most magnetic person in the room. Chaotic in a way that is extremely fun for about eight months." },
-    { key: "comfort", cuts: [1.58, 1.98], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, heightZ: -0.5, hot: 5.5, crazy: 5.5,
+    { key: "comfort", cuts: [1.597, 1.953], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, heightZ: -0.5, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 
@@ -176,8 +189,10 @@ WZ.math = (function () {
     best.fit = Math.max(31, Math.round(100 * Math.exp(-best.d / 4.2)));
 
     /* Which of the type's three portraits to show. The cuts on each archetype
-       are its distance terciles measured over the whole input space, so the
-       three variants come up in even thirds and none is unreachable. */
+       are its distance terciles measured over a realistically-weighted
+       population of answers (see the TYPES comment above and
+       scripts/compute_cuts.js), so the three variants come up in even
+       thirds among real users, not just among every combination on paper. */
     best.note = buildNote(best.t, soft, form, effort, room);
     const c = best.t.cuts;
     best.variant = best.d <= c[0] ? 0 : best.d <= c[1] ? 1 : 2;
