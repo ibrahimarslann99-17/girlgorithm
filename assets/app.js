@@ -10,6 +10,30 @@
   /* Image paths live in images.js — the one file to edit when renders arrive. */
   const IMG = window.WZ_IMG || {};
 
+  /* --- duotone filter: sync #duotone's channel tables to the CSS variables -
+     style.css owns --dt-shadow/--dt-light; this just resolves whatever
+     colour syntax is in there (hex, rgb(), a var() alias) to 0..1 floats and
+     writes them into the SVG filter defined in index.html. Runs once, before
+     any portrait is drawn. */
+  (function initDuotone() {
+    function resolve(value) {
+      const tmp = document.createElement("div");
+      tmp.style.color = value;
+      document.body.appendChild(tmp);
+      const rgb = getComputedStyle(tmp).color;
+      document.body.removeChild(tmp);
+      const m = rgb.match(/[\d.]+/g) || [20, 17, 14];
+      return m.map(Number);
+    }
+    const root = getComputedStyle(document.documentElement);
+    const shadow = resolve(root.getPropertyValue("--dt-shadow").trim() || "#14110E");
+    const light = resolve(root.getPropertyValue("--dt-light").trim() || "#EFEAE0");
+    ["R", "G", "B"].forEach((ch, i) => {
+      const el = document.getElementById("dt" + ch);
+      if (el) el.setAttribute("tableValues", (shadow[i] / 255).toFixed(3) + " " + (light[i] / 255).toFixed(3));
+    });
+  })();
+
   /* --- state ------------------------------------------------------------- */
 
   const BLANK = {
@@ -50,14 +74,21 @@
   const el = html => { stage.innerHTML = html; };
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
 
-  /* slot("cops") for a single image, slot("model", 2) for an archetype variant */
+  /* slot("cops") for a single image, slot("model", 2) for an archetype variant.
+     Archetype portraits get the duotone+grain treatment and a thin ink frame;
+     interstitial memes are printed as-is — recolouring a meme is not a
+     presentation-layer change, it's editing the joke. */
   function slot(key, label, cls, variant) {
     const entry = IMG[key];
     const src = Array.isArray(entry) ? entry[variant || 0] : entry;
     const k = "slot " + (cls || "");
-    return src
-      ? '<div class="' + k + ' filled"><img src="' + src + '" alt="' + esc(label) + '" decoding="async"></div>'
-      : '<div class="' + k + '">Image slot &mdash; ' + esc(label) + "</div>";
+    const isPortrait = /\bportrait\b/.test(cls || "");
+    if (!src) return '<div class="' + k + '">Image slot &mdash; ' + esc(label) + "</div>";
+    const img = '<img src="' + src + '" alt="' + esc(label) + '" decoding="async">';
+    const body = isPortrait
+      ? '<div class="plate-frame"><div class="duotone">' + img + '<i class="grain" aria-hidden="true"></i></div></div>'
+      : img;
+    return '<div class="' + k + ' filled">' + body + "</div>";
   }
 
   /* --- interstitial ------------------------------------------------------ */
@@ -505,6 +536,72 @@
     });
   };
 
+  /* --- field-guide plate copy (presentation only — never read by math.js) -
+     One Latin joke name + four field notes per archetype. Purely cosmetic:
+     classify()/rarity() never see this object. */
+  const PLATE = {
+    model:      { latin: "Sartorius photogenicus",
+      range: "Fashion weeks, agency waiting rooms, any city with decent light.",
+      habitat: "Perches near mirrors and ring lights; nests in a closet larger than your apartment.",
+      identification: "Cheekbones visible across the room, even in bad lighting. Diet: one salad in public, a whole cake at home.",
+      call: "“I have a shoot at 6am” — delivered as greeting and warning at once." },
+    goth:       { latin: "Umbra bibliophila",
+      range: "Basements, poetry nights, the one bar with no windows.",
+      habitat: "Thrives in low light; visibly wilts under fluorescents.",
+      identification: "All-black plumage; a cat, also named after a dead poet, is never far off.",
+      call: "A one-word text at 1am that ends an argument you were winning." },
+    corporate:  { latin: "Loricata ambitiosa",
+      range: "Boardrooms, panel discussions, the good half of a co-working space.",
+      habitat: "Migrates daily between the office and a Pilates studio; rarely seen without a laptop bag.",
+      identification: "Blazer fitted like armour; replies to email within the hour, including yours.",
+      call: "“Send me your calendar” — the most seductive sentence in her vocabulary." },
+    nerd:       { latin: "Vitrea loquax",
+      range: "Library basements, Discord servers, the good panel at the con.",
+      habitat: "Found wherever the wifi is strongest and the lighting is worst.",
+      identification: "Glasses; a strong opinion on a game you have never heard of; visibly more comfortable than five minutes ago.",
+      call: "“Wait, you actually want to hear about this?” — followed by forty-five uninterrupted minutes." },
+    cleangirl:  { latin: "Nitor minimus",
+      range: "Pilates studios, the good juice bar, anywhere with a slicked-back bun and flattering light.",
+      habitat: "Found in identical condition at 7am and at a wedding; habitat does not alter plumage.",
+      identification: "Skin that looks bare and costs four figures a month to look that bare; small gold hoops.",
+      call: "“Oh, this? I just drink a lot of water.” A lie, told kindly." },
+    baddie:     { latin: "Ornatus maximus",
+      range: "Wherever the ring light reaches; peak sightings at brunch and in the group chat at 2am.",
+      habitat: "Requires two hours' notice before appearing in public; territorial about her seat by the mirror.",
+      identification: "Nails first, everything else after. Phone permanently at 9% battery.",
+      call: "An eleven-minute voice note that somehow contains no new information." },
+    gymgirl:    { latin: "Musculus matutinus",
+      range: "5am at the squat rack; anywhere selling a $14 smoothie.",
+      habitat: "Colonises the gym before sunrise; meal-preps on Sundays like a religious observance.",
+      identification: "Matching sets more often than regular clothes. Can, and will, out-lift you.",
+      call: "“Leg day tomorrow, you in?” — not a question, a recruitment." },
+    grunge:     { latin: "Flannela indifferens",
+      range: "The back of the venue, house shows, wherever the flannel is.",
+      habitat: "Nests in secondhand denim; avoids direct light and small talk in equal measure.",
+      identification: "A band t-shirt you don't recognise; combat boots regardless of season.",
+      call: "A shrug that somehow, unmistakably, means yes." },
+    comfort:    { latin: "Sinus calidus",
+      range: "The kitchen, mostly; anywhere there's a couch and something in the oven.",
+      habitat: "Low-maintenance by nature; migrates only for family dinners and the occasional group trip.",
+      identification: "Feeds you before asking your name. Your friends will imprint on her immediately.",
+      call: "“Are you hungry? You look hungry.”" },
+    oldmoney:   { latin: "Pecunia tacita",
+      range: "Wherever the family has owned the property since before it was fashionable.",
+      habitat: "Rarely posts, never explains itself, always seated with excellent posture.",
+      identification: "No visible logos anywhere. A signet ring that predates her.",
+      call: "She doesn't call. She simply expects you to have already known." }
+  };
+  function fieldsHTML(key) {
+    const p = PLATE[key];
+    if (!p) return "";
+    return '<dl class="fields">' +
+      '<div class="field"><dt>Range</dt><dd>' + p.range + "</dd></div>" +
+      '<div class="field"><dt>Habitat</dt><dd>' + p.habitat + "</dd></div>" +
+      '<div class="field"><dt>Identification</dt><dd>' + p.identification + "</dd></div>" +
+      '<div class="field"><dt>Mating call</dt><dd>' + p.call + "</dd></div>" +
+    "</dl>";
+  }
+
   /* --- 13 emphasis (flavor only — never read by math.js) ------------------ */
   const EMPHASIS_LBL = {
     structure: "Sharp lines", waist: "An hourglass, on purpose",
@@ -608,49 +705,51 @@
     const W = 520, H = 430, L = 54, R = 22, T = 26, B = 44;
     const x = v => L + (v - 1) / 9 * (W - L - R);
     const y = v => H - B - (v - 4) / 6 * (H - T - B);
+    const INK = "#14110E", SPOT = "#B4472C", PAPER = "#EFEAE0";
+    const MONO = "IBM Plex Mono, monospace", DISPLAY = "Fraunces, serif";
     const zones = [
-      { x1:1, x2:5,  y1:4,   y2:10,  label:"NO GO ZONE",  fill:"rgba(255,59,92,.07)" },
-      { x1:5, x2:10, y1:8.2, y2:10,  label:"DANGER ZONE", fill:"rgba(255,59,92,.13)" },
-      { x1:5, x2:8,  y1:4,   y2:8.2, label:"FUN ZONE",    fill:"rgba(255,255,255,.025)" },
-      { x1:8, x2:10, y1:7,   y2:8.2, label:"DATE ZONE",   fill:"rgba(116,214,190,.08)" },
-      { x1:8, x2:10, y1:5,   y2:7,   label:"WIFE ZONE",   fill:"rgba(116,214,190,.14)" },
-      { x1:8, x2:10, y1:4,   y2:5,   label:"UNICORN",     fill:"rgba(255,176,32,.12)" }
+      { x1:1, x2:5,  y1:4,   y2:10,  label:"NO GO ZONE",  fill:"rgba(180,71,44,.08)" },
+      { x1:5, x2:10, y1:8.2, y2:10,  label:"DANGER ZONE", fill:"rgba(180,71,44,.16)" },
+      { x1:5, x2:8,  y1:4,   y2:8.2, label:"FUN ZONE",    fill:"rgba(20,17,14,.03)" },
+      { x1:8, x2:10, y1:7,   y2:8.2, label:"DATE ZONE",   fill:"rgba(20,17,14,.06)" },
+      { x1:8, x2:10, y1:5,   y2:7,   label:"WIFE ZONE",   fill:"rgba(20,17,14,.10)" },
+      { x1:8, x2:10, y1:4,   y2:5,   label:"UNICORN",     fill:"rgba(180,71,44,.13)" }
     ];
     let s = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Hot Crazy Matrix with your position plotted">' +
       '<defs><pattern id="hatch" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">' +
-      '<line x1="0" y1="0" x2="0" y2="9" stroke="#FF3B5C" stroke-opacity=".22" stroke-width="1.6"/></pattern></defs>';
+      '<line x1="0" y1="0" x2="0" y2="9" stroke="' + SPOT + '" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>';
 
     zones.forEach(z => {
       s += '<rect x="' + x(z.x1) + '" y="' + y(z.y2) + '" width="' + (x(z.x2) - x(z.x1)) +
-           '" height="' + (y(z.y1) - y(z.y2)) + '" fill="' + z.fill + '" stroke="#45222E" stroke-width="1"/>';
+           '" height="' + (y(z.y1) - y(z.y2)) + '" fill="' + z.fill + '" stroke="' + INK + '" stroke-opacity=".16" stroke-width="1"/>';
     });
     s += '<rect x="' + x(1) + '" y="' + y(10) + '" width="' + (x(5) - x(1)) +
          '" height="' + (y(4) - y(10)) + '" fill="url(#hatch)"/>';
     zones.forEach(z => {
       const cx = (x(z.x1) + x(z.x2)) / 2, cy = (y(z.y1) + y(z.y2)) / 2;
-      s += '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" letter-spacing="1.4" fill="#B49AA2">' + z.label + "</text>";
+      s += '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle" font-family="' + MONO + '" font-size="10.5" letter-spacing="1.4" fill="' + INK + '" fill-opacity=".55">' + z.label + "</text>";
     });
-    s += '<line x1="' + x(1) + '" y1="' + y(4) + '" x2="' + x(10) + '" y2="' + y(10) + '" stroke="#F6EAE5" stroke-width="2.5" stroke-opacity=".8"/>';
-    s += '<text x="' + x(6.6) + '" y="' + y(7.9) + '" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.6" fill="#F6EAE5" fill-opacity=".65" transform="rotate(-25.5 ' + x(6.6) + " " + y(7.9) + ')">HOT CRAZY LINE</text>';
-    s += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="#45222E"/>' +
-         '<line x1="' + L + '" y1="' + T + '" x2="' + L + '" y2="' + (H - B) + '" stroke="#45222E"/>';
+    s += '<line x1="' + x(1) + '" y1="' + y(4) + '" x2="' + x(10) + '" y2="' + y(10) + '" stroke="' + INK + '" stroke-width="1.75" stroke-opacity=".8"/>';
+    s += '<text x="' + x(6.6) + '" y="' + y(7.9) + '" font-family="' + MONO + '" font-size="9.5" letter-spacing="1.6" fill="' + INK + '" fill-opacity=".55" transform="rotate(-25.5 ' + x(6.6) + " " + y(7.9) + ')">HOT CRAZY LINE</text>';
+    s += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="' + INK + '" stroke-opacity=".3"/>' +
+         '<line x1="' + L + '" y1="' + T + '" x2="' + L + '" y2="' + (H - B) + '" stroke="' + INK + '" stroke-opacity=".3"/>';
     for (let i = 1; i <= 10; i++)
-      s += '<text x="' + x(i) + '" y="' + (H - B + 17) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#7E656E">' + i + "</text>";
+      s += '<text x="' + x(i) + '" y="' + (H - B + 17) + '" text-anchor="middle" font-family="' + MONO + '" font-size="10" fill="' + INK + '" fill-opacity=".45">' + i + "</text>";
     for (let j = 4; j <= 10; j++)
-      s += '<text x="' + (L - 10) + '" y="' + (y(j) + 3.5) + '" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#7E656E">' + j + "</text>";
-    s += '<text x="' + ((L + W - R) / 2) + '" y="' + (H - 6) + '" text-anchor="middle" font-family="Anton, sans-serif" font-size="15" letter-spacing="3" fill="#B49AA2">HOT</text>';
-    s += '<text x="14" y="' + ((T + H - B) / 2) + '" text-anchor="middle" font-family="Anton, sans-serif" font-size="15" letter-spacing="3" fill="#B49AA2" transform="rotate(-90 14 ' + ((T + H - B) / 2) + ')">CRAZY</text>';
+      s += '<text x="' + (L - 10) + '" y="' + (y(j) + 3.5) + '" text-anchor="end" font-family="' + MONO + '" font-size="10" fill="' + INK + '" fill-opacity=".45">' + j + "</text>";
+    s += '<text x="' + ((L + W - R) / 2) + '" y="' + (H - 6) + '" text-anchor="middle" font-family="' + DISPLAY + '" font-weight="600" font-size="15" letter-spacing="3" fill="' + INK + '" fill-opacity=".55">HOT</text>';
+    s += '<text x="14" y="' + ((T + H - B) / 2) + '" text-anchor="middle" font-family="' + DISPLAY + '" font-weight="600" font-size="15" letter-spacing="3" fill="' + INK + '" fill-opacity=".55" transform="rotate(-90 14 ' + ((T + H - B) / 2) + ')">CRAZY</text>';
 
     const px = x(hot), py = y(crazy);
     const ty = (crazy <= 8 ? py - 19 : py + 27);
     const tw = 118, th = 15;
     const tx = Math.min(Math.max(px, L + tw / 2 + 2), W - R - tw / 2 - 2);
-    s += '<line x1="' + px + '" y1="' + (H - B) + '" x2="' + px + '" y2="' + py + '" stroke="#FF3B5C" stroke-width="1" stroke-dasharray="3 3" stroke-opacity=".6"/>' +
-         '<line x1="' + L + '" y1="' + py + '" x2="' + px + '" y2="' + py + '" stroke="#FF3B5C" stroke-width="1" stroke-dasharray="3 3" stroke-opacity=".6"/>' +
-         '<circle cx="' + px + '" cy="' + py + '" r="12" fill="#FF3B5C" fill-opacity=".2"/>' +
-         '<circle cx="' + px + '" cy="' + py + '" r="5.5" fill="#FF3B5C" stroke="#24111A" stroke-width="2"/>' +
-         '<rect x="' + (tx - tw / 2) + '" y="' + (ty - th + 3) + '" width="' + tw + '" height="' + th + '" rx="2" fill="#17090F" stroke="#FF3B5C" stroke-opacity=".5"/>' +
-         '<text x="' + tx + '" y="' + (ty - 1) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1" fill="#FF3B5C">YOU WANT (' + hot + ", " + crazy + ")</text>";
+    s += '<line x1="' + px + '" y1="' + (H - B) + '" x2="' + px + '" y2="' + py + '" stroke="' + SPOT + '" stroke-width="1" stroke-dasharray="3 3" stroke-opacity=".7"/>' +
+         '<line x1="' + L + '" y1="' + py + '" x2="' + px + '" y2="' + py + '" stroke="' + SPOT + '" stroke-width="1" stroke-dasharray="3 3" stroke-opacity=".7"/>' +
+         '<circle cx="' + px + '" cy="' + py + '" r="12" fill="' + SPOT + '" fill-opacity=".18"/>' +
+         '<circle cx="' + px + '" cy="' + py + '" r="5.5" fill="' + SPOT + '" stroke="' + PAPER + '" stroke-width="2"/>' +
+         '<rect x="' + (tx - tw / 2) + '" y="' + (ty - th + 3) + '" width="' + tw + '" height="' + th + '" fill="' + PAPER + '" stroke="' + SPOT + '" stroke-opacity=".6"/>' +
+         '<text x="' + tx + '" y="' + (ty - 1) + '" text-anchor="middle" font-family="' + MONO + '" font-size="9.5" letter-spacing="1" fill="' + SPOT + '">YOU WANT (' + hot + ", " + crazy + ")</text>";
     return s + "</svg>";
   }
 
@@ -660,6 +759,8 @@
   SCREEN.result = function (opts) {
     opts = opts || {};
     const v = M.evaluate(S);
+    const plateNo = String(M.TYPES.findIndex(t => t.key === v.type.t.key) + 1).padStart(2, "0");
+    const latin = (PLATE[v.type.t.key] || {}).latin || "";
 
     const flagsHTML = S.flags.length
       ? '<div class="block"><p class="panel-h">' + WZ.icon("alert-triangle") + '<span>Flags on file</span></p><div class="flags">' +
@@ -681,14 +782,22 @@
         '<div class="verdict-row">' +
         slot(v.type.t.key, v.type.t.name + " — " + v.type.tier.label, "portrait", v.type.variant) +
         '<div class="verdict">' +
-          '<p class="eyebrow">Verdict &mdash; Case <b>CLOSED</b></p>' +
+          '<div class="plate-head">' +
+            '<p class="eyebrow" style="margin:0">Verdict &mdash; Case <b>CLOSED</b></p>' +
+            '<span class="plate-num">Plate N&deg; ' + plateNo + " / " + String(M.TYPES.length).padStart(2, "0") + "</span>" +
+          "</div>" +
           '<div class="type">' + v.type.t.name + "</div>" +
+          (latin ? '<p class="latin">' + latin + "</p>" : "") +
+          fieldsHTML(v.type.t.key) +
           '<p class="tier"><span>' + v.type.tier.label + "</span> " + v.type.tier.note + " " + v.type.note + "</p>" +
           '<p class="stature"><b>' + v.target + " cm</b> &nbsp;·&nbsp; " + v.stature.line + "</p>" +
           '<p class="blurb">' + v.type.t.blurb + "</p>" +
-          '<p class="fit" style="margin:16px 0 0">Spec match <b>' + v.type.fit + "%</b> &nbsp;·&nbsp; nearest of " +
+          '<p class="fit" style="margin:16px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">' +
+            "<span>Spec match <b>" + v.type.fit + "%</b> &nbsp;·&nbsp; nearest of " +
             M.TYPES.length + " archetypes &nbsp;·&nbsp; distance " + v.type.d.toFixed(2) +
-            " &nbsp;·&nbsp; portrait " + (v.type.variant + 1) + " of 3</p>" +
+            " &nbsp;·&nbsp; portrait " + (v.type.variant + 1) + " of 3</span>" +
+            '<span class="stamp">Specimen&nbsp;verified</span>' +
+          "</p>" +
         "</div></div>" +
 
         '<div class="specs">' +
