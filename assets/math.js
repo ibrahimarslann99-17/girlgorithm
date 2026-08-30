@@ -140,26 +140,32 @@ WZ.math = (function () {
      output here if any axis weight, TYPES centroid, or probability table
      above changes — these numbers are only correct for the current model. */
   const TYPES = [
-    { key: "model", cuts: [1.757, 2.037], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, vice: +0.20, tradition: -0.30, visibility: +0.70, family: -0.20, heightZ: +0.9, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.735, 2.023], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, vice: +0.20, tradition: -0.30, visibility: +0.70, family: -0.20, heightZ: +0.9, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "goth", cuts: [2.058, 2.527], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, vice: +0.40, tradition: -0.60, visibility: +0.10, family: -0.50, heightZ: +0.3, hot: 7.5, crazy: 9.0,
+    { key: "goth", cuts: [1.797, 2.34], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, vice: +0.40, tradition: -0.60, visibility: +0.10, family: -0.50, heightZ: +0.3, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "corporate", cuts: [2.005, 2.463], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, vice: +0.10, tradition: -0.30, visibility: +0.20, family: -0.10, heightZ: +0.5, hot: 7.2, crazy: 5.2,
+    { key: "corporate", cuts: [1.866, 2.403], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, vice: +0.10, tradition: -0.30, visibility: +0.20, family: -0.10, heightZ: +0.5, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [1.975, 2.329], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, vice: -0.60, tradition: +0.00, visibility: -0.50, family: +0.20, heightZ: -0.2, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [1.759, 2.158], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, vice: -0.60, tradition: +0.00, visibility: -0.50, family: +0.20, heightZ: -0.2, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "cleangirl", cuts: [1.783, 2.179], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, vice: -0.40, tradition: +0.10, visibility: +0.40, family: +0.30, heightZ:  0.0, hot: 7.0, crazy: 4.5,
+    { key: "cleangirl", cuts: [1.614, 1.938], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, vice: -0.40, tradition: +0.10, visibility: +0.40, family: +0.30, heightZ:  0.0, hot: 7.0, crazy: 4.5,
       blurb: "Glowing skin, slicked-back bun, small gold hoops, nothing on her that looks like it took effort — because the effort went into sleep, water and a skincare shelf you will not be allowed to touch. Looks identical at 7am and at a wedding. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.961, 2.494], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, vice: +0.50, tradition: -0.50, visibility: +0.90, family: -0.10, heightZ: -0.3, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [1.889, 2.492], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, vice: +0.50, tradition: -0.50, visibility: +0.90, family: -0.10, heightZ: -0.3, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "gymgirl", cuts: [2.18, 2.667], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, vice: -0.50, tradition: +0.00, visibility: +0.30, family: +0.00, heightZ: +0.4, hot: 7.8, crazy: 6.2,
+    { key: "gymgirl", cuts: [2.138, 2.601], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, vice: -0.50, tradition: +0.00, visibility: +0.30, family: +0.00, heightZ: +0.4, hot: 7.8, crazy: 6.2,
       blurb: "Trains five days a week and can tell you exactly why. Meal-prepped, disciplined, in a matching set more often than in clothes. The most reliable person on this chart and the one most likely to out-lift you. Your gym membership is about to start getting used." },
-    { key: "grunge", cuts: [2.092, 2.496], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, vice: +0.60, tradition: -0.70, visibility: -0.40, family: -0.60, heightZ: -0.1, hot: 6.8, crazy: 8.9,
+    { key: "grunge", cuts: [1.836, 2.322], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, vice: +0.60, tradition: -0.70, visibility: -0.40, family: -0.60, heightZ: -0.1, hot: 6.8, crazy: 8.9,
       blurb: "Flannel, ripped jeans, combat boots, a band on the shirt you have not heard of. Puts in no visible effort and is somehow the most magnetic person in the room. Chaotic in a way that is extremely fun for about eight months." },
-    { key: "comfort", cuts: [1.951, 2.332], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, vice: -0.30, tradition: +0.40, visibility: -0.50, family: +0.80, heightZ: -0.5, hot: 5.5, crazy: 5.5,
+    { key: "comfort", cuts: [1.876, 2.228], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, vice: -0.30, tradition: +0.40, visibility: -0.50, family: +0.80, heightZ: -0.5, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." },
-    { key: "oldmoney", cuts: [1.789, 2.244], name: "Old Money", soft: 1.4, form: 0.1, effort: 1.4, room: -0.2, vice: 0.1, tradition: 0.7, visibility: -0.7, family: 0.5, heightZ: 0.3, hot: 7.0, crazy: 3.8,
-      blurb: "Never raises her voice, never explains herself twice, has never once posted the vacation. Quiet is not the same as boring; quiet is what you can afford once you stop needing an audience. The calmest person in any room by a wide margin." }
+    { key: "oldmoney", cuts: [1.707, 2.147], name: "Old Money", soft: 1.4, form: 0.1, effort: 1.4, room: -0.2, vice: 0.1, tradition: 0.7, visibility: -0.7, family: 0.5, heightZ: 0.3, hot: 7.0, crazy: 3.8,
+      blurb: "Never raises her voice, never explains herself twice, has never once posted the vacation. Quiet is not the same as boring; quiet is what you can afford once you stop needing an audience. The calmest person in any room by a wide margin." },
+    { key: "coquette", cuts: [1.808, 2.225], name: "The Coquette", soft: 1.5, form: 0.1, effort: 2.7, room: 0.6, vice: -0.20, tradition: -0.40, visibility: +0.70, family: -0.20, heightZ: -0.3, hot: 7.0, crazy: 7.0,
+      blurb: "Bows, blush and a smile that has been rehearsed since middle school. Photographs like a Valentine and negotiates like a hostage situation. Sweet is the costume; underneath is someone who has never once lost an argument she planned in advance." },
+    { key: "academia", cuts: [1.85, 2.263], name: "Dark Academia", soft: 1.2, form: 0.1, effort: 1.0, room: -0.7, vice: +0.60, tradition: +0.90, visibility: -0.80, family: -0.40, heightZ: 0.1, hot: 5.3, crazy: 7.0,
+      blurb: "Tweed, a battered copy of something Russian, and the settled conviction that she was born in the wrong century. Quotes poetry unprompted, cries at an ending she already knew was coming. Brilliant, a little doomed, and you will absolutely read the book before you're allowed to watch the film." },
+    { key: "cottagecore", cuts: [1.884, 2.173], name: "Cottagecore", soft: 2.1, form: 0.4, effort: 0.15, room: -0.3, vice: -0.30, tradition: +0.60, visibility: +0.35, family: +0.70, heightZ: -0.3, hot: 5.0, crazy: 6.0,
+      blurb: "Flower-pressed, sun-freckled, on a first-name basis with her sourdough starter. Talks about the moon cycle like it's a coworker. No makeup, no shoes, opinions about raw milk you did not ask for. Feral in the specific way that involves a very good skincare routine." }
   ];
 
   /* --- normal distribution ------------------------------------------------ */

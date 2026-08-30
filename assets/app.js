@@ -589,7 +589,22 @@
       range: "Wherever the family has owned the property since before it was fashionable.",
       habitat: "Rarely posts, never explains itself, always seated with excellent posture.",
       identification: "No visible logos anywhere. A signet ring that predates her.",
-      call: "She doesn't call. She simply expects you to have already known." }
+      call: "She doesn't call. She simply expects you to have already known." },
+    coquette:   { latin: "Nodus dulcis",
+      range: "Group chats, front rows, wherever the lighting flatters a bow.",
+      habitat: "Nests in blanket forts and vintage dressing tables; migrates in packs of three for photo evidence.",
+      identification: "A bow doing more strategic work than decoration. Eyelashes arrive in a room four seconds before she does.",
+      call: "“Wait, are you mad at me?” — deployed before you were mad, which is the point." },
+    academia:   { latin: "Melancholia erudita",
+      range: "The oldest library in a fifty-mile radius; wherever the coffee is bad and the light is good.",
+      habitat: "Nests in a window seat behind a stack of books she's behind on; keeps a candle she isn't supposed to have.",
+      identification: "Wool, brass buttons, ink-stained fingers. Refers to feelings as a chapter she is still annotating.",
+      call: "A three-paragraph text about a dream she had, sent at 2am, ending in “anyway, how are you.”" },
+    cottagecore:{ latin: "Hortensia feralis",
+      range: "Farmers markets, overgrown gardens, any barn that photographs well.",
+      habitat: "Nests barefoot in tall grass; a jar of something fermenting on every surface she owns.",
+      identification: "Linen, flower crowns, dirt under the nails that somehow still reads as intentional.",
+      call: "An unprompted monologue about her soil's pH that ends up being a metaphor for the relationship." }
   };
   function fieldsHTML(key) {
     const p = PLATE[key];

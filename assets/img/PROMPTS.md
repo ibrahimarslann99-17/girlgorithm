@@ -1,9 +1,10 @@
 # Image generation brief
 
-10 archetypes × 3 variants (30) + 8 interstitials. **38 files total.**
-Model and Baddie (6 files) are already generated — do not regenerate. Old Money
-(3 files) is drafted below and waiting on generation. The rest are already in
-place.
+13 archetypes × 3 variants (39) + 8 interstitials. **47 files total.**
+Model and Baddie (6 files) are already generated — do not regenerate. The
+original 8 archetypes plus Old Money (27 files) are all in place. Coquette,
+Dark Academia and Cottagecore (9 files) are drafted below and waiting on
+generation.
 
 ---
 
@@ -97,9 +98,32 @@ without looking artificial. Nothing about the image should read as "trying" — 
 whole point is that trying is beneath her.
 ```
 
+**TREATMENT E · ROMANTIC** — for Coquette (effort 2.7, the highest of the
+low-body-modification types; the glam is decorative, not sharp)
+```
+Soft key light from camera left with generous fill, a warm rim light. Bright,
+slightly warm colour grade — softer contrast than the Polished treatment,
+nothing hard-edged. f/2.5. Deliberately, elaborately styled: hair curled, a
+considered bow or ribbon somewhere on the outfit, glossy lips. The styling
+reads as decorative and performed-sweet rather than sharp or severe — this is
+softness as a deliberate choice, not an accident. Retouched to flawless.
+```
+
+**TREATMENT F · LITERARY** — for Dark Academia (effort 1.0, tradition +0.9,
+visibility −0.8, hot 5.3 — deliberately not the conventionally "hot" register
+this brief usually casts for; beauty here reads as interesting, not glossy)
+```
+Soft, slightly cool-neutral key light from camera left, minimal fill, moody
+falloff into the dark background rather than an even wash. f/2.8. Tailored but
+unglamorous: real wool, real brass buttons, nothing borrowed from a runway.
+Hair and skin lightly done, not styled for a camera. The retouching should
+still make her flawless, but the mood is inward — she is not performing for
+the lens, she has simply been caught mid-thought and happens to be beautiful.
+```
+
 ---
 
-# The 10 archetypes
+# The 13 archetypes
 
 - **1 · textbook** — the pure form. Answers land almost on the archetype.
 - **2 · variation** — recognisably the type, one thing off-spec.
@@ -699,6 +723,222 @@ case where quiet confidence tips into not needing the room's approval at all.
 
 ---
 
+## THE COQUETTE — treatment E · effort 2.7, room +0.6, height −0.3, hot 7.0, crazy 7.0
+*(PDF: Coquette / Balletcore — fiyonk, dantel, inci, flörtöz vintage-romantik feminenlik;
+new archetype, added from the 52-aesthetic dictionary — fills the "deliberately
+soft, decorative, performed-sweet" niche nothing else on the board covers)*
+
+### `coquette1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, a warm rim light. Bright,
+slightly warm colour grade — softer contrast than a sharp editorial look, nothing
+hard-edged. f/2.5. Deliberately, elaborately styled: hair curled, a considered bow
+or ribbon somewhere on the outfit, glossy lips. The styling reads as decorative and
+performed-sweet rather than sharp or severe. Retouched to flawless.
+A beautiful woman in her early twenties, petite, in a fitted pale-pink cardigan with
+a large satin bow at the collar, a pleated white mini skirt, knee-high white socks,
+black ballet flats. Hair in loose curled pigtails tied with matching ribbon. Glossy
+tinted lip, soft blush, doe-eyed makeup with long lashes. Expression: a wide,
+practiced, camera-ready smile, head tilted just slightly, one finger near her chin —
+sweet on purpose, and clearly aware of the effect. The whole picture is a decision.
+```
+
+### `coquette2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, a warm rim light. Bright,
+slightly warm colour grade — softer contrast than a sharp editorial look, nothing
+hard-edged. f/2.5. Deliberately, elaborately styled: hair curled, a considered bow
+or ribbon somewhere on the outfit, glossy lips. The styling reads as decorative and
+performed-sweet rather than sharp or severe. Retouched to flawless.
+The same woman in her mid-twenties, a plainer version: a cream slip dress with one
+small ribbon at the strap, hair down and only loosely curled, a single delicate
+pearl necklace. Less production than the first image but the same calculated
+softness underneath. Expression: pouting slightly, wide eyes looking straight into
+the lens as if she has just been mildly wronged and is waiting for you to notice.
+```
+
+### `coquette3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, a warm rim light. Bright,
+slightly warm colour grade — softer contrast than a sharp editorial look, nothing
+hard-edged. f/2.5. Deliberately, elaborately styled: hair curled, a considered bow
+or ribbon somewhere on the outfit, glossy lips. The styling reads as decorative and
+performed-sweet rather than sharp or severe. Retouched to flawless.
+A beautiful woman in her early twenties, in a baby-pink babydoll dress layered with
+lace trim, an oversized bow worn like a crown at the top of her head, thigh-high
+socks, mary-jane heels. Exaggerated doll-like makeup — round blush spots, glossy
+cupid's-bow lips. Expression: wide-eyed and unblinking, head cocked at an unnatural
+angle, smiling a beat too long. Genuinely gorgeous and just slightly too much — the
+crazy dial on this one is turned all the way up.
+```
+
+---
+
+## DARK ACADEMIA — treatment F · effort 1.0, tradition +0.9, visibility −0.8,
+## height +0.1, hot 5.3, crazy 7.0
+*(PDF: Dark academia — kitap, klasik triko, ekose, sonbahar/kütüphane atmosferi;
+new archetype, added from the 52-aesthetic dictionary — the "brooding intellectual"
+niche nothing else on the board covers; deliberately cast at a lower hot than the
+rest of the set — this type reads as interesting rather than glossy)*
+
+### `academia1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft, slightly cool-neutral key light from camera left, minimal fill, moody falloff
+into the dark background. f/2.8. Tailored but unglamorous: real wool, real brass
+buttons, nothing borrowed from a runway. Hair and skin lightly done, not styled for
+a camera. Retouched to flawless, but the mood stays inward.
+A beautiful woman in her early twenties, slim, in a fitted brown herringbone blazer
+with brass buttons over a cream turtleneck, a pleated forest-green tartan skirt,
+knee-high brown leather boots, round wire-rimmed glasses. Dark hair loosely pinned
+up with pieces falling out, a scarf looped twice at the neck. No visible makeup
+beyond a hint of dark red on the lips. Expression: distant, thoughtful, looking
+slightly off to the side as though mid-thought, a paperback held loosely at her
+side. Beautiful in a way that takes a second look to register.
+```
+
+### `academia2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft, slightly cool-neutral key light from camera left, minimal fill, moody falloff
+into the dark background. f/2.8. Tailored but unglamorous: real wool, real brass
+buttons, nothing borrowed from a runway. Hair and skin lightly done, not styled for
+a camera. Retouched to flawless, but the mood stays inward.
+The same woman in her mid-twenties, softer register: an oversized charcoal cardigan
+over a white collared shirt, straight wool trousers, no glasses this time, hair down
+and slightly windswept. A thin gold chain with a small pendant. Expression: a small,
+private, closed-mouth smile, eyes down and to the side — the look of someone
+enjoying a joke she has decided not to share.
+```
+
+### `academia3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft, slightly cool-neutral key light from camera left, minimal fill, moody falloff
+into the dark background. f/2.8. Tailored but unglamorous: real wool, real brass
+buttons, nothing borrowed from a runway. Hair and skin lightly done, not styled for
+a camera. Retouched to flawless, but the mood stays inward.
+A beautiful woman in her early twenties, dark circles lightly visible under the
+eyes, in a rumpled cream blouse under an unbuttoned black wool coat, ink stains on
+two fingers, hair falling out of a messy braid. A stack of three books clutched to
+her chest instead of held loosely. Expression: intense, slightly wild-eyed, staring
+directly into the lens mid-sentence, mouth slightly open. Gorgeous, and very
+obviously three coffees and one existential crisis into the evening.
+```
+
+---
+
+## COTTAGECORE — treatment C · effort 0.15, tradition +0.6, family +0.7,
+## height −0.3, hot 5.0, crazy 6.0
+*(PDF: Cottagecore / Bohem / Earthy — çiçekli elbise, keten, doğal materyal, yavaş
+yaşam fantezisi; new archetype, merging three closely related PDF entries — the
+"natural, low-effort, family-and-tradition-coded" niche nothing else on the board
+covers; deliberately the lowest hot on the whole board — the joke is that she is
+genuinely lovely and has never once optimised for it)*
+
+### `cottagecore1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her late twenties, soft and round-faced, in a flowing floral
+linen dress, barefoot, a woven flower crown sitting slightly crooked in loose wavy
+hair. Sun-freckled skin, no makeup. A smear of flour on one forearm. Expression: an
+open, unguarded smile, eyes crinkled against the light, entirely at ease with
+herself. Looks like she just walked out of a garden, because she did.
+```
+
+### `cottagecore2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same woman in her early thirties, practical register: a chunky knit cardigan
+over a simple cotton dress, canvas garden apron with pockets, hair tied back with a
+strip of cloth, dirt visibly under her nails. Expression: focused, mid-task, glancing
+up at the lens with a small distracted smile — interrupted, not posing.
+```
+
+### `cottagecore3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her mid-twenties, barefoot in a slip of a linen dress with
+grass stains at the hem, hair wild and full of small leaves and petals, a string of
+hand-tied herbs around one wrist. Expression: wide-eyed, unblinking, a little too
+delighted, staring directly into the lens with the intensity of someone who has just
+named the moon her business partner. Feral in the nicest possible way.
+```
+
+---
+
 # The 8 interstitials
 
 Joke cards, not portraits — spine and treatments do **not** apply. All eight are
@@ -717,7 +957,10 @@ cleangirl : ["assets/img/cleangirl1.webp", "assets/img/cleangirl2.webp", "assets
 gymgirl   : ["assets/img/gymgirl1.webp", "assets/img/gymgirl2.webp", "assets/img/gymgirl3.webp"],
 grunge    : ["assets/img/grunge1.webp", "assets/img/grunge2.webp", "assets/img/grunge3.webp"],
 comfort   : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"],
-oldmoney  : ["assets/img/oldmoney1.webp", "assets/img/oldmoney2.webp", "assets/img/oldmoney3.webp"]
+oldmoney  : ["assets/img/oldmoney1.webp", "assets/img/oldmoney2.webp", "assets/img/oldmoney3.webp"],
+coquette    : ["assets/img/coquette1.webp", "assets/img/coquette2.webp", "assets/img/coquette3.webp"],
+academia    : ["assets/img/academia1.webp", "assets/img/academia2.webp", "assets/img/academia3.webp"],
+cottagecore : ["assets/img/cottagecore1.webp", "assets/img/cottagecore2.webp", "assets/img/cottagecore3.webp"]
 ```
 
 ```bash
