@@ -604,7 +604,22 @@
       range: "Farmers markets, overgrown gardens, any barn that photographs well.",
       habitat: "Nests barefoot in tall grass; a jar of something fermenting on every surface she owns.",
       identification: "Linen, flower crowns, dirt under the nails that somehow still reads as intentional.",
-      call: "An unprompted monologue about her soil's pH that ends up being a metaphor for the relationship." }
+      call: "An unprompted monologue about her soil's pH that ends up being a metaphor for the relationship." },
+    y2k:        { latin: "Stras nostalgicus",
+      range: "Wherever there's a disposable camera and a strobe light.",
+      habitat: "Nests on the dance floor until 4am; migrates to the diner immediately after.",
+      identification: "A rhinestone somewhere non-negotiable. Jeans riding lower than is structurally wise.",
+      call: "“Do you have a lighter” — the opening line to at least three great nights and two disasters." },
+    offduty:    { latin: "Otium eleganter",
+      range: "Sidewalks, coffee runs, anywhere with a decent street-style photographer nearby.",
+      habitat: "Nests in an oversized leather jacket regardless of season; migrates from gym to brunch without changing.",
+      identification: "Sunglasses indoors. A jawline that suggests she knows exactly how good this lighting is.",
+      call: "A one-word text back, three hours later, that somehow doesn't end things." },
+    pilates:    { latin: "Reformator placidus",
+      range: "The reformer studio at 6am; the smoothie place immediately after.",
+      habitat: "Nests in a matching set; migrates in a pack of four to the same 9am class, every single day.",
+      identification: "A grip sock. An unprompted opinion about pelvic floor health.",
+      call: "“You should really try Pilates” — said to you, unprompted, within the first ten minutes of meeting." }
   };
   function fieldsHTML(key) {
     const p = PLATE[key];

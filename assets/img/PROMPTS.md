@@ -1,10 +1,10 @@
 # Image generation brief
 
-13 archetypes × 3 variants (39) + 8 interstitials. **47 files total.**
+16 archetypes × 3 variants (48) + 8 interstitials. **56 files total.**
 Model and Baddie (6 files) are already generated — do not regenerate. The
-original 8 archetypes plus Old Money (27 files) are all in place. Coquette,
-Dark Academia and Cottagecore (9 files) are drafted below and waiting on
-generation.
+original 8 archetypes plus Old Money, Coquette, Dark Academia and Cottagecore
+(36 files) are all in place. Y2K, Off-Duty and Pilates Princess (9 files) are
+drafted below and waiting on generation.
 
 ---
 
@@ -121,9 +121,20 @@ still make her flawless, but the mood is inward — she is not performing for
 the lens, she has simply been caught mid-thought and happens to be beautiful.
 ```
 
+**TREATMENT G · FLASH** — for Y2K (effort 1.3, hot 7.0, crazy 7.0 — playful
+chaos, not the broody kind)
+```
+Direct on-camera flash look — slightly blown highlights, a harder shadow edge
+than the rest of this set, but still clean enough to read the outfit clearly.
+Bright, slightly oversaturated colour grade. f/4. Deliberately dressed for
+going out: low-rise, rhinestones or shimmer somewhere, hair either dead
+straight or crimped. The energy is disposable-camera-at-a-party, not
+studio-polished — but she is still the best-looking person in the frame.
+```
+
 ---
 
-# The 13 archetypes
+# The 16 archetypes
 
 - **1 · textbook** — the pure form. Answers land almost on the archetype.
 - **2 · variation** — recognisably the type, one thing off-spec.
@@ -939,6 +950,216 @@ named the moon her business partner. Feral in the nicest possible way.
 
 ---
 
+## Y2K — treatment G · effort 1.3, room +0.5, height −0.2, hot 7.0, crazy 7.0
+*(PDF: Y2K / McBling — düşük bel, taşlı aksesuar, parlak pembe, 2000'ler pop
+kültürü nostaljisi; new archetype — fills the "playful chaotic" register
+nothing else on the board covers, since Grunge and Goth are chaotic in a
+broody/dark direction instead)*
+
+### `y2k1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Direct on-camera flash look — slightly blown highlights, a harder shadow edge than
+the rest of this set, but still clean enough to read the outfit clearly. Bright,
+slightly oversaturated colour grade. f/4. Deliberately dressed for going out: the
+energy is disposable-camera-at-a-party, not studio-polished.
+A beautiful woman in her early twenties, in a baby-pink halter top with a
+rhinestone trim, low-rise denim mini skirt, chunky-heeled sandals. Hair straightened
+poker-flat with chunky highlighted pieces, a butterfly clip on one side. Glossy
+lip gloss, shimmery eyeshadow. A rhinestone belly chain visible above the
+waistband. Expression: mid-laugh, head thrown back, one hand on her hip — caught,
+not posed, exactly like a flash photo taken at 1am.
+```
+
+### `y2k2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Direct on-camera flash look — slightly blown highlights, a harder shadow edge than
+the rest of this set, but still clean enough to read the outfit clearly. Bright,
+slightly oversaturated colour grade. f/4. Deliberately dressed for going out: the
+energy is disposable-camera-at-a-party, not studio-polished.
+The same woman in her mid-twenties, a plainer register: a fitted grey baby tee
+with a small graphic, low-rise cargo pants, hoop earrings, hair in two low
+pigtails with face-framing pieces out. Less shimmer, same energy. Expression:
+peace sign half-raised, tongue out, mid-blink from the flash — a candid, not a
+pose.
+```
+
+### `y2k3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Direct on-camera flash look — slightly blown highlights, a harder shadow edge than
+the rest of this set, but still clean enough to read the outfit clearly. Bright,
+slightly oversaturated colour grade. f/4. Deliberately dressed for going out: the
+energy is disposable-camera-at-a-party, not studio-polished.
+A beautiful woman in her early twenties, in a rhinestone-logo tube top, extremely
+low-rise flare jeans, tinted heart-shaped sunglasses pushed up into messy crimped
+hair. Body glitter on the shoulders and collarbone. Expression: wide-eyed,
+slightly manic grin, one finger pointing at the lens, caught mid-shout. Gorgeous,
+and about four drinks past her best decision-making.
+```
+
+---
+
+## OFF-DUTY — treatment C · effort 0.4, height +0.8, hot 8.2, crazy 3.8
+*(PDF: Model-off-duty / Clean girl indie — rahat basic parçalar, deri ceket,
+sneaker, zahmetsiz "cool" şehir stili; new archetype — distinct from the
+existing Model (glam, full production) and Clean Girl (skincare-minimalism):
+this one is street-cool, not glowy)*
+
+### `offduty1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A very tall, striking woman in her early twenties, sharp model-adjacent bone
+structure, in an oversized black leather jacket over a plain white tank, straight-leg
+jeans, white sneakers, oversized sunglasses pushed up on her head. Hair down, slightly
+undone, no visible makeup. Expression: flat, faintly bored, unimpressed by the
+camera entirely — cool in the specific way that requires not caring at all.
+```
+
+### `offduty2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same woman in her mid-twenties, warmer register: an oversized grey hoodie
+over bike shorts, an iced coffee held loosely, hair in a low claw clip. Barely
+there makeup. Expression: a small, private half-smile, eyes elsewhere, entirely
+unbothered by being looked at.
+```
+
+### `offduty3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her early twenties, in yesterday's outfit — a crumpled
+oversized band shirt worn as a dress, unlaced boots, sunglasses on despite being
+indoors, hair a genuine mess rather than a styled one. Expression: detached to
+the point of vacant, staring just past the lens, not performing coolness so much
+as simply not registering the camera at all.
+```
+
+---
+
+## PILATES PRINCESS — treatment C · effort 1.3, tradition +0.4, family +0.5,
+## height +0.2, hot 7.0, crazy 4.5
+*(PDF: Pilates girl / Balletcore wellness — pilates, hareket, athleisure,
+sakin; new archetype — distinct from Gym Girl (muscle, performance, disciplined
+grind): this one is soft movement, matching sets, and a slightly cult-like
+devotion to the reformer)*
+
+### `pilates1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her late twenties, lean and long-limbed rather than
+muscular, in a matching sage-green ribbed bra top and full-length leggings, grip
+socks, hair in a sleek low bun. Dewy, barely-there makeup. A yoga mat rolled under
+one arm. Expression: serene, faintly self-satisfied, chin slightly lifted — the
+specific calm of someone who has already done more today than you have.
+```
+
+### `pilates2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+The same woman in her early thirties, post-class: an oversized cream half-zip
+over the same leggings, hair down and slightly damp at the edges, a large
+smoothie in one hand. Expression: mid-conversation, warm and animated, clearly
+telling someone about her class whether they asked or not.
+```
+
+### `pilates3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with generous fill, one gentle rim light. Warm,
+natural colour grade. f/2.5. Minimal or no makeup and simple unstyled hair — but
+flattering light, healthy glowing skin, light retouching so she looks well and
+rested. CRITICAL: low effort means low styling, not low attractiveness — she must
+still be a strikingly good-looking woman. Do NOT make her plain, tired, or ordinary.
+A beautiful woman in her late twenties, in a full matching pastel-lilac set,
+grip socks with a cat print, a resistance band looped over one shoulder like an
+accessory. Expression: intense, slightly evangelical, mid-sentence with both hands
+raised as if demonstrating a stretch — one class away from starting a wellness
+cult, in the nicest possible way.
+```
+
+---
+
 # The 8 interstitials
 
 Joke cards, not portraits — spine and treatments do **not** apply. All eight are
@@ -960,7 +1181,10 @@ comfort   : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img
 oldmoney  : ["assets/img/oldmoney1.webp", "assets/img/oldmoney2.webp", "assets/img/oldmoney3.webp"],
 coquette    : ["assets/img/coquette1.webp", "assets/img/coquette2.webp", "assets/img/coquette3.webp"],
 academia    : ["assets/img/academia1.webp", "assets/img/academia2.webp", "assets/img/academia3.webp"],
-cottagecore : ["assets/img/cottagecore1.webp", "assets/img/cottagecore2.webp", "assets/img/cottagecore3.webp"]
+cottagecore : ["assets/img/cottagecore1.webp", "assets/img/cottagecore2.webp", "assets/img/cottagecore3.webp"],
+y2k         : ["assets/img/y2k1.webp", "assets/img/y2k2.webp", "assets/img/y2k3.webp"],
+offduty     : ["assets/img/offduty1.webp", "assets/img/offduty2.webp", "assets/img/offduty3.webp"],
+pilates     : ["assets/img/pilates1.webp", "assets/img/pilates2.webp", "assets/img/pilates3.webp"]
 ```
 
 ```bash
