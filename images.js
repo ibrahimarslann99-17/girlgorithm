@@ -44,7 +44,7 @@ window.WZ_IMG = {
   coquette     : ["assets/img/coquette1.webp", "assets/img/coquette2.webp", "assets/img/coquette3.webp"],
   academia     : ["assets/img/academia1.webp", "assets/img/academia2.webp", "assets/img/academia3.webp"],
   cottagecore  : ["assets/img/cottagecore1.webp", "assets/img/cottagecore2.webp", "assets/img/cottagecore3.webp"],
-  y2k          : ["", "", ""],
-  offduty      : ["", "", ""],
-  pilates      : ["", "", ""]
+  y2k          : ["assets/img/y2k1.webp", "assets/img/y2k2.webp", "assets/img/y2k3.webp"],
+  offduty      : ["assets/img/offduty1.webp", "assets/img/offduty2.webp", "assets/img/offduty3.webp"],
+  pilates      : ["assets/img/pilates1.webp", "assets/img/pilates2.webp", "assets/img/pilates3.webp"]
 };
