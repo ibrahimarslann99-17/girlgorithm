@@ -361,16 +361,17 @@
 
   /* --- 06b build, axis two: what is underneath ---------------------------- */
   SCREEN.form = function () {
-    const hug = M.softOf(S.soft).hug;
     el(
       '<div class="card">' +
         '<p class="eyebrow">' + WZ.icon("shirt") + '<span>Question 06 &mdash; Build, second axis</span></p>' +
-        '<h2 class="q">And underneath that &mdash; what is doing the work?</h2>' +
-        '<p class="sub">You said <em>' + hug + '</em>. Two women can feel identical in a hug and be built completely differently. Softness is one axis; this is the other, and the old version of this quiz collapsed them into one, which is why everybody got the same answer.</p>' +
+        '<h2 class="q">How much does she actually work out?</h2>' +
+        '<p class="sub">The last question told you how she feels in a hug. This tells you what\'s underneath it &mdash; a separate axis, because asking straight beats asking you to diagnose muscle tone through fabric.</p>' +
         '<div class="stack">' +
-          '<button data-v="muscle">Muscle<span class="hint">She trains. It is load-bearing.</span></button>' +
-          '<button data-v="neutral">Nothing in particular<span class="hint">No engine under it either way. She just is.</span></button>' +
-          '<button data-v="fat">More of the same<span class="hint">Softness all the way down. No apologies.</span></button>' +
+          '<button data-v="fat">Doesn\'t own gym clothes<span class="hint">Physical activity is a concept she\'s heard of. Soft is a feature here, not a phase.</span></button>' +
+          '<button data-v="neutral">Yoga, pilates, the vibes classes<span class="hint">Moves her body on purpose. None of it is training toward a number.</span></button>' +
+          '<button data-v="neutral">Regular gym-goer, no real program<span class="hint">Shows up two or three times a week. Nobody\'s asking her to spot them.</span></button>' +
+          '<button data-v="muscle">Actually lifts, tracks the numbers<span class="hint">Progressive overload and a protein target. It shows, and it\'s the point.</span></button>' +
+          '<button data-v="muscle">Competes in something<span class="hint">Powerlifting meet, marathon PB, a CrossFit box that knows her name. It\'s a personality trait now.</span></button>' +
         "</div>" +
       "</div>"
     );
@@ -405,7 +406,7 @@
       '<div class="card">' +
         '<p class="eyebrow">' + WZ.icon("users") + '<span>Question 08 &mdash; Temperament</span></p>' +
         '<h2 class="q">You walk into a party together. Ninety seconds later, where is she?</h2>' +
-        '<p class="sub">Not a shyness question &mdash; a gravity one. This single answer splits the Goth from the Baddie and the Nerd from the Comfort Class harder than anything else on the form.</p>' +
+        '<p class="sub">Not a shyness question &mdash; a gravity one. Four different ways to survive a party, and which one she picks splits the Goth from the Baddie and the Nerd from the Comfort Class harder than anything else on the form.</p>' +
         '<div class="stack">' +
           M.ROOM.map(function (o) {
             return '<button data-v="' + o.key + '">' + o.label +
@@ -421,8 +422,8 @@
 
   /* --- 09 emphasis (flavor only — never read by math.js) ------------------ */
   const EMPHASIS_LBL = {
-    structure: "Structure", waist: "Waist",
-    movement: "Movement", clean: "Whatever's clean"
+    structure: "Sharp lines", waist: "An hourglass, on purpose",
+    movement: "Whatever moves with her", clean: "Whatever was clean"
   };
   SCREEN.emphasis = function () {
     el(
@@ -431,10 +432,10 @@
         '<h2 class="q">When she gets dressed, what is she actually optimizing for?</h2>' +
         '<p class="sub">This one doesn\'t touch the arithmetic. It just means the write-up describes her instead of a mannequin.</p>' +
         '<div class="stack">' +
-          '<button data-v="structure">Structure<span class="hint">Shoulders, tailoring, straight lines. She dresses like architecture.</span></button>' +
-          '<button data-v="waist">Waist<span class="hint">Everything is cut to say the word &ldquo;waist.&rdquo;</span></button>' +
-          '<button data-v="movement">Movement<span class="hint">Fabric that moves before she does. Comfort dressed up as intention.</span></button>' +
-          '<button data-v="clean">Whatever\'s clean<span class="hint">She got dressed in four minutes and it worked anyway.</span></button>' +
+          '<button data-v="structure">Sharp lines<span class="hint">Blazers, shoulder pads, tailoring so clean you could cut paper on it. Less &ldquo;outfit,&rdquo; more &ldquo;blueprint.&rdquo;</span></button>' +
+          '<button data-v="waist">An hourglass, on purpose<span class="hint">Belts, wraps, cinched everything. If a garment can point at her waist, it will.</span></button>' +
+          '<button data-v="movement">Whatever moves with her<span class="hint">Slip dresses, soft knits, flowy fabric. Looks effortless because it has to survive her actually walking around.</span></button>' +
+          '<button data-v="clean">Whatever was clean<span class="hint">She got dressed in four minutes flat and somehow it worked. No optimization occurred.</span></button>' +
         "</div>" +
       "</div>"
     );
@@ -446,18 +447,21 @@
   /* --- 10 dealbreaker (flavor only — never read by math.js) --------------- */
   const DEALBREAKER_LBL = {
     hard: "Trying too hard", flat: "Not trying at all",
-    trend: "Chasing every trend", none: "Nothing, really"
+    trend: "Chasing every trend", overshare: "Tells you everything, immediately",
+    flaky: "Cancels twice, ghosts the third time", none: "Nothing, really"
   };
   SCREEN.dealbreaker = function () {
     el(
       '<div class="card">' +
         '<p class="eyebrow">' + WZ.icon("alert-triangle") + '<span>Question 10 &mdash; The instant no</span></p>' +
         '<h2 class="q">One thing, and it ends immediately. What is it?</h2>' +
-        '<p class="sub">Also flavor only. The matrix doesn\'t care what ends it &mdash; it only knows that you have a limit.</p>' +
+        '<p class="sub">Also flavor only. The matrix doesn\'t care what ends it &mdash; it only knows that you have a limit. This one is a straight read on character, so it earns its keep the next time we add a criterion.</p>' +
         '<div class="stack">' +
           '<button data-v="hard">Trying too hard<span class="hint">You can see the effort, and seeing it kills the effect.</span></button>' +
           '<button data-v="flat">Not trying at all<span class="hint">Zero effort reads as zero interest.</span></button>' +
           '<button data-v="trend">Chasing every trend<span class="hint">No point of view. Just this week\'s algorithm.</span></button>' +
+          '<button data-v="overshare">Tells you everything, immediately<span class="hint">You know her ex\'s name, her therapist\'s name, and her rising sign before the appetizer arrives.</span></button>' +
+          '<button data-v="flaky">Cancels twice, ghosts the third time<span class="hint">Unreliable often enough that it stops being an accident and starts being a personality.</span></button>' +
           '<button data-v="none">Nothing, really<span class="hint">Dealbreakers are a luxury good. You don\'t have the inventory.</span></button>' +
         "</div>" +
       "</div>"
