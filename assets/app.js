@@ -15,6 +15,7 @@
   const BLANK = {
     height: null, obese: null, looks: null,
     adjust: null, delta: 0, soft: null, form: null, effort: null, room: null,
+    vice: null, tradition: null, visibility: null, family: null,
     emphasis: null, dealbreaker: null,
     hot: 8, crazy: 6, flags: []
   };
@@ -27,7 +28,7 @@
   };
   const addFlag = k => { if (!S.flags.some(f => f[0] === k)) S.flags.push([k, FLAG_TEXT[k]]); };
 
-  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","effort","room","emphasis","dealbreaker","hot","crazy","result"];
+  const STEPS = ["height","reveal","obese","looks","adjust","soft","form","effort","room","vice","tradition","visibility","family","emphasis","dealbreaker","hot","crazy","result"];
   let stepIdx = -1;
 
   const stage  = document.getElementById("stage");
@@ -125,7 +126,7 @@
       '<div class="card">' +
         '<p class="eyebrow">Intake &mdash; Case <b>OPEN</b></p>' +
         '<h1 class="big">You have been picking wrong. We can prove it.</h1>' +
-        '<p class="sub">Thirteen questions. Real arithmetic behind most of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. Two of them are just for flavor and never touch the math. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
+        '<p class="sub">Seventeen questions. Real arithmetic behind most of them &mdash; a height ratio, six normal distributions, and the Hot Crazy Matrix, applied without mercy. Two of them are just for flavor and never touch the math. At the end you get a written spec for the woman you should actually be looking for, and an honest estimate of how many exist.</p>' +
         '<p class="sub"><em>No result here is random.</em> Same answers, same verdict, every time. That is the part that will annoy you.</p>' +
         '<div class="row">' +
           '<button class="primary has-icon" style="flex:1;min-width:180px" id="begin"><span>Let\'s begin</span>' + WZ.icon("arrow-right") + '</button>' +
@@ -416,11 +417,95 @@
       "</div>"
     );
     stage.querySelectorAll("button").forEach(b => b.onclick = () => {
-      S.room = b.dataset.v; go("emphasis");
+      S.room = b.dataset.v; go("vice");
     });
   };
 
-  /* --- 09 emphasis (flavor only — never read by math.js) ------------------ */
+  /* --- 09 vice -------------------------------------------------------------
+     Real axis, same as build/effort/room: feeds classify(), feeds rarity(),
+     feeds buildNote(). Not flavor. */
+  SCREEN.vice = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("sliders-horizontal") + '<span>Question 09 &mdash; Vices</span></p>' +
+        '<h2 class="q">What\'s her relationship with a Tuesday-night drink?</h2>' +
+        '<p class="sub">Real axis, same tier as build and effort. It moves the arithmetic and it moves the rarity math &mdash; asking for a specific vice profile costs pool size like everything else on this form.</p>' +
+        '<div class="stack">' +
+          M.VICE.map(function (o) {
+            return '<button data-v="' + o.key + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.vice = b.dataset.v; go("tradition");
+    });
+  };
+
+  /* --- 10 tradition (real axis) -------------------------------------------- */
+  SCREEN.tradition = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("link-2") + '<span>Question 10 &mdash; Tradition</span></p>' +
+        '<h2 class="q">How much does tradition actually run her life?</h2>' +
+        '<p class="sub">Not about any one faith or background &mdash; about whether her life runs on an inherited script or one she wrote herself. Real axis, real weight.</p>' +
+        '<div class="stack">' +
+          M.TRADITION.map(function (o) {
+            return '<button data-v="' + o.key + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.tradition = b.dataset.v; go("visibility");
+    });
+  };
+
+  /* --- 11 visibility (real axis) -------------------------------------------
+     Deliberately not the same thing room measures — see the note above
+     VISIBILITY in math.js. Room is the physical room; this is the feed. */
+  SCREEN.visibility = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("eye") + '<span>Question 11 &mdash; Online</span></p>' +
+        '<h2 class="q">What\'s her Instagram actually like?</h2>' +
+        '<p class="sub">Not the same question as the party one &mdash; that was the room she can see. This is the audience she can\'t. A wallflower can run a huge account; the centre of every room can post nothing at all.</p>' +
+        '<div class="stack">' +
+          M.VISIBILITY.map(function (o) {
+            return '<button data-v="' + o.key + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.visibility = b.dataset.v; go("family");
+    });
+  };
+
+  /* --- 12 family (real axis) ------------------------------------------------ */
+  SCREEN.family = function () {
+    el(
+      '<div class="card">' +
+        '<p class="eyebrow">' + WZ.icon("users") + '<span>Question 12 &mdash; Family</span></p>' +
+        '<h2 class="q">How close is she with her family?</h2>' +
+        '<p class="sub">Last of the real axes. This one you inherit along with her, so it is worth answering honestly rather than aspirationally.</p>' +
+        '<div class="stack">' +
+          M.FAMILY.map(function (o) {
+            return '<button data-v="' + o.key + '">' + o.label +
+              '<span class="hint">' + o.hint + "</span></button>";
+          }).join("") +
+        "</div>" +
+      "</div>"
+    );
+    stage.querySelectorAll("button").forEach(b => b.onclick = () => {
+      S.family = b.dataset.v; go("emphasis");
+    });
+  };
+
+  /* --- 13 emphasis (flavor only — never read by math.js) ------------------ */
   const EMPHASIS_LBL = {
     structure: "Sharp lines", waist: "An hourglass, on purpose",
     movement: "Whatever moves with her", clean: "Whatever was clean"
@@ -428,7 +513,7 @@
   SCREEN.emphasis = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">' + WZ.icon("eye") + '<span>Question 09 &mdash; What she leads with</span></p>' +
+        '<p class="eyebrow">' + WZ.icon("eye") + '<span>Question 13 &mdash; What she leads with</span></p>' +
         '<h2 class="q">When she gets dressed, what is she actually optimizing for?</h2>' +
         '<p class="sub">This one doesn\'t touch the arithmetic. It just means the write-up describes her instead of a mannequin.</p>' +
         '<div class="stack">' +
@@ -453,7 +538,7 @@
   SCREEN.dealbreaker = function () {
     el(
       '<div class="card">' +
-        '<p class="eyebrow">' + WZ.icon("alert-triangle") + '<span>Question 10 &mdash; The instant no</span></p>' +
+        '<p class="eyebrow">' + WZ.icon("alert-triangle") + '<span>Question 14 &mdash; The instant no</span></p>' +
         '<h2 class="q">One thing, and it ends immediately. What is it?</h2>' +
         '<p class="sub">Also flavor only. The matrix doesn\'t care what ends it &mdash; it only knows that you have a limit. This one is a straight read on character, so it earns its keep the next time we add a criterion.</p>' +
         '<div class="stack">' +
@@ -503,14 +588,14 @@
   }
 
   SCREEN.hot = () => sliderScreen({
-    n: 11, key: "hot", labels: HOTLBL, next: "crazy",
+    n: 15, key: "hot", labels: HOTLBL, next: "crazy",
     title: "How hot do you want her?",
     sub: "The chart's x-axis. Be greedy here and the arithmetic at the end will hand you the bill.",
     note: "In the reference population hotness sits around 5 with a standard deviation of 1.6. Every point you add above 5 cuts the pool by roughly two thirds."
   });
 
   SCREEN.crazy = () => sliderScreen({
-    n: 12, key: "crazy", labels: CZLBL, next: "result",
+    n: 16, key: "crazy", labels: CZLBL, next: "result",
     title: "And how much crazy can you take?",
     sub: "The y-axis. Nobody is under 4 &mdash; the chart doesn't even print the numbers. You are choosing a ceiling, not an absence.",
     note: "Population crazy sits near 6.4. Asking for a hot 9 with a crazy 5 is not a preference, it is a search for an exception &mdash; and the model prices exceptions accordingly."
@@ -611,6 +696,8 @@
           '<div class="spec"><div class="k">' + WZ.icon("ruler") + '<span>Height gap</span></div><div class="v">' + v.gap + "<small>cm below you</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("shirt") + '<span>Build</span></div><div class="v" style="font-size:17px">' + v.soft.label + "<small>" + v.form.note + "</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("sparkles") + '<span>Effort</span></div><div class="v" style="font-size:17px">' + v.effort.label + "<small>" + v.room.label + "</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("sliders-horizontal") + '<span>Vices</span></div><div class="v" style="font-size:17px">' + v.vice.label + "<small>" + v.tradition.label + "</small></div></div>" +
+          '<div class="spec"><div class="k">' + WZ.icon("eye") + '<span>Online</span></div><div class="v" style="font-size:17px">' + v.visibility.label + "<small>" + v.family.label + "</small></div></div>" +
           '<div class="spec ' + (v.zone.ok ? "zone" : "bad") + '"><div class="k">' + WZ.icon("target") + '<span>Matrix position</span></div><div class="v">' + v.zone.name + "<small>hot " + S.hot + " · crazy " + S.crazy + "</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("hash") + '<span>Rarity</span></div><div class="v">1 in ' + M.fmt(v.rare.oneIn) + "<small>of the population</small></div></div>" +
           '<div class="spec"><div class="k">' + WZ.icon("clock") + '<span>Search time</span></div><div class="v">' + v.searchTime + "<small>at 2 dates a week</small></div></div>" +
@@ -631,6 +718,10 @@
             "<li><span>Build: " + v.buildLabel.toLowerCase() + "</span><span>" + M.pct(v.rare.pB) + "</span></li>" +
             "<li><span>Effort: " + v.effort.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pE) + "</span></li>" +
             "<li><span>Room: " + v.room.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pR) + "</span></li>" +
+            "<li><span>Vices: " + v.vice.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pV) + "</span></li>" +
+            "<li><span>Tradition: " + v.tradition.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pT) + "</span></li>" +
+            "<li><span>Online: " + v.visibility.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pVis) + "</span></li>" +
+            "<li><span>Family: " + v.family.label.toLowerCase() + "</span><span>" + M.pct(v.rare.pF) + "</span></li>" +
             "<li><span>Hot &ge; " + S.hot + ' &nbsp;<em style="color:var(--dim)">N(' + M.HOT.mu + ", " + M.HOT.sd + ")</em></span><span>" + M.pct(v.rare.pHt) + "</span></li>" +
             "<li><span>Crazy &le; " + S.crazy + ' &nbsp;<em style="color:var(--dim)">N(' + M.CRAZY.mu + ", " + M.CRAZY.sd + ")</em></span><span>" + M.pct(v.rare.pCz) + "</span></li>" +
             "<li><span>Hot/crazy correlation penalty</span><span>&times;" + v.rare.corr.toFixed(2) + "</span></li>" +

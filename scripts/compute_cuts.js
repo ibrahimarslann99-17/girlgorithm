@@ -15,12 +15,15 @@
    testers, zero variant-2/3 hits, confirms it.
 
    Fix: Monte Carlo sample answers from the SAME weights the app already
-   documents (BUILD_P / EFFORT.p / ROOM.p / HOT / CRAZY), plus a reasonable
-   model for height + the override delta (not otherwise weighted in math.js),
-   run each sample through the real classify() distance formula, and take each
-   type's distance terciles only among the samples actually assigned to it —
-   the same semantics the old cuts were supposed to have, just honestly
-   weighted this time.
+   documents (BUILD_P / EFFORT.p / ROOM.p / VICE.p / TRADITION.p /
+   VISIBILITY.p / FAMILY.p / HOT / CRAZY), plus a reasonable model for height
+   + the override delta (not otherwise weighted in math.js), run each sample
+   through the real classify() distance formula, and take each type's
+   distance terciles only among the samples actually assigned to it — the
+   same semantics the old cuts were supposed to have, just honestly weighted
+   this time. Re-run this whenever an axis, weight, or TYPES centroid
+   changes — vice/tradition/visibility/family joining as real axes is
+   exactly that kind of change.
 
    node scripts/compute_cuts.js
    ============================================================================= */
@@ -56,6 +59,10 @@ const drawBuild = sampler(buildPairs, x => x.p);
 
 const drawEffort = sampler(M.EFFORT, x => x.p);
 const drawRoom = sampler(M.ROOM, x => x.p);
+const drawVice = sampler(M.VICE, x => x.p);
+const drawTradition = sampler(M.TRADITION, x => x.p);
+const drawVisibility = sampler(M.VISIBILITY, x => x.p);
+const drawFamily = sampler(M.FAMILY, x => x.p);
 
 /* Height override: math.js doesn't weight this (it's per-user, not a modelled
    population axis), so this is the one assumption in the script that isn't
@@ -99,6 +106,10 @@ for (let i = 0; i < N; i++) {
   const formKey = b.form;
   const effort = drawEffort().idx;
   const room = drawRoom().key;
+  const vice = drawVice().key;
+  const tradition = drawTradition().key;
+  const visibility = drawVisibility().key;
+  const family = drawFamily().key;
   const height = drawHeight();
   const ideal = M.idealFor(height);
   const delta = drawDelta().d;
@@ -107,7 +118,7 @@ for (let i = 0; i < N; i++) {
   const hot = drawSlider(M.HOT);
   const crazy = drawSlider(M.CRAZY);
 
-  const best = M.classify(b.soft, formKey, effort, room, heightZ, hot, crazy);
+  const best = M.classify(b.soft, formKey, effort, room, vice, tradition, visibility, family, heightZ, hot, crazy);
   byType[best.t.key].push(best.d);
 }
 

@@ -75,6 +75,47 @@ WZ.math = (function () {
   const effortOf = i => EFFORT[i];
   const roomOf   = k => ROOM.find(r => r.key === k) || ROOM[1];
 
+  /* --- vice: how much drink and smoke are actually in the picture --------- */
+  const VICE = [
+    { v: -1,    key: "sober",   p: 0.20, label: "Sober, doesn't touch either",                          hint: "Never picked either habit up. No interest in starting on your account." },
+    { v: -0.33, key: "social",  p: 0.40, label: "Social drinker, no smoking",                            hint: "A glass of wine at dinner. That is the entire relationship." },
+    { v: 0.33,  key: "regular", p: 0.25, label: "Drinks regularly, smokes or vapes occasionally",        hint: "Not a daily habit, but nobody at the table is surprised to see it." },
+    { v: 1,     key: "heavy",   p: 0.15, label: "Smokes regularly, drinks like it's a personality trait", hint: "It is load-bearing at this point. Ask her about it, she has a whole bit." }
+  ];
+
+  /* --- tradition: how much of her life runs on an inherited script -------- */
+  const TRADITION = [
+    { v: -1,    key: "secular",  p: 0.25, label: "Writes her own rules, no inherited script",               hint: "Faith and family tradition are things other people have. She built her own instead." },
+    { v: -0.33, key: "cultural", p: 0.35, label: "Respects tradition, doesn't live by it",                   hint: "Shows up for the holidays. Skips everything in between without a shred of guilt." },
+    { v: 0.33,  key: "practicing", p: 0.25, label: "Practices, keeps it personal",                          hint: "It is genuinely part of her life. She is not building a sermon out of it for you." },
+    { v: 1,     key: "core",    p: 0.15, label: "It's the organising principle — family, faith, the whole structure", hint: "This is not a phase or an aesthetic. It is the load-bearing wall of how she lives." }
+  ];
+
+  /* --- visibility: how much of her life is performed for an audience ------
+     Deliberately not the same thing "room" measures. Room is how she carries
+     herself in a space she can see the whole of. This is how much of her
+     life she performs for an audience she can't — a wallflower can run a
+     large account, a room's centre of gravity can post nothing at all. */
+  const VISIBILITY = [
+    { v: -1,    key: "ghost",   p: 0.20, label: "Ghost. Three mutual friends had to confirm she owns a phone", hint: "No grid, no stories, no digital footprint worth finding." },
+    { v: -0.33, key: "private", p: 0.30, label: "Close-friends story only, four posts a year",                hint: "Exists online strictly for an audience of people who already have her number." },
+    { v: 0.33,  key: "normal",  p: 0.35, label: "Normal poster — a few stories a week, curated grid",         hint: "Documents her life without turning it into a job." },
+    { v: 1,     key: "creator", p: 0.15, label: "Full content creation — she has a ring light and opinions about it", hint: "There is a posting schedule. There is a brand. You are, on some level, a storyline now." }
+  ];
+
+  /* --- family: how close the family orbit sits ----------------------------- */
+  const FAMILY = [
+    { v: -1,    key: "distant", p: 0.15, label: "Distant or estranged — family's a group chat she mutes",   hint: "Handles the holidays and asks for nothing further from the arrangement." },
+    { v: -0.33, key: "normal",  p: 0.40, label: "Normal — a call every week or two, home for the holidays", hint: "A functioning, ordinary amount of family. Nothing to manage, nothing to escape." },
+    { v: 0.33,  key: "close",   p: 0.30, label: "Close — texts her mom daily, still asks her advice on everything", hint: "You are not just dating her. You are, eventually, dating the group chat too." },
+    { v: 1,     key: "core",    p: 0.15, label: "Family is the whole operating system", hint: "Sunday dinners are mandatory. So, eventually, are you." }
+  ];
+
+  const viceOf       = k => VICE.find(x => x.key === k) || VICE[1];
+  const traditionOf  = k => TRADITION.find(x => x.key === k) || TRADITION[1];
+  const visibilityOf = k => VISIBILITY.find(x => x.key === k) || VISIBILITY[1];
+  const familyOf     = k => FAMILY.find(x => x.key === k) || FAMILY[1];
+
   /* Hotness and craziness, as distributed in the wild. */
   const HOT   = { mu: 5.0, sd: 1.6 };
   const CRAZY = { mu: 6.4, sd: 1.5 };
@@ -99,23 +140,23 @@ WZ.math = (function () {
      output here if any axis weight, TYPES centroid, or probability table
      above changes — these numbers are only correct for the current model. */
   const TYPES = [
-    { key: "model", cuts: [1.41, 1.732], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, heightZ: +0.9, hot: 9.2, crazy: 7.5,
+    { key: "model", cuts: [1.761, 2.051], name: "The Model", soft: 0.7, form: -0.2, effort: 2.6, room:  0.0, vice: +0.20, tradition: -0.30, visibility: +0.70, family: -0.20, heightZ: +0.9, hot: 9.2, crazy: 7.5,
       blurb: "Built like a coat hanger, photographs better than she looks and looks incredible. Eats one salad in public and a whole cake at home. Will out-earn you by 25 and remind you of it kindly." },
-    { key: "goth", cuts: [1.764, 2.229], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, heightZ: +0.3, hot: 7.5, crazy: 9.0,
+    { key: "goth", cuts: [2.06, 2.529], name: "The Goth", soft: 1.1, form:  0.1, effort: 2.2, room: -0.8, vice: +0.40, tradition: -0.60, visibility: +0.10, family: -0.50, heightZ: +0.3, hot: 7.5, crazy: 9.0,
       blurb: "Black everything, reads three books at once, owns a cat with a Latin name. Deeply loyal until the exact second she is not. You will learn more about yourself than you wanted to." },
-    { key: "corporate", cuts: [1.67, 2.186], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, heightZ: +0.5, hot: 7.2, crazy: 5.2,
+    { key: "corporate", cuts: [2.001, 2.457], name: "Corporate Baddie", soft: 1.7, form: -0.3, effort: 2.4, room:  0.3, vice: +0.10, tradition: -0.30, visibility: +0.20, family: -0.10, heightZ: +0.5, hot: 7.2, crazy: 5.2,
       blurb: "Sharp, tailored, replies to texts in complete sentences. Will win every argument you start, including the ones you were right about. Astonishingly low drama, astonishingly high standards." },
-    { key: "nerd", cuts: [1.72, 2.115], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, heightZ: -0.2, hot: 6.0, crazy: 4.2,
+    { key: "nerd", cuts: [1.973, 2.33], name: "The Nerd", soft: 1.3, form:  0.2, effort: 0.4, room: -0.9, vice: -0.60, tradition: +0.00, visibility: -0.50, family: +0.20, heightZ: -0.2, hot: 6.0, crazy: 4.2,
       blurb: "Quick, wry, glasses, opinions about a videogame you have never heard of. Improves by 2 points the moment she gets comfortable. The highest-return pick on the whole board." },
-    { key: "cleangirl", cuts: [1.369, 1.741], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, heightZ:  0.0, hot: 7.0, crazy: 4.5,
+    { key: "cleangirl", cuts: [1.784, 2.18], name: "Clean Girl", soft: 1.9, form:  0.1, effort: 0.7, room:  0.1, vice: -0.40, tradition: +0.10, visibility: +0.40, family: +0.30, heightZ:  0.0, hot: 7.0, crazy: 4.5,
       blurb: "Glowing skin, slicked-back bun, small gold hoops, nothing on her that looks like it took effort — because the effort went into sleep, water and a skincare shelf you will not be allowed to touch. Looks identical at 7am and at a wedding. Everyone underrates her until they meet her." },
-    { key: "baddie", cuts: [1.662, 2.009], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, heightZ: -0.3, hot: 9.3, crazy: 8.3,
+    { key: "baddie", cuts: [1.959, 2.494], name: "The Baddie", soft: 2.0, form:  0.0, effort: 3.0, room:  0.9, vice: +0.50, tradition: -0.50, visibility: +0.90, family: -0.10, heightZ: -0.3, hot: 9.3, crazy: 8.3,
       blurb: "Nails, lashes, a phone that never stops. Turns a supermarket run into an event. Costs money, costs sleep, worth it for a defined period you should agree on in advance." },
-    { key: "gymgirl", cuts: [1.688, 2.155], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, heightZ: +0.4, hot: 7.8, crazy: 6.2,
+    { key: "gymgirl", cuts: [2.181, 2.668], name: "Gym Girl", soft: 0.9, form: -0.9, effort: 1.6, room:  0.6, vice: -0.50, tradition: +0.00, visibility: +0.30, family: +0.00, heightZ: +0.4, hot: 7.8, crazy: 6.2,
       blurb: "Trains five days a week and can tell you exactly why. Meal-prepped, disciplined, in a matching set more often than in clothes. The most reliable person on this chart and the one most likely to out-lift you. Your gym membership is about to start getting used." },
-    { key: "grunge", cuts: [1.803, 2.212], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, heightZ: -0.1, hot: 6.8, crazy: 8.9,
+    { key: "grunge", cuts: [2.091, 2.497], name: "Grunge Girl", soft: 1.2, form:  0.0, effort: 0.3, room: -0.3, vice: +0.60, tradition: -0.70, visibility: -0.40, family: -0.60, heightZ: -0.1, hot: 6.8, crazy: 8.9,
       blurb: "Flannel, ripped jeans, combat boots, a band on the shirt you have not heard of. Puts in no visible effort and is somehow the most magnetic person in the room. Chaotic in a way that is extremely fun for about eight months." },
-    { key: "comfort", cuts: [1.608, 1.96], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, heightZ: -0.5, hot: 5.5, crazy: 5.5,
+    { key: "comfort", cuts: [1.951, 2.334], name: "The Comfort Class", soft: 2.8, form:  0.9, effort: 0.8, room:  0.4, vice: -0.30, tradition: +0.40, visibility: -0.50, family: +0.80, heightZ: -0.5, hot: 5.5, crazy: 5.5,
       blurb: "Warm, unbothered, feeds people as a love language. The lowest-maintenance partner on this chart by a distance. Your friends will like her more than they like you." }
   ];
 
@@ -175,20 +216,50 @@ WZ.math = (function () {
      across a 165 cm user and a 205 cm user, and it moves only when the user
      actually pushes on the override screen. Weighted low relative to the
      other axes on purpose — a nudge toward Model/Gym Girl on a tall ask, not
-     a repeat of the old takeover. */
-  function classify(soft, form, effort, room, heightZ, hot, crazy) {
-    const f = formOf(form).v;
-    const r = roomOf(room).v;
+     a repeat of the old takeover.
+
+     Form's weight was 1.10 until a real user hit "clean-girl minimal effort,
+     no muscle" and still got handed Gym Girl — hot+crazy+softness sat close
+     enough to Gym Girl's centre that they outvoted a form axis that flatly
+     disagreed. Form is the one axis that is nearly definitional for a couple
+     of these types (Gym Girl's whole identity is "muscle"), so it needed to
+     out-argue the others when it disagrees, not get outvoted by them.
+     Raised to 1.90 — a same-form mismatch now costs roughly as much distance
+     as being off by two full points on the hot/crazy sliders — and the
+     "clean effort, no muscle" combination stopped reaching Gym Girl in
+     simulation. Changing it moved every type's distance scale, so cuts were
+     recomputed same as any other axis change (see the TYPES comment).
+
+     Vice, tradition, visibility and family joined as real axes at the same
+     time as the Gym Girl fix went in — same treatment as every other axis
+     here: a real weight in this distance, a real centroid on all nine
+     TYPES, a real population table (VICE.p / TRADITION.p / VISIBILITY.p /
+     FAMILY.p) feeding both this classification AND rarity()'s "1 in N", and
+     a sentence slot in buildNote() below so a specific answer shows up as a
+     specific line in the write-up, not just an invisible number. Weighted
+     at 0.65 each — real, but lighter than form or room, since four axes
+     arrived in one pass and the existing seven were already load-bearing. */
+  function classify(soft, form, effort, room, vice, tradition, visibility, family, heightZ, hot, crazy) {
+    const f   = formOf(form).v;
+    const r   = roomOf(room).v;
+    const vc  = viceOf(vice).v;
+    const tr  = traditionOf(tradition).v;
+    const vis = visibilityOf(visibility).v;
+    const fam = familyOf(family).v;
     let best = null;
     for (const t of TYPES) {
       const d = Math.sqrt(
-        Math.pow((soft    - t.soft)    * 0.90, 2) +
-        Math.pow((f       - t.form)    * 1.10, 2) +
-        Math.pow((effort  - t.effort)  * 0.75, 2) +
-        Math.pow((r       - t.room)    * 0.85, 2) +
-        Math.pow((heightZ - t.heightZ) * 0.45, 2) +
-        Math.pow((hot     - t.hot)     * 0.60, 2) +
-        Math.pow((crazy   - t.crazy)   * 0.55, 2)
+        Math.pow((soft    - t.soft)       * 0.90, 2) +
+        Math.pow((f       - t.form)       * 1.90, 2) +
+        Math.pow((effort  - t.effort)     * 0.75, 2) +
+        Math.pow((r       - t.room)       * 0.85, 2) +
+        Math.pow((vc      - t.vice)       * 0.65, 2) +
+        Math.pow((tr      - t.tradition)  * 0.65, 2) +
+        Math.pow((vis     - t.visibility) * 0.65, 2) +
+        Math.pow((fam     - t.family)     * 0.65, 2) +
+        Math.pow((heightZ - t.heightZ)    * 0.45, 2) +
+        Math.pow((hot     - t.hot)        * 0.60, 2) +
+        Math.pow((crazy   - t.crazy)      * 0.55, 2)
       );
       if (!best || d < best.d) best = { t: t, d: d };
     }
@@ -199,7 +270,7 @@ WZ.math = (function () {
        population of answers (see the TYPES comment above and
        scripts/compute_cuts.js), so the three variants come up in even
        thirds among real users, not just among every combination on paper. */
-    best.note = buildNote(best.t, soft, form, effort, room);
+    best.note = buildNote(best.t, soft, form, effort, room, vice, tradition, visibility, family);
     const c = best.t.cuts;
     best.variant = best.d <= c[0] ? 0 : best.d <= c[1] ? 1 : 2;
     best.tier    = VARIANTS[best.variant];
@@ -209,11 +280,15 @@ WZ.math = (function () {
   /* The type is the headline; this is the fine print. It reads the user's exact
      build against the archetype's centre, so two people who land on the same
      type but arrived from different builds do not get the identical write-up. */
-  function buildNote(t, soft, form, effort, room) {
+  function buildNote(t, soft, form, effort, room, vice, tradition, visibility, family) {
     const ds = soft - t.soft;
     const df = formOf(form).v - t.form;
     const de = effort - t.effort;
     const dr = roomOf(room).v - t.room;
+    const dv  = viceOf(vice).v - t.vice;
+    const dt  = traditionOf(tradition).v - t.tradition;
+    const dvi = visibilityOf(visibility).v - t.visibility;
+    const dfa = familyOf(family).v - t.family;
     const bits = [];
     if (ds <= -1.0) bits.push("firmer than the type usually runs");
     else if (ds >= 1.0) bits.push("softer than the type usually runs");
@@ -226,6 +301,14 @@ WZ.math = (function () {
     else if (de >= 1.2) out += " And considerably more production than the type calls for.";
     if (dr <= -1.2) out += " Quieter in a room than the archetype suggests.";
     else if (dr >= 1.2) out += " Louder in a room than the archetype suggests.";
+    if (dv <= -1.0) out += " More sober than the type usually runs.";
+    else if (dv >= 1.0) out += " Considerably more vice in the picture than the archetype carries.";
+    if (dt <= -1.0) out += " Less tied to tradition than typical for the type.";
+    else if (dt >= 1.0) out += " More tradition-bound than the archetype suggests.";
+    if (dvi <= -1.0) out += " Quieter online than the type usually is.";
+    else if (dvi >= 1.0) out += " Considerably more online than the archetype suggests.";
+    if (dfa <= -1.0) out += " More distant from family than typical for the type.";
+    else if (dfa >= 1.0) out += " Closer to family than the archetype suggests.";
     return out;
   }
 
@@ -253,22 +336,26 @@ WZ.math = (function () {
 
   /* --- rarity ------------------------------------------------------------- */
 
-  function rarity(lo, hi, soft, form, effort, room, hot, crazy) {
-    const pH  = Math.max(1e-12, ncdf(hi + 0.5, POP.mu, POP.sd) - ncdf(lo - 0.5, POP.mu, POP.sd));
-    const pB  = buildP(soft, form);
-    const pE  = EFFORT[effort].p;
-    const pR  = roomOf(room).p;
-    const pHt = Math.max(1e-12, 1 - ncdf(hot - 0.5, HOT.mu, HOT.sd));
-    const pCz = Math.max(1e-12, ncdf(crazy + 0.5, CRAZY.mu, CRAZY.sd));
+  function rarity(lo, hi, soft, form, effort, room, vice, tradition, visibility, family, hot, crazy) {
+    const pH   = Math.max(1e-12, ncdf(hi + 0.5, POP.mu, POP.sd) - ncdf(lo - 0.5, POP.mu, POP.sd));
+    const pB   = buildP(soft, form);
+    const pE   = EFFORT[effort].p;
+    const pR   = roomOf(room).p;
+    const pV   = viceOf(vice).p;
+    const pT   = traditionOf(tradition).p;
+    const pVis = visibilityOf(visibility).p;
+    const pF   = familyOf(family).p;
+    const pHt  = Math.max(1e-12, 1 - ncdf(hot - 0.5, HOT.mu, HOT.sd));
+    const pCz  = Math.max(1e-12, ncdf(crazy + 0.5, CRAZY.mu, CRAZY.sd));
 
     /* Hot and crazy are correlated in the wild — that is the whole point of the
        diagonal on the chart. Asking for a wide gap has to cost something. */
     const gap  = hot - crazy;
     const corr = gap > 2 ? 1 / (1 + (gap - 2) * 1.8) : 1;
 
-    const p = pH * pB * pE * pR * pHt * pCz * corr;
+    const p = pH * pB * pE * pR * pV * pT * pVis * pF * pHt * pCz * corr;
     return {
-      pH: pH, pB: pB, pE: pE, pR: pR, pHt: pHt, pCz: pCz, corr: corr, p: p,
+      pH: pH, pB: pB, pE: pE, pR: pR, pV: pV, pT: pT, pVis: pVis, pF: pF, pHt: pHt, pCz: pCz, corr: corr, p: p,
       oneIn: 1 / p,
       candidates: POP.singlePool * p
     };
@@ -282,8 +369,8 @@ WZ.math = (function () {
     const lo = target - 3, hi = target + 3;
     const zone  = zoneOf(s.hot, s.crazy);
     const heightZ = heightZFor(target);
-    const type  = classify(s.soft, s.form, s.effort, s.room, heightZ, s.hot, s.crazy);
-    const rare  = rarity(lo, hi, s.soft, s.form, s.effort, s.room, s.hot, s.crazy);
+    const type  = classify(s.soft, s.form, s.effort, s.room, s.vice, s.tradition, s.visibility, s.family, heightZ, s.hot, s.crazy);
+    const rare  = rarity(lo, hi, s.soft, s.form, s.effort, s.room, s.vice, s.tradition, s.visibility, s.family, s.hot, s.crazy);
     const stature = statureOf(target);
     const weeks = rare.oneIn / 2;                 // two assessed first dates a week
     const years = weeks / 52;
@@ -293,6 +380,8 @@ WZ.math = (function () {
       floor: floorFor(s.height),
       soft: softOf(s.soft), form: formOf(s.form),
       effort: effortOf(s.effort), room: roomOf(s.room),
+      vice: viceOf(s.vice), tradition: traditionOf(s.tradition),
+      visibility: visibilityOf(s.visibility), family: familyOf(s.family),
       buildLabel: buildLabel(s.soft, s.form),
       zone: zone, type: type, rare: rare, stature: stature,
       weeks: weeks, years: years,
@@ -316,8 +405,8 @@ WZ.math = (function () {
          : (p * 100).toExponential(1) + "%";
   }
 
-  return { POP, RATIO, SOFT, FORM, EFFORT, ROOM, BUILD_P, HOT, CRAZY, TYPES, VARIANTS,
-           effortOf, roomOf,
+  return { POP, RATIO, SOFT, FORM, EFFORT, ROOM, VICE, TRADITION, VISIBILITY, FAMILY, BUILD_P, HOT, CRAZY, TYPES, VARIANTS,
+           effortOf, roomOf, viceOf, traditionOf, visibilityOf, familyOf,
            buildP, softOf, formOf, buildLabel, buildNote,
            ncdf, idealFor, floorFor, applyDelta,
            zoneOf, classify, statureOf, heightZFor, rarity, evaluate, fmt, pct };
