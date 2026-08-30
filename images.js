@@ -39,5 +39,6 @@ window.WZ_IMG = {
   baddie       : ["assets/img/baddie1.webp", "assets/img/baddie2.webp", "assets/img/baddie3.webp"],
   gymgirl      : ["assets/img/gymgirl1.webp", "assets/img/gymgirl2.webp", "assets/img/gymgirl3.webp"],
   grunge       : ["assets/img/grunge1.webp", "assets/img/grunge2.webp", "assets/img/grunge3.webp"],
-  comfort      : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"]
+  comfort      : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"],
+  oldmoney     : ["assets/img/oldmoney1.webp", "assets/img/oldmoney2.webp", "assets/img/oldmoney3.webp"]
 };

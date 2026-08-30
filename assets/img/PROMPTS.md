@@ -1,8 +1,9 @@
 # Image generation brief
 
-9 archetypes × 3 variants (27) + 8 interstitials. **35 files total.**
-Model and Baddie (6 files) are already generated — do not regenerate. The other
-21 are what this brief covers.
+10 archetypes × 3 variants (30) + 8 interstitials. **38 files total.**
+Model and Baddie (6 files) are already generated — do not regenerate. Old Money
+(3 files) is drafted below and waiting on generation. The rest are already in
+place.
 
 ---
 
@@ -86,17 +87,28 @@ still be a strikingly good-looking woman — the kind people describe as "she do
 even try". Do NOT make her plain, tired, washed out, or ordinary.
 ```
 
+**TREATMENT D · QUIET LUXURY** — for Old Money (effort 1.4, tradition +0.7, visibility −0.7)
+```
+Soft key light from camera left with gentle fill, one subtle rim light. Clean, muted
+colour grade — warm neutrals, no saturation spikes. f/2.5. Groomed and polished but
+deliberately unflashy: the effort went into fabric and cut, not into visible styling.
+Hair professionally done but reads as low-maintenance. Skin retouched to flawless
+without looking artificial. Nothing about the image should read as "trying" — the
+whole point is that trying is beneath her.
+```
+
 ---
 
-# The 9 archetypes
+# The 10 archetypes
 
 - **1 · textbook** — the pure form. Answers land almost on the archetype.
 - **2 · variation** — recognisably the type, one thing off-spec.
 - **3 · edge case** — barely qualifies; the type stretched to its far edge.
 
 Which one shows is decided by how far the user's answers sit from the archetype
-centre in seven-dimensional space (build ×2, effort, room, height, hot, crazy),
-split at that type's distance terciles — each comes up in even thirds.
+centre in eleven-dimensional space (build ×2, effort, room, vice, tradition,
+visibility, family, height, hot, crazy), split at that type's distance
+terciles — each comes up in even thirds.
 
 ---
 
@@ -593,6 +605,100 @@ lights are simply off.
 
 ---
 
+## OLD MONEY — treatment D · effort 1.4, room −0.2, vice 0.1, tradition +0.7,
+## visibility −0.7, family +0.5, height +0.3, hot 7.0, crazy 3.8
+*(PDF: Old money / Quiet luxury — logosuz kaliteli kumaşlar, pastel/nötr tonlar,
+inci, hiç zorlama görünmeyen bakımlı hâl; en sık "Clean girl" ile karışan tip —
+ayrımı burada tradition yüksek + visibility düşük yapıyor, clean girl'de ikisi de
+nötr)*
+
+### `oldmoney1.webp` · textbook
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with gentle fill, one subtle rim light. Clean, muted
+colour grade — warm neutrals, no saturation spikes. f/2.5. Groomed and polished but
+deliberately unflashy: the effort went into fabric and cut, not into visible styling.
+Hair professionally done but reads as low-maintenance. Skin retouched to flawless
+without looking artificial. Nothing about the image should read as "trying" — the
+whole point is that trying is beneath her.
+A beautiful woman in her late twenties, tall and slim, standing with her weight
+shifted onto one leg, one hand raised to push a pair of dark cat-eye sunglasses up
+into her hair, caught mid-gesture rather than posed. A dark green and navy
+cricket-style varsity knit jumper layered over a crisp white oxford shirt, cuffs
+turned back over the sweater at the wrist, tucked into pleated camel wool trousers
+with a thin black leather belt. A slim gold chain-link watch, one plain gold ring.
+Brown leather loafers, no socks. Hair down in loose natural waves. Bare, even
+complexion, a soft muted red on the lips — the one deliberate touch of colour.
+Expression: composed, faintly amused, looking off past the camera as if distracted
+by something more interesting than the lens. Reads like she just stepped out of a
+library in a house with too many books in it — not off a runway, not out of an
+office.
+```
+
+*(v3 — v2 fixed the corporate-headshot problem but was still generic quiet-luxury.
+Rebuilt against İbrahim's own reference set: his 5 "old money" photos split into two
+different types — visible-logo Parisian It-girl (Gucci horsebit, LV bag, red lip,
+sneakers) which is NOT this archetype, and genuine unbranded heritage style (cricket
+knit, books, fireplace, sunglasses-as-gesture) which is. Swapped the plain cashmere
+crewneck for a cricket-style varsity knit — the one signifier in the set no
+non-heritage rich person reaches for by accident — kept the sunglasses-into-hair
+gesture and off-camera gaze from the good references, standing-only since the site
+format has no room for the seated/prop shots those came from.)*
+
+### `oldmoney2.webp` · variation
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with gentle fill, one subtle rim light. Clean, muted
+colour grade — warm neutrals, no saturation spikes. f/2.5. Groomed and polished but
+deliberately unflashy: the effort went into fabric and cut, not into visible styling.
+Hair professionally done but reads as low-maintenance. Skin retouched to flawless
+without looking artificial. Nothing about the image should read as "trying" — the
+whole point is that trying is beneath her.
+The same woman in her early thirties, weekend register: a cream cable-knit sweater
+tied over her shoulders on top of a white oxford shirt, straight-leg jeans, tan
+flats, tortoiseshell sunglasses pushed up into her hair. Small gold hoops. Expression:
+mid-laugh, genuinely delighted, head tilted back slightly, one hand loosely at her
+collarbone. Warmer and looser than the first image, still unmistakably put together
+without effort.
+```
+
+### `oldmoney3.webp` · edge case
+```
+Full-length portrait photograph, standing, head to feet fully inside the frame,
+subject placed right of centre with clear negative space on the left third. 3:4
+vertical portrait aspect ratio. Background: flat, plain, very dark plum-black
+(#17090F) — no props, no set, no texture behind her. 85mm lens look, sharp focus,
+evenly lit from head to feet. Photorealistic. Cast a genuinely beautiful woman with
+strong, memorable features and clear healthy skin. A fictional person who does not
+resemble any real or public figure. No text, no logos, no watermark, no border.
+Soft key light from camera left with gentle fill, one subtle rim light. Clean, muted
+colour grade — warm neutrals, no saturation spikes. f/2.5. Groomed and polished but
+deliberately unflashy: the effort went into fabric and cut, not into visible styling.
+Hair professionally done but reads as low-maintenance. Skin retouched to flawless
+without looking artificial. Nothing about the image should read as "trying" — the
+whole point is that trying is beneath her.
+A striking woman in her mid-thirties, at home in a floor-length ivory silk robe worn
+loosely over silk pyjamas, hair swept up loosely with a few pieces falling, thin
+reading glasses pushed down her nose, a heavy signet ring on one hand. No other
+jewellery. Expression: cool, appraising, looking over the top of the glasses directly
+into the lens, one eyebrow very faintly raised. Detached rather than warm — the edge
+case where quiet confidence tips into not needing the room's approval at all.
+```
+
+---
+
 # The 8 interstitials
 
 Joke cards, not portraits — spine and treatments do **not** apply. All eight are
@@ -610,7 +716,8 @@ nerd      : ["assets/img/nerd1.webp", "assets/img/nerd2.webp", "assets/img/nerd3
 cleangirl : ["assets/img/cleangirl1.webp", "assets/img/cleangirl2.webp", "assets/img/cleangirl3.webp"],
 gymgirl   : ["assets/img/gymgirl1.webp", "assets/img/gymgirl2.webp", "assets/img/gymgirl3.webp"],
 grunge    : ["assets/img/grunge1.webp", "assets/img/grunge2.webp", "assets/img/grunge3.webp"],
-comfort   : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"]
+comfort   : ["assets/img/comfort1.webp", "assets/img/comfort2.webp", "assets/img/comfort3.webp"],
+oldmoney  : ["assets/img/oldmoney1.webp", "assets/img/oldmoney2.webp", "assets/img/oldmoney3.webp"]
 ```
 
 ```bash
