@@ -24,7 +24,11 @@ create table if not exists public.runs (
   soft          smallint not null check (soft between 0 and 3),
   form          text     not null check (form   in ('muscle','neutral','fat')),
   effort        smallint not null check (effort between 0 and 3),
-  room          text     not null check (room   in ('centre','edges','corner')),
+  room          text     not null check (room   in ('centre','social','clique','corner')),
+  vice          text     not null check (vice   in ('sober','social','regular','heavy')),
+  tradition     text     not null check (tradition   in ('secular','cultural','practicing','core')),
+  visibility    text     not null check (visibility  in ('ghost','private','normal','creator')),
+  family        text     not null check (family      in ('distant','normal','close','core')),
   hot           smallint not null check (hot   between 4 and 10),
   crazy         smallint not null check (crazy between 4 and 10),
 
@@ -43,6 +47,48 @@ alter table public.runs add  column if not exists form text;
 alter table public.runs add  column if not exists effort smallint;
 alter table public.runs add  column if not exists room text;
 
+-- upgrade path for a table created before vice/tradition/visibility/family
+-- joined build/effort/room as real (non-flavor) axes — see assets/math.js.
+-- Added nullable first so existing rows do not violate not-null on upgrade,
+-- then tightened; a fresh project just gets the not-null columns above.
+do $$
+begin
+  if not exists (select 1 from information_schema.columns
+                 where table_schema='public' and table_name='runs' and column_name='vice') then
+    alter table public.runs add column vice text;
+  end if;
+  if not exists (select 1 from information_schema.columns
+                 where table_schema='public' and table_name='runs' and column_name='tradition') then
+    alter table public.runs add column tradition text;
+  end if;
+  if not exists (select 1 from information_schema.columns
+                 where table_schema='public' and table_name='runs' and column_name='visibility') then
+    alter table public.runs add column visibility text;
+  end if;
+  if not exists (select 1 from information_schema.columns
+                 where table_schema='public' and table_name='runs' and column_name='family') then
+    alter table public.runs add column family text;
+  end if;
+end $$;
+
+-- room's check constraint predates the room split from 3 buckets to 4
+-- (centre/social/clique/corner) — drop whatever Postgres auto-named it and
+-- reapply the current one under a name we can find again next time.
+do $$
+declare
+  c record;
+begin
+  for c in
+    select conname from pg_constraint
+     where conrelid = 'public.runs'::regclass
+       and pg_get_constraintdef(oid) ilike '%room%in%'
+  loop
+    execute format('alter table public.runs drop constraint %I', c.conname);
+  end loop;
+end $$;
+alter table public.runs add constraint runs_room_check
+  check (room in ('centre','social','clique','corner'));
+
 create index if not exists runs_created_idx   on public.runs (created_at desc);
 create index if not exists runs_zone_idx      on public.runs (zone);
 create index if not exists runs_archetype_idx on public.runs (archetype);
@@ -59,6 +105,13 @@ revoke all on public.runs from anon, authenticated;
 -- Writes one run, returns its share code. Throttled globally so a bored friend
 -- with curl cannot fill the table faster than 40 rows a minute.
 
+-- drop the pre-vice/tradition/visibility/family signature so it doesn't hang
+-- around as a dead overload once the new one below is created.
+drop function if exists public.submit_run(
+  smallint,boolean,text,text,smallint,smallint,text,smallint,text,
+  smallint,smallint,smallint,text,text,bigint,text[]
+);
+
 create or replace function public.submit_run(
   p_height        smallint,
   p_obese         boolean,
@@ -69,6 +122,10 @@ create or replace function public.submit_run(
   p_form          text,
   p_effort        smallint,
   p_room          text,
+  p_vice          text,
+  p_tradition     text,
+  p_visibility    text,
+  p_family        text,
   p_hot           smallint,
   p_crazy         smallint,
   p_target_height smallint,
@@ -105,10 +162,12 @@ begin
   end loop;
 
   insert into public.runs (
-    code, height, obese, looks, adjust, delta, soft, form, effort, room, hot, crazy,
+    code, height, obese, looks, adjust, delta, soft, form, effort, room,
+    vice, tradition, visibility, family, hot, crazy,
     target_height, zone, archetype, one_in, flags
   ) values (
-    v_code, p_height, p_obese, p_looks, p_adjust, p_delta, p_soft, p_form, p_effort, p_room, p_hot, p_crazy,
+    v_code, p_height, p_obese, p_looks, p_adjust, p_delta, p_soft, p_form, p_effort, p_room,
+    p_vice, p_tradition, p_visibility, p_family, p_hot, p_crazy,
     p_target_height, p_zone, p_archetype, greatest(p_one_in, 1),
     coalesce(p_flags, '{}')
   );
@@ -127,7 +186,8 @@ set search_path = public
 as $$
   select to_json(t) from (
     select code, created_at, height, obese, looks, adjust, delta, soft, form,
-           effort, room, hot, crazy, target_height, zone, archetype, one_in, flags
+           effort, room, vice, tradition, visibility, family,
+           hot, crazy, target_height, zone, archetype, one_in, flags
       from public.runs
      where code = upper(trim(p_code))
      limit 1
@@ -166,10 +226,16 @@ $$;
 
 -- ---------- grants ----------------------------------------------------------
 
-revoke all on function public.submit_run(smallint,boolean,text,text,smallint,smallint,text,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) from public;
+revoke all on function public.submit_run(
+  smallint,boolean,text,text,smallint,smallint,text,smallint,text,
+  text,text,text,text,smallint,smallint,smallint,text,text,bigint,text[]
+) from public;
 revoke all on function public.get_run(text)      from public;
 revoke all on function public.get_stats(bigint)  from public;
 
-grant execute on function public.submit_run(smallint,boolean,text,text,smallint,smallint,text,smallint,text,smallint,smallint,smallint,text,text,bigint,text[]) to anon, authenticated;
+grant execute on function public.submit_run(
+  smallint,boolean,text,text,smallint,smallint,text,smallint,text,
+  text,text,text,text,smallint,smallint,smallint,text,text,bigint,text[]
+) to anon, authenticated;
 grant execute on function public.get_run(text)     to anon, authenticated;
 grant execute on function public.get_stats(bigint) to anon, authenticated;

@@ -13,6 +13,6 @@
    share links and the group stats.
    ============================================================================= */
 window.WZ_CONFIG = {
-  SUPABASE_URL:      "",  // https://xxxxxxxxxxxx.supabase.co
-  SUPABASE_ANON_KEY: ""   // Project Settings → API → anon / public
+  SUPABASE_URL:      "https://npyfgbhdseigfnsdevtd.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5weWZnYmhkc2VpZ2Zuc2RldnRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTE4NzAsImV4cCI6MjEwMzc2Nzg3MH0.6EMpNRY6wGnyjQUQZHVwYQNBMZVEo1jVbsPnz-cAZp8"
 };
