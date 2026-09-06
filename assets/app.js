@@ -898,20 +898,25 @@
     document.getElementById("tweak").onclick = () => go("hot");
 
     /* --- backend: share code + how the room compares --------------------- */
-    renderShare(opts.code || null, v);
+    renderShare(opts.code || null, v, plateNo);
     if (!opts.code && DB.enabled) {
-      DB.submit(S, v).then(code => { if (code) renderShare(code, v); });
+      DB.submit(S, v).then(code => { if (code) renderShare(code, v, plateNo); });
     }
     DB.stats(v.rare.oneIn).then(st => renderRoom(st, v));
   };
 
-  function renderShare(code, v) {
+  function renderShare(code, v, plateNo) {
     const host = document.getElementById("shareblock");
     if (!host) return;
+    const cardBtn = '<button class="small has-icon" id="sharecardbtn" style="flex:1">' + WZ.icon("download") + '<span>Save the plate as an image</span></button>';
     if (!DB.enabled) {
       host.innerHTML =
-        '<div class="block"><p class="panel-h">' + WZ.icon("share-2") + '<span>Sharing</span></p>' +
-        '<p class="sub" style="margin:0;font-size:15px">Running without a backend, so this file lives only in your browser. Screenshot it like a caveman.</p></div>';
+        '<div class="share"><p class="panel-h">' + WZ.icon("share-2") + '<span>Sharing</span></p>' +
+        '<p class="sub" style="margin:0 0 14px;font-size:15px">Running without a backend, so there is no share link &mdash; but the plate itself exports as an image.</p>' +
+        '<div class="row">' + cardBtn + "</div>" +
+        '<p class="msg" id="shmsg"></p>' +
+      "</div>";
+      wireCardButton(v, plateNo);
       return;
     }
     if (!code) {
@@ -930,6 +935,7 @@
           '<button class="small has-icon" id="copylink" style="flex:1">' + WZ.icon("link-2") + '<span>Copy link</span></button>' +
           '<button class="small has-icon" id="copytext" style="flex:1">' + WZ.icon("copy") + '<span>Copy the brag</span></button>' +
         "</div>" +
+        '<div class="row" style="margin-top:10px">' + cardBtn + "</div>" +
         '<p class="msg" id="shmsg"></p>' +
       "</div>";
 
@@ -944,6 +950,54 @@
     };
     document.getElementById("copylink").onclick = () => copy(url,  "Link copied");
     document.getElementById("copytext").onclick = () => copy(brag, "Brag copied");
+    wireCardButton(v, plateNo, url);
+  }
+
+  /* Builds the share-card canvas from WZ.card (assets/sharecard.js) and either
+     hands it to the OS share sheet (mobile — posts straight to whatever app
+     the person picks) or downloads it as a PNG (desktop / no Web Share file
+     support). Reads the same v object the page rendered from, so the exported
+     image can never say something the screen doesn\'t. */
+  function wireCardButton(v, plateNo, shareUrl) {
+    const btn = document.getElementById("sharecardbtn");
+    if (!btn || !(window.WZ && WZ.card && WZ.card.build)) return;
+    const msg = document.getElementById("shmsg");
+    const say = (text, isErr) => {
+      if (!msg) return;
+      msg.className = "msg" + (isErr ? " off" : "");
+      msg.textContent = text;
+      setTimeout(() => { msg.textContent = ""; }, 3200);
+    };
+    btn.onclick = async () => {
+      btn.disabled = true;
+      const original = btn.innerHTML;
+      btn.innerHTML = WZ.icon("download") + "<span>Rendering&hellip;</span>";
+      try {
+        const canvas = await WZ.card.build(v, plateNo, M.TYPES.length);
+        const blob = await WZ.card.toBlob(canvas);
+        if (!blob) throw new Error("no blob");
+        const filename = "girlgorithm-" + v.type.t.key + "-" + plateNo + ".png";
+        const file = new File([blob], filename, { type: "image/png" });
+        const shareText = v.type.t.name + " — " + v.target + " cm, " + v.zone.name +
+                           ", 1 in " + M.fmt(v.rare.oneIn) + (shareUrl ? ". " + shareUrl : ". girlgorithm.app");
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: "Girlgorithm", text: shareText });
+          say("Sent to share sheet");
+        } else {
+          const objUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = objUrl; a.download = filename;
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(objUrl), 4000);
+          say("Image downloaded");
+        }
+      } catch (e) {
+        if (e && e.name !== "AbortError") say("Couldn\'t render the image — try again", true);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    };
   }
 
   function renderRoom(st, v) {
