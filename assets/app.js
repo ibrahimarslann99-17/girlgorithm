@@ -968,6 +968,13 @@
       msg.textContent = text;
       setTimeout(() => { msg.textContent = ""; }, 3200);
     };
+    const downloadBlob = (blob, filename) => {
+      const objUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = objUrl; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(objUrl), 4000);
+    };
     btn.onclick = async () => {
       btn.disabled = true;
       const original = btn.innerHTML;
@@ -980,15 +987,24 @@
         const file = new File([blob], filename, { type: "image/png" });
         const shareText = v.type.t.name + " — " + v.target + " cm, " + v.zone.name +
                            ", 1 in " + M.fmt(v.rare.oneIn) + (shareUrl ? ". " + shareUrl : ". girlgorithm.app");
+        /* Web Share needs live transient activation, which the render above
+           (fonts + image decode + canvas + toBlob) can burn through on a
+           slow device — if the OS refuses the share sheet for that reason
+           (or any reason other than the person cancelling it), fall back to
+           a plain download instead of surfacing a scary error for a file
+           that rendered fine. */
+        let shared = false;
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: "Girlgorithm", text: shareText });
-          say("Sent to share sheet");
-        } else {
-          const objUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = objUrl; a.download = filename;
-          document.body.appendChild(a); a.click(); a.remove();
-          setTimeout(() => URL.revokeObjectURL(objUrl), 4000);
+          try {
+            await navigator.share({ files: [file], title: "Girlgorithm", text: shareText });
+            shared = true;
+            say("Sent to share sheet");
+          } catch (shareErr) {
+            if (shareErr && shareErr.name === "AbortError") { shared = true; /* user cancelled — do nothing */ }
+          }
+        }
+        if (!shared) {
+          downloadBlob(blob, filename);
           say("Image downloaded");
         }
       } catch (e) {
